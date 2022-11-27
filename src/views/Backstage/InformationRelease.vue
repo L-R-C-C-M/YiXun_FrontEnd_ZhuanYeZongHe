@@ -7,7 +7,7 @@
     </el-breadcrumb>
   </el-header>
   <el-main style="background-color: rgba(245, 249, 250, 1)">
-    <el-card style="height: 100%; width: 100%">
+    <el-card style="min-height: 100%; width: 100%">
       <div style="margin-left: 3%; margin-top: 3%; margin-right: 5%">
         <el-form-item label="文章标题" style="margin-bottom: 3%">
           <el-input
@@ -49,12 +49,20 @@
           label="文章内容"
           style="margin-bottom: 3%; margin-top: 2%"
         >
+        <div style="text-align: left">
+        <!--
           <el-input
             v-model="article.content"
             :autosize="{ minRows: 10 }"
             type="textarea"
             placeholder="请输入文章内容"
           ></el-input>
+        -->
+          <editorCom
+              ref="editorRef"
+              :getContent="默认值"
+            />
+        </div>
         </el-form-item>
         <div>
           <el-button type="primary" @click="save">发 布</el-button>
@@ -66,23 +74,29 @@
 
 <script>
 import api from "/src/api/index";
+import editorCom from "@/components/Editor.vue";
+
 
 export default {
   name: "InformationRelease-vue",
+  components: {
+    editorCom
+  },
   data() {
     return {
       admin_id: JSON.parse(sessionStorage.getItem("administratorid")),
       article: {
         title: "",
         type: "",
-        content: "",
+        content: '',
         imageurl: "",
         id: "",
-      },
+      }, 
     };
   },
   methods: {
     save() {
+      this.article.content=this.$refs.editorRef.content
       console.log(this.article);
       api
         .releaseNews(
@@ -162,6 +176,7 @@ export default {
 h6 {
   color: rgb(184, 184, 184);
 }
+
 .el-header {
   background-color: rgba(255, 255, 255, 1);
   height: 60px;

@@ -9,6 +9,7 @@
   "dependencies": {
     "@amap/amap-jsapi-loader": "^1.0.1",
     "@element-plus/icons-vue": "^2.0.6",
+    "@vueup/vue-quill": "^1.0.0-beta.11",
     "axios": "^0.27.2",
     "core-js": "^3.8.3",
     "element-china-area-data": "^5.0.2",
