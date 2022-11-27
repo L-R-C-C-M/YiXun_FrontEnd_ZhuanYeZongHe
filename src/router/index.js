@@ -265,6 +265,7 @@ router.afterEach((to, from, next) => {
 
 })
 
+/*
 router.beforeEach((to,from,next)=>{
   console.log(to.path)
 //拦截直接访问用户后台页面
@@ -306,5 +307,5 @@ if(identity!="administrator")
   return next();
   next();//直接放行
 })
-
+*/
 export default router
