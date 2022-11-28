@@ -103,19 +103,18 @@ const routes = [
     name: 'volunInstInfo',
     component: () => import("../views/VolunInstInfoView.vue")
   },
-
+  // 寻人论坛主界面
+  {
+    path: "/forum",
+    name: "forum",
+    component: () => import("../views/ForumView.vue"),
+  },
   // 寻人资讯主界面
   {
     path: "/news",
     name: "news",
     component: () => import("../views/NewsView.vue"),
   },
-  // // 寻人资讯主页面跳转到详情页
-  // {
-  //   path: "/report/about",
-  //   name: "/report/about",
-  //   component: () => import("../views/AboutReport.vue"),
-  // },
   // 寻人资讯主页面跳转到详情页
   {
     path: "/newsInfo",

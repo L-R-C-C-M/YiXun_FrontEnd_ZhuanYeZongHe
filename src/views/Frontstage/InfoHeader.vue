@@ -19,35 +19,23 @@
           fit="contain"
         />
         <div class="flex-grow" />
-        <el-menu-item index="/">寻人首页</el-menu-item>
+        <el-menu-item index="/">首页</el-menu-item>
         <el-menu-item index="/volunOver">志愿活动</el-menu-item>
+        <el-menu-item index="/forum">寻人论坛</el-menu-item>
         <el-menu-item index="/news">寻人资讯</el-menu-item>
         <el-menu-item index="/department">相关部门信息</el-menu-item>
-        <!-- <el-avatar
-          v-if="loginState && haveHeadshot"
-          :src="userHead"
+        <el-avatar
+          v-if="loginState && userHead != null"
           shape="circle"
+          :src="userHead"
           @click="gobackStage"
         ></el-avatar>
         <el-avatar
-          v-if="loginState && !haveHeadshot"
+          v-if="loginState && userHead == null"
           shape="circle"
           src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
           @click="gobackStage"
-        ></el-avatar> -->
-        <el-avatar
-          v-if="loginState"
-          shape="circle"
-          :src="userHead"
-          @click="gobackStage"
         ></el-avatar>
-        <!-- <el-avatar
-          v-if="loginState"
-          shape="circle"
-          src="https://yixun-picture.oss-cn-shanghai.aliyuncs.com/user_head/1.jpeg"
-          @click="gobackStage"
-        ></el-avatar> -->
-        <!-- <el-menu-item v-if="loginState" :index="homepage">主页</el-menu-item> -->
         <el-menu-item
           v-if="!loginState"
           index="/login"

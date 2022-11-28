@@ -1,19 +1,14 @@
 <template>
   <el-container style="min-height: 100">
-    <!-- <el-header>
-      <InfoHeader />
-    </el-header> -->
     <el-header style="height: fit-content; padding: 0">
       <el-menu
         router
-        :default-active="activeIndex"
         class="up-menu"
         mode="horizontal"
         background-color="#202741"
         text-color="#FFFFFF"
         active-text-color="#2E74B6"
         :ellipsis="false"
-        @select="handleSelect"
       >
         <el-image
           style="height: 70%; width: 20%"
