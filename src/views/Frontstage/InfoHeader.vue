@@ -7,7 +7,7 @@
         :default-active="activeIndex"
         class="up-menu"
         mode="horizontal"
-        background-color="#202714"
+        background-color="#202741"
         text-color="#FFFFFF"
         active-text-color="#2E74B6"
         :ellipsis="false"
@@ -18,7 +18,7 @@
           :src="require('../../../image/logo.png')"
           fit="contain"
         />
-        <div class="flex-grow" />
+        <div class="flex-grow"/>
         <el-menu-item index="/">首页</el-menu-item>
         <el-menu-item index="/volunOver">志愿活动</el-menu-item>
         <el-menu-item index="/forum">寻人论坛</el-menu-item>
@@ -111,7 +111,7 @@ export default {
 <!-- css -->
 <style scoped>
 .detail-view .el-header {
-  background-color: #202714;
+  background-color: #202741;
   color: #ffffff;
   align-items: center;
   display: flex;

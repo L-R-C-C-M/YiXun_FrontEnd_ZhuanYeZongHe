@@ -14,7 +14,7 @@
 .el-footer {
   background-color: #202741;
   color: #dddcdc;
-  height: 40px;
+  height: 60px;
   font-size: 8px;
   display: flex;
   align-items: center;

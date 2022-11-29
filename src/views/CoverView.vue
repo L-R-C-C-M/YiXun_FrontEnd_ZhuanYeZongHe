@@ -27,7 +27,6 @@
           style="text-align: left;margin-left: 3%; margin-right: 1%; margin-bottom: 1%"
         >
           <h style="
-              /* padding-right: 85%; */
               font-size: 8px;
               font-weight: 600;
               color: #c2c2c2;
@@ -53,8 +52,7 @@
                 <el-col :span="8">
                   <div class="thePhoto">
                     <el-image
-                      style="
-                        width: 100%;
+                      style="width: 100%;
                         height: 220px;
                         border-radius: 10px 10px 0 0;
                       "
@@ -115,26 +113,78 @@
           />
         </div>
 
-        <div class="last-page">
-          <div class="bottom-style">
-            <div class="logo-bottom">
-              <img
-                class="hand"
-                src="../../image/hand.jpg"
-              />
-            </div>
-            <div class="total-number">
-              <div class="total-item">
-                |已发布启事 {{ padding1(itemNum, length) }}个
+        <div id="app">
+          <kinesis-container class="container">
+            <kinesis-element>
+              <kinesis-element 
+                  tag="img"
+                  :src="require('../../image/cover_show3.png')"
+                  :strength="10"
+                  type="rotate"
+                  transformOrigin="50% 300%"
+                  axis="x"/>
+            <kinesis-element 
+                  tag="img"
+                  :src="require('../../image/cover_show2.png')"
+                  :strength="-10"
+                  type="rotate"
+                  transformOrigin="50% 300%"
+                  axis="x" />
+            <kinesis-element 
+                  tag="img"
+                  :src="require('../../image/cover_show1.png')"
+                  :strength="10"
+                  type="depth"
+                  />
+
+              <div class="box2-2">
+                  <div class="box-div"
+                    @mouseenter="mouseEnter(0)" 
+                    @mouseleave="mouseLeave" 
+                    :class="{color: changeIndex === 0}"
+                    >
+                    <el-icon class="box_icon" ><Document /></el-icon>
+                    已发布启事 {{ padding1(itemNum, length) }}个
+                  </div>
+                  <div class="box-div"
+                  @mouseenter="mouseEnter(1)" 
+                    @mouseleave="mouseLeave" 
+                    :class="{color: changeIndex === 1}"
+                    >
+                    <el-icon class="box_icon" ><DocumentChecked /></el-icon>
+                    共收到线索 {{ padding1(clueNum, length) }}条</div>
+                  <div class="box-div"
+                  :class="{color: changeIndex === 2}"
+                  @mouseenter="mouseEnter(2)" 
+                    @mouseleave="mouseLeave" 
+                    :style="active">
+                    <el-icon class="box_icon" ><Connection/></el-icon>
+                    累计已帮助 {{ padding1(peopleNum, length) }}人</div>
+                  <div class="box-div"
+                  @mouseenter="mouseEnter(3)" 
+                    @mouseleave="mouseLeave" 
+                    :class="{color: changeIndex === 3}">
+                    <el-icon class="box_icon" ><User /></el-icon>
+                    注册志愿者 200000人
+                  </div>
               </div>
-              <div class="total-item">
-                |共收到线索 {{ padding1(clueNum, length) }}条
-              </div>
-              <div class="total-item">
-                |累计已帮助 {{ padding1(peopleNum, length) }}人
-              </div>
-            </div>
-          </div>
+
+            </kinesis-element>
+
+            <!-- background-circles-props -->
+            <kinesis-element>
+              <div class="circle circle-purple" ></div>
+            </kinesis-element>
+            <kinesis-element>
+              <div class="circle circle-purple1"></div>
+            </kinesis-element>
+            <kinesis-element>
+              <div class="circle circle-purple2"></div>
+            </kinesis-element>
+            <kinesis-element>
+              <div class="circle circle-purple3"></div>
+            </kinesis-element>
+          </kinesis-container>
         </div>
       </el-main>
 
@@ -156,6 +206,8 @@ import AMapLoader from "@amap/amap-jsapi-loader";
 import { CodeToText } from "element-china-area-data";
 import QueryString from "qs";
 import { ElMessage } from "element-plus";
+import { KinesisContainer, KinesisElement} from "vue-kinesis"
+import { Connection, Document, DocumentChecked } from "@element-plus/icons-vue";
 
 export default {
   components: {
@@ -164,9 +216,15 @@ export default {
     gaodeMap,
     InfoHeader,
     Footer,
-  },
+    KinesisContainer,
+    KinesisElement,
+    Document,
+    DocumentChecked,
+    Connection
+},
   data () {
     return {
+      changeIndex: -1,
       user_id: "",
       loginState: false,
 
@@ -229,6 +287,12 @@ export default {
     });
   },
   methods: {
+    mouseEnter: function(index){
+      this.changeIndex = index;        },
+    mouseLeave: function () {
+      this.changeIndex = -1;
+        },
+
     changeString (myData) {
       if (myData) return myData;
       else {
@@ -537,13 +601,13 @@ export default {
   margin-bottom: 0;
   margin-left: 40px;
 }
-.last-page .bottom-style .total-number {
+.total-number {
   margin-left: 0;
   padding-top: 70px;
 }
-.last-page .bottom-style .total-number .total-item {
+.total-item {
   color: #ffffff;
-  font-size: 20px;
+  font-size: 25px;
   font-family: "Oxygen";
   font-style: normal;
   font-weight: 700;
@@ -613,6 +677,103 @@ h {
 .el-pagination {
   margin: auto;
 }
+
+#app {
+  text-align: center;
+}
+
+.container {
+  padding-bottom: 15rem;
+  margin-top: 40px;
+  height: 30px;
+  background-color: #32495E;
+}
+
+.circle {
+  position: absolute;
+  border-radius: 100%;
+}
+
+.circle.circle-purple {
+  border: 10px solid #f2eafa;
+  opacity: 0.1;
+  width: 4vw;
+  height: 4vw;
+  left: 10%;
+  top: 25%;
+}
+
+.circle.circle-purple1 {
+  border: 15px solid #f2eafa;
+  opacity: 0.1;
+  width: 8vw;
+  height: 8vw;
+  right: -2%;
+  bottom: 17%;
+}
+.circle.circle-purple2 {
+  background-color: #f2eafa;
+  opacity: 0.1;
+  width: 5vw;
+  height: 5vw;
+  left: 30%;
+  bottom: 17%;
+}
+
+.circle.circle-purple3 {
+  border: 15px solid #f2eafa;
+  opacity: 0.3;
+  width: 3vw;
+  height: 3vw;
+  top: 80%;
+  left: 60%;
+}
+
+.container img{
+  border-radius:10px;
+  width: 150px;
+  height: 150px;
+  position: absolute; 
+  left:20%;
+  margin-top: 50px;
+}
+
+.box2-2 {
+        /*vw是相对视口（viewport）的宽度而定的，长度等于视口宽度的1/100*/
+        /*vh是相对视口（viewport）的高度而定的，长度等于视口高度的1/100*/
+        width: 40vw;
+        display: grid; /* 开启grid布局*/
+        grid-template-columns: repeat(2, 50%); /*设置4列，每一列占总宽度的25% */
+        grid-template-rows: repeat(2, 30%); /*设置3行， 每一行占总宽度的30% */
+        grid-column-gap: 1vh; /*列间距*/
+       grid-row-gap: 1vh; /*行间距*/
+       border-radius:10px;
+        position: absolute; 
+        right:20%;
+         margin-top: 50px;
+    }
+    .box-div {
+        background-color: white;
+        border-radius:10px;
+        height: 75px;
+        display: flex;
+        /*实现水平居中*/
+        align-items: center;
+        /*实现垂直居中*/
+        justify-content: center;
+        /*文字大小颜色*/
+        font-size: 18px;
+        color: #200741;
+    }
+  .box_icon{
+    font-size: 30px;
+    margin-right: 18px;
+  }
+
+  .color{
+        background-color: #2e74b6;
+        color:#ffffff;
+    }
 </style>
 
 
