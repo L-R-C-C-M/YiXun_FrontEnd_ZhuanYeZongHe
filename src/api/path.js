@@ -1,6 +1,6 @@
 const base = {
     //公共路径
-    baseUrl: "http://8.130.101.207:1827",
+    baseUrl: "http://localhost:3300",
     //1.3 获取用户信息
     userInfo: "/api/UserInfo/GetUserInfo",
     //1.3-2 修改个人信息
@@ -13,32 +13,36 @@ const base = {
     upLoadInfo: "/api/LogIn/UpLoadInfo",
 
     //zqr
-    //已发布项目，寻人信息总数
+    //已发布项目，寻人信息总数 *
     GetSearchInfoNum: "/api/MainPage/GetSearchInfoNum",
-    //已获得线索，线索总数
+    //已获得线索，线索总数 *
     GetCluesNum: "/api/MainPage/GetCluesNum",
-    //累计已帮助，就是已经找到的信息
+    //累计已帮助，就是已经找到的信息 *
     GetFoundInfoNum: "/api/MainPage/GetFoundInfoNum",
-
+    //获取所有寻人信息 *
     GetAllSearchInfo: "/api/MainPage/GetAllSearchInfo",
+    //注册志愿者数 *
+    getVolunteerNum: "/api/MainPage/GetVolunteerNum",
+    //获取筛选后的寻人信息
     ScreenSearchInfo: "/api/MainPage/ScreenSearchInfo",
     //该地址码处的寻人信息
     GetSearchInfoPos: "/api/MainPage/GetSearchInfoPos",
-
+ 
+    //--完成--//
     //csy
-    //4.1.1 获取志愿活动
+    //4.1.1 获取志愿活动 =====> *
     //volAct: "/api/volAct",
-    volAct: "/api/Vol/ShowVolActivityList",
-    //4.1.2 搜索志愿活动
-    searchAct: "/api/Vol/SearchVolActivity",
-    //4.1.3 获取志愿活动详细信息
+    volAct: "/api/VolAct/ShowVolActivityList",
+    //4.1.2 搜索志愿活动 =====> *
+    searchAct: "/api/VolAct/SearchVolActivity",
+    //4.1.3 获取志愿活动详细信息 =====> *
     //volActInfo: "/api/volActInfo",
-    volActInfo: "/api/Vol/ShowSingleVolActivity",
-    //4.1.4 报名&取消报名志愿活动
+    volActInfo: "/api/VolAct/ShowSingleVolActivity",
+    //4.1.4 报名&取消报名志愿活动 *
     volSignUp: "/api/Vol/SignupOrCancelVolActivity",
-    //判断报名状态
+    //判断报名状态 *
     applyState: "/api/Vol/IfApplyActivity",
-    //4.2.1 获取志愿机构
+    //4.2.1 获取志愿机构 
     //volInst: "/api/volInst",
     volInst: "/api/Vol/ShowAllVolInstitution",
     //4.2.2 搜索志愿机构
@@ -46,26 +50,29 @@ const base = {
     //4.2.3 获取志愿机构详细信息
     //volInstInfo: "/api/volInstInfo",
     volInstInfo: "/api/Vol/ShowSingleVolInstitution",
-    //4.3.1 获取志愿时长排在前10的志愿者信息
+    //4.3.1 获取志愿时长排在前10的志愿者信息 *
     volRank: "/api/Vol/ShowTenVolunteer",
+    //--完成--//
 
     //yfh
     //10.1 登录验证
     loginCheck: "/api/LogIn/LogInCheck",
-    //7.1 展示寻人资讯卡片
+
+
+
+    //7.1 展示寻人资讯卡片 *
     newsCard: "/api/News/GetAllNews",
-    //7.2 展示寻人资讯详情
+    //7.2 展示寻人资讯详情 *
     newsInfo: "/api/News/GetNewsDetail",
-    //7.3 搜索寻人资讯
+    //7.3 搜索寻人资讯 *
     searchNews: "/api/News/SearchNews",
-    //8.1 展示相关部门信息卡片
+    //8.1 展示相关部门信息卡片 *
     departmentCard: "/api/RelatedDp/GetRelatedDps",
-    //8.2 展示相关部门详情
+    //8.2 展示相关部门详情 *
     departmentDetail: "/api/RelatedDp/GetDPDetail",
 
-
     //gjj
-    //获取寻人详情页
+    //获取寻人详情页 
     getMissingpersonInfoUrl: "/api/SearchInfo/GetSearchInfo",
     //发布线索
     upClueUrl: "/api/UserOperation/AddSearchPeopleClue",
@@ -100,22 +107,22 @@ const base = {
     changeUserInfo: "/api/UserInfo/ChangeUserInfo",
     //上传头像
     uploadAvator: "/api/UserInfo/upLoadUserHead",
-    //2.1 展示用户发布的所有寻人信息
+    //2.1 展示用户发布的所有寻人信息 *
     getAllSearchInfoPublished: "/api/UserOperation/GetAllSearchInfoPublished",
-    //2.2 展示用户发布的所有寻人线索
+    //2.2 展示用户发布的所有寻人线索 *
     getAllCLuesPublished: "/api/UserOperation/GetAllCLuesPublished",
-    //2.3 展示用户关注的所有寻人信息
-    getFollowInfo: "/api/UserOperation/GetFollowInfo",
-    //3.1 展示志愿者跟进的所有寻人信息
+    //2.3 展示用户关注的所有寻人信息 *
+    getFollowInfo: "/api/UserOperation/GetFocusInfo",
+    //3.1 展示志愿者跟进的所有寻人信息 *
     getFollowUpInfo: "/api/Vol/GetFollowUpInfo",
-    //3.2 展示志愿者报名的所有志愿活动
+    //3.2 展示志愿者报名的所有志愿活动 *
     getVolApplyAct: '/api/Vol/GetVolAct',
     //用户删除自己发布的寻人信息
     userDeleteInfo: "/api/User/UserDeleteInfo",
     //用户删除自己发布的寻人线索
     userDeleteClue: "/api/User/UserDeleteClue",
 
-    //1.4 用户管理
+    //1.4 用户管理 
     allNorUser: "/api/Administrator/GetAllNorUser",
     //1.4.1 封禁用户
     banUser: "/api/Administrator/BanUser",
@@ -154,10 +161,10 @@ const base = {
     //1.8.8 拒绝举报
     denyClueRepo: "/api/Administrator/DenyClueRepo",
 
-    //2.4 用户申请成为志愿者
+    //2.4 用户申请成为志愿者 *
     //userApplyVolunteer: "/api/LogIn/UserApplyVolunteer",
     userApplyVolunteer: "/api/Vol/UserApplyVolunteer",
-    //2.5 判断用户是否有正在审核中
+    //2.5 判断用户是否有正在审核中 *
     // isReviewApply: "/api/LogIn/IsReviewApply",
     isReviewApply: "/api/Vol/IsReviewApply",
 
@@ -175,10 +182,6 @@ const base = {
     changeUserInfo: "/api/UserInfo/ChangeUserInfo",
     //上传头像
     uploadAvator: "/api/UserInfo/upLoadUserHead",
-    //2.1 展示用户发布的所有寻人线索
-    getAllCLuesPublished: "/api/UserOperation/GetAllCLuesPublished",
-    //3.2 展示志愿者报名的所有志愿活动
-    getVolAct: '/api/Vol/GetVolAct',
 }
 
 export default base;

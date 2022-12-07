@@ -29,7 +29,7 @@ const errorHandle = (status, info) => {
 //网络请求对象
 const instance = axios.create({
     //网络请求的公共配置
-    timeout: 5000
+    //timeout: 5000
 })
 
 //拦截器最常用的
@@ -50,16 +50,16 @@ const instance = axios.create({
 // )
 
 //获取数据之前
-instance.interceptors.response.use(
-    response => {
-        //网络请求成功
-        return response.status === 200 ? Promise.resolve(response) : Promise.reject(response)
-    },
-    error => {
-        //错误的处理
-        const { response } = error;
-        errorHandle(response.status, response.info)
-    }
-)
+// instance.interceptors.response.use(
+//     response => {
+//         //网络请求成功
+//         return response.status === 200 ? Promise.resolve(response) : Promise.reject(response)
+//     },
+//     error => {
+//         //错误的处理
+//         const { response } = error;
+//         errorHandle(response.status, response.info)
+//     }
+// )
 
 export default instance;

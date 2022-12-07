@@ -101,40 +101,40 @@
           <el-card
             v-for="actitem in volActAll"
             :key="actitem.VolActId"
-            @click="goActInfo(actitem.vol_act_id)"
+            @click="goActInfo(actitem.VolActId)"
             class="mycard"
             :body-style="{ padding: '0px' }"
           >
             <el-image
-              v-if="actitem.actpicurl == null"
+              v-if="actitem.ActPicUrl == null"
               style="width: 100%; height: 150px"
               :src="pic"
               fit="cover"
             />
 
             <el-image
-              v-if="actitem.actpicurl != null"
+              v-if="actitem.ActPicUrl != null"
               style="width: 100%; height: 150px"
-              :src="actitem.actpicurl"
+              :src="actitem.ActPicUrl"
               fit="cover"
             />
 
             <div class="bottom">
               <div style="color: #67bbff; font-size: 15px; margin: 0 0 10px">
-                {{ actitem.vol_act_name }}
+                {{ actitem.VolActName }}
               </div>
               <div>
                 活动地址：{{
                     codeToText(
-                      actitem.province_id,
-                      actitem.city_id,
-                      actitem.area_id,
-                      actitem.detail
+                      actitem.Province,
+                      actitem.City,
+                      actitem.Area,
+                      actitem.Detail
                     )
                   }}
               </div>
-              <div>志愿时间：{{ actitem.vol_act_time }}</div>
-              <div>人数：{{ actitem.need_people }}人</div>
+              <div>志愿时间：{{ actitem.ExpTime }}</div>
+              <div>人数：{{ actitem.Needpeople }}人</div>
               <div>
                 <el-button
                   type="primary"

@@ -14,9 +14,9 @@
           <div
             class="PhotoContainer"
             v-for="item in searchInfo_list"
-            :key="item.SearchinfoId"
+            :key="item.search_info_id"
           >
-            <div class="PhotoOnly" @click="clickPhoto(item.SearchinfoId)">
+            <div class="PhotoOnly" @click="clickPhoto(item.search_info_id)">
               <el-row class="myRow">
                 <el-col :span="8">
                   <div class="thePhoto" style="margin-left: 10%">
@@ -29,7 +29,7 @@
                         box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
                           rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
                       "
-                      :src="item.SearchinfoPhotoURL"
+                      :src="item.search_info_photourl"
                     />
                   </div>
                 </el-col>
@@ -37,32 +37,32 @@
                   <div class="informationBlock">
                     <div class="line">
                       <h class="tableTitle">类型:</h>
-                      <h>{{ item.SearchType }}</h>
+                      <h>{{ item.search_type }}</h>
                     </div>
                     <div class="line">
                       <h class="tableTitle">姓名:</h>
-                      <h>{{ item.SoughtPeopleName }}</h>
+                      <h>{{ item.sought_people_name }}</h>
                     </div>
                     <div class="line">
                       <h class="tableTitle">性别:</h>
-                      <h>{{ item.SoughtPeopleGender }}</h>
+                      <h>{{ item.sought_people_gender }}</h>
                     </div>
                     <div class="line">
                       <h class="tableTitle">出生日期:</h>
-                      <h>{{ item.SoughtPeopleBirthday }}</h>
+                      <h>{{ item.sought_people_birthday }}</h>
                     </div>
                     <div class="line">
                       <h class="tableTitle">失散日期:</h>
-                      <h>{{ item.SearchinfoLostdate }}</h>
+                      <h>{{ item.search_info_lostdate }}</h>
                     </div>
                     <div class="line">
                       <h class="tableTitle">失散地点/被寻人所在地:</h>
                       <h>{{
                         codeToText(
-                          item.Province,
-                          item.City,
-                          item.Area,
-                          item.Detail
+                          item.province_id,
+                          item.city_id,
+                          item.area_id,
+                          item.detail
                         )
                       }}</h>
                     </div>

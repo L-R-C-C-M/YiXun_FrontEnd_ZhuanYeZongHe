@@ -374,15 +374,6 @@ const api = {
         return axios.put(path.baseUrl + path.addNewsCover, { news_id: news_id, news_cover: news_cover })
 
     },
-    //2.2 展示用户发布的所有寻人线索
-    getAllCLuesPublished(user_id, pageNum, pageSize) {
-        return axios.get(path.baseUrl + path.getAllCLuesPublished, { params: { user_id: user_id, pageNum: pageNum, pageSize: pageSize } })
-    },
-
-    // //3.2 展示志愿者报名的所有志愿活动
-    // getVolAct(volid, pagenum, pagesize) {
-    //     return axios.get(path.baseUrl + path.getVolAct, { params: { volid: volid, pagenum: pagenum, pagesize: pagesize } })
-    // },
 
     //1.1-2管理员发布志愿活动
     releaseVolActivity(act_name, act_content, act_time, need_people, act_province, act_city, act_area, act_address, contact_method, volInst_Id) {
@@ -442,6 +433,10 @@ const api = {
     ////用户删除自己发布的寻人线索
     userDeleteClue(userid, clueid) {
         return axios.delete(path.baseUrl + path.userDeleteClue, { params: { userid: userid, clueid: clueid } })
+    },
+    //注册志愿者数
+    GetVolunteerNum(){
+        return axios.get(path.baseUrl + path.getVolunteerNum);
     }
 }
 

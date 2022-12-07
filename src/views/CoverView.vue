@@ -165,7 +165,7 @@
                     @mouseleave="mouseLeave" 
                     :class="{color: changeIndex === 3}">
                     <el-icon class="box_icon" ><User /></el-icon>
-                    注册志愿者 200000人
+                    注册志愿者 {{ padding1(volNum, length) }}人
                   </div>
               </div>
 
@@ -238,6 +238,7 @@ export default {
       itemNum: Math.random() * 10000,
       clueNum: Math.random() * 10000,
       peopleNum: Math.random() * 10000,
+      volNum: Math.random() * 10000,
       //分页
       total: 90,
       LostInfo: {
@@ -275,15 +276,23 @@ export default {
     this.handleCurrentChange(1);
     //已发布启事
     api.GetSearchInfoNum().then((res) => {
-      this.itemNum = res.data;
+      if(res.data!=null)
+        this.itemNum = res.data;
     });
     //共收到线索
     api.GetCluesNum().then((res) => {
-      this.clueNum = res.data;
+      if(res.data!=null)
+        this.clueNum = res.data;
     });
     //累计已帮助
     api.GetFoundInfoNum().then((res) => {
-      this.peopleNum = res.data;
+      if(res.data!=null)
+        this.peopleNum = res.data;
+    });
+    //已注册志愿者
+    api.GetVolunteerNum().then((res) => {
+      if(res.data!=null)
+        this.volNum = res.data;
     });
   },
   methods: {
@@ -472,47 +481,47 @@ export default {
               };
               var item = this.lostInfoList[i];
               //寻人信息id
-              item.SearchinfoId = res.data.data.searchInfo_list[i].SearchinfoId;
+              item.SearchinfoId = res.data.data.searchInfo_list[i].search_info_id;
               item.SearchinfoId = this.changeString(item.SearchinfoId);
               //寻人类型
-              item.SearchType = res.data.data.searchInfo_list[i].SearchType;
+              item.SearchType = res.data.data.searchInfo_list[i].search_type;
               item.SearchType = this.changeString(item.SearchType);
               //失踪人姓名
               item.SoughtPeopleName =
-                res.data.data.searchInfo_list[i].SoughtPeopleName;
+                res.data.data.searchInfo_list[i].sought_people_name;
               item.SoughtPeopleName = this.changeString(item.SoughtPeopleName);
               //失踪日期
               item.SearchinfoLostdate =
-                res.data.data.searchInfo_list[i].SearchinfoLostdate;
+                res.data.data.searchInfo_list[i].search_info_lostdate;
               item.SearchinfoLostdate = this.changeString(
                 item.SearchinfoLostdate
               );
               //失踪人生日
               item.SoughtPeopleBirthday =
-                res.data.data.searchInfo_list[i].SoughtPeopleBirthday;
+                res.data.data.searchInfo_list[i].sought_people_birthday;
               item.SoughtPeopleBirthday = this.changeString(
                 item.SoughtPeopleBirthday
               );
               //失踪人性别
               item.SoughtPeopleGender =
-                res.data.data.searchInfo_list[i].SoughtPeopleGender;
+                res.data.data.searchInfo_list[i].sought_people_gender;
               item.SoughtPeopleGender = this.changeString(
                 item.SoughtPeopleGender
               );
               //失踪人照片
               // item.SearchinfoPhotoURL = res.data.data.searchInfo_list[i].SearchinfoPhotoURL;
-              if (res.data.data.searchInfo_list[i].SearchinfoPhotoURL != null) {
+              if (res.data.data.searchInfo_list[i].search_info_photourl != null) {
                 item.SearchinfoPhotoURL =
-                  res.data.data.searchInfo_list[i].SearchinfoPhotoURL;
+                  res.data.data.searchInfo_list[i].search_info_photourl;
               }
               // document.getElementById("SoughtPeoplePhoto").src = res.data.data.searchInfo_list[i].SearchinfoPhotoURL
               // item.SearchinfoPhotoURL = this.changeString(item.SearchinfoPhotoURL);
               // 失踪地点
               item.LostPlace = this.codeToText(
-                res.data.data.searchInfo_list[i].Province,
-                res.data.data.searchInfo_list[i].City,
-                res.data.data.searchInfo_list[i].Area,
-                res.data.data.searchInfo_list[i].Detail
+                res.data.data.searchInfo_list[i].province_id,
+                res.data.data.searchInfo_list[i].city_id,
+                res.data.data.searchInfo_list[i].area_id,
+                res.data.data.searchInfo_list[i].detail
               );
               item.LostPlace = this.changeString(item.LostPlace);
             }
