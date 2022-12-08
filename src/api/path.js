@@ -128,15 +128,15 @@ const base = {
     banUser: "/api/Administrator/BanUser",
     //1.4.2 删除用户 *
     deleteUser: "/api/Administrator/DeleteUser",
-    //1.4.3 搜索
+    //1.4.3 搜索 *
     userByName: "/api/Administrator/GetUserByName",
-    //1.5 志愿者管理
+    //1.5 志愿者管理 *
     allVol: "/api/Administrator/GetAllVol",
     //1.6 资讯管理
     allNews: "/api/Administrator/GetAllNews",
     //1.6.1 删除资讯
     deleteNews: "/api/Administrator/DeleteNews",
-    //1.7.1 获得审核数量
+    //1.7.1 获得审核数量 *
     volApplyCount: "/api/Administrator/GetVolApplyCount",
     //1.7.2 获得需要审核的志愿者信息
     volApplyReviewed: "/api/Administrator/GetVolApplyReviewed",
