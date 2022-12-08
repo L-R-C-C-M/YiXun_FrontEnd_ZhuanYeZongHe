@@ -74,7 +74,7 @@
               <el-button
                 type="primary"
                 size="small"
-                @click="deleteInfo(item.SearchinfoId)"
+                @click="deleteInfo(item.search_info_id)"
                 >删 除</el-button
               >
             </div>

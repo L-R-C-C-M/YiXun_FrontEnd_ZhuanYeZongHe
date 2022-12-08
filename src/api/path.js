@@ -72,19 +72,19 @@ const base = {
     departmentDetail: "/api/RelatedDp/GetDPDetail",
 
     //gjj
-    //获取寻人详情页 
+    //获取寻人详情页 *
     getMissingpersonInfoUrl: "/api/SearchInfo/GetSearchInfo",
-    //发布线索
+    //发布线索 *
     upClueUrl: "/api/UserOperation/AddSearchPeopleClue",
-    //发布线索举报
+    //发布线索举报 *
     upClueReportUrl: "/api/UserOperation/AddSearchClueReport",
-    //寻人信息举报
+    //寻人信息举报 *
     upMisReportUrl: "/api/UserOperation/AddSearchInfoReport",
     //录入寻人信息
     upMissingpersonUrl: "/api/UserOperation/AddSearchPeopleInfo",
     addPictureUrl: "/api/UserOperation/AddSearchInfoPic",
-    //关注寻人信息
-    followMisUrl: "/api/User/UserFocus",
+    //关注寻人信息 *
+    followMisUrl: "/api/UserOperation/UserFocus",
 
 
     //公共路径
@@ -101,7 +101,7 @@ const base = {
     getAllVolInst: "/api/Administrator/GetAllVolInst",
     //baseUrl0: "http://8.130.101.207:5927",
     //baseUrl1: "http://8.130.101.207:10105",
-    //1.3 获取用户信息
+    //1.3 获取用户信息 *
     userInfo: "/api/UserInfo/GetUserInfo",
     //1.3-2 修改个人信息
     changeUserInfo: "/api/UserInfo/ChangeUserInfo",
@@ -117,16 +117,16 @@ const base = {
     getFollowUpInfo: "/api/Vol/GetFollowUpInfo",
     //3.2 展示志愿者报名的所有志愿活动 *
     getVolApplyAct: '/api/Vol/GetVolAct',
-    //用户删除自己发布的寻人信息
-    userDeleteInfo: "/api/User/UserDeleteInfo",
-    //用户删除自己发布的寻人线索
-    userDeleteClue: "/api/User/UserDeleteClue",
+    //用户删除自己发布的寻人信息 *
+    userDeleteInfo: "/api/UserOperation/UserDeleteInfo",
+    //用户删除自己发布的寻人线索 *
+    userDeleteClue: "/api/UserOperation/UserDeleteClue",
 
-    //1.4 用户管理 
+    //1.4 用户管理 *
     allNorUser: "/api/Administrator/GetAllNorUser",
-    //1.4.1 封禁用户
+    //1.4.1 封禁用户 *
     banUser: "/api/Administrator/BanUser",
-    //1.4.2 删除用户
+    //1.4.2 删除用户 *
     deleteUser: "/api/Administrator/DeleteUser",
     //1.4.3 搜索
     userByName: "/api/Administrator/GetUserByName",
@@ -168,20 +168,6 @@ const base = {
     // isReviewApply: "/api/LogIn/IsReviewApply",
     isReviewApply: "/api/Vol/IsReviewApply",
 
-    //1.1 发布资讯
-    releaseNews: "/api/Administrator/ReleaseNews",
-    //1.1-1 上传资讯图片
-    addNewsCover: "/api/Administrator/AddNewsCover",
-    //1.1-2管理员发布志愿活动
-    releaseVolActivity: "/api/Administrator/ReleaseVolActivity",
-    //1.1-3返回所有志愿机构id和名称
-    getAllVolInst: "/api/Administrator/GetAllVolInst",
-    //1.3 获取用户信息
-    userInfo: "/api/UserInfo/GetUserInfo",
-    //1.3-2 修改个人信息
-    changeUserInfo: "/api/UserInfo/ChangeUserInfo",
-    //上传头像
-    uploadAvator: "/api/UserInfo/upLoadUserHead",
 }
 
 export default base;

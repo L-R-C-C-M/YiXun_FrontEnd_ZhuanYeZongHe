@@ -126,7 +126,7 @@
               type="primary"
               class="actButton"
               round
-              @click="upClue(clueForm.report_content)"
+              @click="upClueClick(clueForm.report_content)"
             >发布线索</el-button>
 
             <!-- <el-button type="primary" class="actButton" round @click="goReport(index)">举 报</el-button> -->
@@ -320,7 +320,7 @@ export default {
       this.$router.back();
     },
     //线索发布按钮
-    upClue (clueText) {
+    upClueClick(clueText) {
       if (!this.loginState) {
         ElMessage({
           message: "请先登录",
@@ -331,7 +331,7 @@ export default {
       console.log("发布线索内容", clueText);
       console.log("寻人信息ID", this.MissID);
       api
-        .upClue(this.user_id, this.MissID, clueText)
+        .upClue(parseInt(this.user_id), parseInt(this.MissID), clueText)
         .then(function (response) {
           console.log("发布线索", response);
           ElMessage({
@@ -359,7 +359,7 @@ export default {
     //确认提交寻人信息举报理由按钮
     SubmitMisReason (text) {
       api
-        .upMisReport(this.user_id, this.MissID, text)
+        .upMisReport(parseInt(this.user_id), parseInt(this.MissID), text)
         .then(function (response) {
           console.log("发布寻人信息举报", response);
           ElMessage({
@@ -389,7 +389,7 @@ export default {
     //确认提交线索举报按钮
     SubmitClueReason (text) {
       api
-        .upClueReport(this.user_id, this.clueID, text)
+        .upClueReport(parseInt(this.user_id), parseInt(this.clueID), text)
         .then(function (response) {
           console.log("发布线索举报", response);
           ElMessage({
