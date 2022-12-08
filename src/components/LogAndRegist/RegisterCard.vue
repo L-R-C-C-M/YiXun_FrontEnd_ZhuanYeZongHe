@@ -176,7 +176,7 @@ export default {
       api
         .Regist(
           this.registForm.userName,
-          this.registForm.phoneNumber,
+          Number(this.registForm.phoneNumber),
           this.registForm.userEmail,
           this.registForm.password
         )
