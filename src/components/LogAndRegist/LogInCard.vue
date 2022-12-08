@@ -144,11 +144,17 @@ export default {
                   JSON.stringify(res.data.data.identity)
                 ); //保存用户类型
 
+                //保存token
+                window.sessionStorage.setItem(
+                  "token",
+                  JSON.stringify(res.data.data.user_token)
+                ); //保存用户id
                 if (res.data.data.identity == "user") {
                   window.sessionStorage.setItem(
                     "userid",
                     JSON.stringify(res.data.data.id)
                   ); //保存用户id
+
 
                   // this.$router.push({
                   //   //登陆成功跳转到普通用户后台
@@ -170,6 +176,11 @@ export default {
                     "userid",
                     JSON.stringify(res.data.data.user_id)
                   ); //保存用户id
+                  //保存token
+                  window.sessionStorage.setItem(
+                    "token",
+                    JSON.stringify(res.data.data.user_token)
+                  ); 
                   this.$router.push({
                     //登陆成功跳转到寻人首页
                     path: "/",
@@ -180,7 +191,11 @@ export default {
                     "administratorid",
                     JSON.stringify(res.data.data.id)
                   ); //保存管理员id
-
+                   //保存token
+                  window.sessionStorage.setItem(
+                    "token",
+                    JSON.stringify(res.data.data.user_token)
+                  ); 
                   this.$router.push({
                     //管理员登陆成功跳转到管理员后台
                     path: "/backstage",

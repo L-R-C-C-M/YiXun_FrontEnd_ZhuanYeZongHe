@@ -32,6 +32,23 @@ const instance = axios.create({
     //timeout: 5000
 })
 
+
+
+// request 拦截器
+// 可以自请求发送前对请求做一些处理
+// 比如统一加token，对请求参数统一加密
+instance.interceptors.request.use(config => {
+    config.headers['Content-Type'] = 'application/json;charset=utf-8';
+
+    let token =sessionStorage.getItem("token") ? JSON.parse(sessionStorage.getItem("token")) : null
+    if (token) {
+        config.headers['token'] = token;  // 设置请求头
+    }
+
+    return config
+}, error => {
+    return Promise.reject(error)
+});
 //拦截器最常用的
 
 //发送数据之前

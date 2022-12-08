@@ -6,7 +6,7 @@ const base = {
     //1.3-2 修改个人信息
     changeUserInfo: "/api/UserInfo/ChangeUserInfo",
     //用户登录
-    userLogin: "/api/LogIn/LogInCheck",
+    userLogin: "/LogIn/LogInCheck",//这里去掉了api
     //10.3 注册用户
     Regist: "/api/LogIn/Regist",
     //10.4 添加用户地址，头像，性别
