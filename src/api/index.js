@@ -315,15 +315,15 @@ const api = {
     },
     //1.8.5 通过举报
     passInfoRepo(infoid) {
-        return axios.delete(path.baseUrl + path.passInfoRepo, null, { params: { infoid: infoid } })
+        return axios.delete(path.baseUrl + path.passInfoRepo, { params: { infoid: infoid } })
     },
     //1.8.6 拒绝举报
     denyInfoRepo(inforepoid) {
         return axios.post(path.baseUrl + path.denyInfoRepo, null, { params: { inforepoid: inforepoid } })
     },
     //1.8.7 通过举报
-    passClueRepo(clueid) {
-        return axios.put(path.baseUrl + path.passClueRepo, null, { params: { clueId: clueId } })
+    passClueRepo(clueId) {
+        return axios.put(path.baseUrl + path.passClueRepo,{ params: { clueId: clueId } })
     },
     //1.8.8 拒绝举报
     denyClueRepo(cluerepoid) {
