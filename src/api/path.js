@@ -1,6 +1,6 @@
 const base = {
     //公共路径
-    baseUrl: "http://localhost:3300",
+    baseUrl: "http://121.40.111.217:3300",
     //1.3 获取用户信息*
     userInfo: "/api/UserInfo/GetUserInfo",
     //1.3-2 修改个人信息*
