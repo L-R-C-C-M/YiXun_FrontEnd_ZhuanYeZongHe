@@ -1,17 +1,16 @@
 const base = {
     //公共路径
     baseUrl: "http://localhost:3300",
-    //1.3 获取用户信息
+    //1.3 获取用户信息*
     userInfo: "/api/UserInfo/GetUserInfo",
-    //1.3-2 修改个人信息
+    //1.3-2 修改个人信息*
     changeUserInfo: "/api/UserInfo/ChangeUserInfo",
-    //用户登录
+    //用户登录*
     userLogin: "/api/LogIn/LogInCheck",//这里去掉了api
-    //10.3 注册用户
+    //10.3 注册用户*
     Regist: "/api/LogIn/Regist",
-    //10.4 添加用户地址，头像，性别
+    //10.4 添加用户地址，头像，性别*
     upLoadInfo: "/api/LogIn/UpLoadInfo",
-
     //zqr
     //已发布项目，寻人信息总数 *
     GetSearchInfoNum: "/api/MainPage/GetSearchInfoNum",
@@ -23,9 +22,9 @@ const base = {
     GetAllSearchInfo: "/api/MainPage/GetAllSearchInfo",
     //注册志愿者数 *
     getVolunteerNum: "/api/MainPage/GetVolunteerNum",
-    //获取筛选后的寻人信息
+    //获取筛选后的寻人信息——不会*****未测试******************************************
     ScreenSearchInfo: "/api/MainPage/ScreenSearchInfo",
-    //该地址码处的寻人信息
+    //该地址码处的寻人信息*
     GetSearchInfoPos: "/api/MainPage/GetSearchInfoPos",
  
     //--完成--//
@@ -55,7 +54,7 @@ const base = {
     //--完成--//
 
     //yfh
-    //10.1 登录验证
+    //10.1 登录验证*
     loginCheck: "/api/LogIn/LogInCheck",
 
 
@@ -80,7 +79,7 @@ const base = {
     upClueReportUrl: "/api/UserOperation/AddSearchClueReport",
     //寻人信息举报 *
     upMisReportUrl: "/api/UserOperation/AddSearchInfoReport",
-    //录入寻人信息
+    //录入寻人信息*
     upMissingpersonUrl: "/api/UserOperation/AddSearchPeopleInfo",
     addPictureUrl: "/api/UserOperation/AddSearchInfoPic",
     //关注寻人信息 *
@@ -103,9 +102,9 @@ const base = {
     //baseUrl1: "http://8.130.101.207:10105",
     //1.3 获取用户信息 *
     userInfo: "/api/UserInfo/GetUserInfo",
-    //1.3-2 修改个人信息
+    //1.3-2 修改个人信息*
     changeUserInfo: "/api/UserInfo/ChangeUserInfo",
-    //上传头像
+    //上传头像*
     uploadAvator: "/api/UserInfo/upLoadUserHead",
     //2.1 展示用户发布的所有寻人信息 *
     getAllSearchInfoPublished: "/api/UserOperation/GetAllSearchInfoPublished",
@@ -129,36 +128,39 @@ const base = {
     //1.4.2 删除用户 *
     deleteUser: "/api/Administrator/DeleteUser",
     //1.4.3 搜索 *
+    //1.4.3 搜索*
     userByName: "/api/Administrator/GetUserByName",
     //1.5 志愿者管理 *
+    //1.5 志愿者管理*
     allVol: "/api/Administrator/GetAllVol",
-    //1.6 资讯管理
+    //1.6 资讯管理*
     allNews: "/api/Administrator/GetAllNews",
-    //1.6.1 删除资讯
+    //1.6.1 删除资讯*
     deleteNews: "/api/Administrator/DeleteNews",
     //1.7.1 获得审核数量 *
+    //1.7.1 获得审核数量*
     volApplyCount: "/api/Administrator/GetVolApplyCount",
-    //1.7.2 获得需要审核的志愿者信息 
+    //1.7.2 获得需要审核的志愿者信息*
     volApplyReviewed: "/api/Administrator/GetVolApplyReviewed",
-    //1.7.3 通过志愿者申请
+    //1.7.3 通过志愿者申请*
     passVolApply: "/api/Administrator/PassVolApply",
-    //1.7.4 拒绝志愿者申请
+    //1.7.4 拒绝志愿者申请*
     denyVolApply: "/api/Administrator/DenyVolApply",
-    //1.8.1 获得信息举报数量
+    //1.8.1 获得信息举报数量*
     infoRepoCount: "/api/Administrator/GetInfoRepoCount",
-    //1.8.2 获得线索举报数量
+    //1.8.2 获得线索举报数量*
     clueRepoCount: "/api/Administrator/GetClueRepoCount",
-    //1.8.3 获得信息举报信息
+    //1.8.3 获得信息举报信息*
     infoRepoReviewed: "/api/Administrator/GetInfoRepoReviewed",
-    //1.8.4 获得线索举报信息
+    //1.8.4 获得线索举报信息*
     clueRepoReviewed: "/api/Administrator/GetClueRepoReviewed",
-    //1.8.5 通过举报
+    //1.8.5 通过举报*
     passInfoRepo: "/api/Administrator/PassInfoRepo",
-    //1.8.6 拒绝举报
+    //1.8.6 拒绝举报*
     denyInfoRepo: "/api/Administrator/DenyInfoRepo",
-    //1.8.7 通过举报
+    //1.8.7 通过举报*
     passClueRepo: "/api/Administrator/PassClueRepo",
-    //1.8.8 拒绝举报
+    //1.8.8 拒绝举报*
     denyClueRepo: "/api/Administrator/DenyClueRepo",
 
     //2.4 用户申请成为志愿者 *
@@ -171,3 +173,6 @@ const base = {
 }
 
 export default base;
+
+
+//问题记录：管理员删除咨询后仍会获取已经删除掉的咨询（两个getnews都是）
