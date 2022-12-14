@@ -89,13 +89,13 @@ const base = {
 
     //公共路径
     //baseUrlh: "http://8.130.101.207:5927",
-    //1.1 发布资讯*
+    //1.1 发布资讯
     releaseNews: "/api/Administrator/ReleaseNews",
-    //1.1-1 上传资讯图片*
+    //1.1-1 上传资讯图片
     addNewsCover: "/api/Administrator/AddNewsCover",
-    //1.1-2管理员发布志愿活动*
+    //1.1-2管理员发布志愿活动
     releaseVolActivity: "/api/Administrator/ReleaseVolActivity",
-    //发布志愿活动图片*
+    //发布志愿活动图片
     addVolActivityPic: "/api/Administrator/AddVolActivityPic",
     //1.1-3返回所有志愿机构id和名称
     getAllVolInst: "/api/Administrator/GetAllVolInst",
@@ -138,7 +138,7 @@ const base = {
     deleteNews: "/api/Administrator/DeleteNews",
     //1.7.1 获得审核数量 *
     volApplyCount: "/api/Administrator/GetVolApplyCount",
-    //1.7.2 获得需要审核的志愿者信息
+    //1.7.2 获得需要审核的志愿者信息 
     volApplyReviewed: "/api/Administrator/GetVolApplyReviewed",
     //1.7.3 通过志愿者申请
     passVolApply: "/api/Administrator/PassVolApply",

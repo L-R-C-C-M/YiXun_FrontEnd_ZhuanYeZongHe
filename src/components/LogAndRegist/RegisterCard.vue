@@ -183,20 +183,22 @@ export default {
         .then((res) => {
           console.log('注册成功', res.data)
           this.userId = res.data.data.user_id;
+          console.log(this.userId);
           window.sessionStorage.setItem(
             "userid",
             JSON.stringify(res.data.data.user_id)
           );
+              //路径跳转
+          this.$router.push({
+            path: "/addInfo",
+            //params: {  }, path和params不能同时使用，会使params失效，要用params需要将path替代为name(router名)
+            query: { user_id: this.userId},
+          });
         })
         .catch((err) => {
           console.log("注册失败", err.data);
         })
-      //路径跳转
-      this.$router.push({
-        path: "/addInfo",
-        //params: {  }, path和params不能同时使用，会使params失效，要用params需要将path替代为name(router名)
-        query: { user_id: this.userId },
-      });
+    
     }
   },
 };

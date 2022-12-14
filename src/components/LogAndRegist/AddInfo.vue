@@ -92,7 +92,7 @@ import { regionData } from "element-china-area-data";
 export default {
   data () {
     return {
-      user_id: JSON.parse(sessionStorage.getItem("userid")),
+      user_id: 0,
       user_gender: "",
       user_province: "",
       user_city: "",
@@ -117,7 +117,10 @@ export default {
       ],
     };
   },
-
+  mounted () {
+    this.user_id = this.$route.query.user_id;
+    console.log("mounted接收到的id：", this.user_id);
+  },
   methods: {
     handleChange (value) {
       this.user_province = value[0];
@@ -149,10 +152,10 @@ export default {
     },
 
     save () {
-      console.log(this.data);
+      console.log(this.user_id);
       api
         .upLoadInfo(
-          this.user_id,
+          Number(this.user_id),
           this.user_gender,
           this.user_province,
           this.user_city,
