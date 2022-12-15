@@ -126,7 +126,7 @@ export default {
       });
     },
     returnToNol() {
-      console.log("11111111");
+      console.log("返回第一页");
       this.in_search = false;
       this.getAllNorUser();
     },
@@ -184,7 +184,7 @@ export default {
       else this.getAllNorUser(); //带着新的分页请求获取数据
     },
     handleCurrentChange(newPage) {
-      //console.log(newPage);
+      console.log("跳转的页数", newPage);
       this.pagenum = newPage; //重新指定当前页
       if (this.in_search) this.getUserByName();
       else this.getAllNorUser();
