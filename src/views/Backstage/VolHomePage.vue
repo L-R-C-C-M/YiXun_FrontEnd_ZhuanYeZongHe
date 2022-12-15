@@ -9,28 +9,25 @@
       <div style="text-align: left; margin-left: 3%">
         <h3>我跟进的寻人信息</h3>
         <!-- 我跟进的寻人信息 -->
-        <div
-          class="containerFlex"
-          style="margin-bottom: 2%"
-        >
+        <div class="containerFlex" style="margin-bottom: 2%">
           <div
             class="PhotoContainer"
             v-for="item in follow_list"
             :key="item.search_info_id"
           >
-            <div
-              class="PhotoOnly"
-              @click="clickPhoto(item.search_info_id)"
-            >
+            <div class="PhotoOnly" @click="clickPhoto(item.search_info_id)">
               <el-row class="myRow">
                 <el-col :span="8">
-                  <div
-                    class="thePhoto"
-                    style="margin-left: 10%"
-                  >
+                  <div class="thePhoto" style="margin-left: 10%">
                     <img
                       fit="cover"
-                      style="width: 100%;height:100%;border-radius: 10px 10px 0 0;box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;"
+                      style="
+                        width: 100%;
+                        height: 100%;
+                        border-radius: 10px 10px 0 0;
+                        box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+                          rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+                      "
                       :src="item.search_info_photourl"
                     />
                   </div>
@@ -125,22 +122,20 @@
               </div>
               <div>
                 活动地址：{{
-                    codeToText(
-                      actitem.Province,
-                      actitem.City,
-                      actitem.Area,
-                      actitem.Detail
-                    )
-                  }}
+                  codeToText(
+                    actitem.Province,
+                    actitem.City,
+                    actitem.Area,
+                    actitem.Detail
+                  )
+                }}
               </div>
               <div>志愿时间：{{ actitem.ExpTime }}</div>
               <div>人数：{{ actitem.Needpeople }}人</div>
               <div>
-                <el-button
-                  type="primary"
-                  class="button"
-                  round
-                >了解详情</el-button>
+                <el-button type="primary" class="button" round
+                  >了解详情</el-button
+                >
               </div>
             </div>
           </el-card>
@@ -168,7 +163,7 @@ import { reactive } from "vue";
 
 export default {
   name: "VolHomePage-vue",
-  data () {
+  data() {
     return {
       pic: "https://yixun-picture.oss-cn-shanghai.aliyuncs.com/user_head/1.jpeg",
       volid: JSON.parse(sessionStorage.getItem("volid")),
@@ -183,13 +178,13 @@ export default {
       total: 0, //总条目数
     };
   },
-  mounted () {
+  mounted() {
     this.getVolApplyAct();
     this.getFollowUpInfo();
   },
   methods: {
     //点击跳转
-    goActInfo (actID) {
+    goActInfo(actID) {
       console.log("志愿活动id:", actID);
       //跳转至活动详情页面
       this.$router.push({
@@ -198,7 +193,7 @@ export default {
       });
     },
     //获取志愿活动信息
-    getVolApplyAct () {
+    getVolApplyAct() {
       api
         .getVolApplyAct(this.volid, this.currentPage, this.pagesize)
         .then((res) => {
@@ -214,19 +209,21 @@ export default {
     },
 
     //更新分页
-    handleCurrentChange (newPage) {
+    handleCurrentChange(newPage) {
       console.log(newPage);
       this.currentPage = newPage; //重新指定当前页
       this.getVolApplyAct();
     },
     //区域码转地址
-    codeToText (province, city, area, detail) {
-      return (
-        CodeToText[province] + CodeToText[city] + CodeToText[area] + detail
-      );
+    codeToText(province, city, area, detail) {
+      if (detail != null)
+        return (
+          CodeToText[province] + CodeToText[city] + CodeToText[area] + detail
+        );
+      else return CodeToText[province] + CodeToText[city] + CodeToText[area];
     },
     //寻人信息跳转
-    clickPhoto (SearchinfoId) {
+    clickPhoto(SearchinfoId) {
       console.log(SearchinfoId);
       //点击跳转到寻人信息的详情页
       this.$router.push({
@@ -237,7 +234,7 @@ export default {
       });
     },
     //跟进的寻人信息
-    getFollowUpInfo () {
+    getFollowUpInfo() {
       api
         .getFollowUpInfo(
           this.volid,
@@ -250,7 +247,7 @@ export default {
           this.total_follow = res.data.data.total;
         });
     },
-    handleCurrentChange_follow (newPage) {
+    handleCurrentChange_follow(newPage) {
       console.log(newPage);
       this.currentPage_follow = newPage; //重新指定当前页
       this.getFollowUpInfo();

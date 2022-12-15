@@ -222,7 +222,7 @@ import { CodeToText } from "element-china-area-data";
 export default {
   data() {
     return {
-      user_id:JSON.parse(sessionStorage.getItem("userid")),
+      user_id: JSON.parse(sessionStorage.getItem("userid")),
       searchInfo_list: [],
       pagesize_info: 3, ///每页数量
       currentPage_info: 1, //页码
@@ -299,9 +299,11 @@ export default {
 
     //区域码转地址
     codeToText(province, city, area, detail) {
-      return (
-        CodeToText[province] + CodeToText[city] + CodeToText[area] + detail
-      );
+      if (detail != null)
+        return (
+          CodeToText[province] + CodeToText[city] + CodeToText[area] + detail
+        );
+      else return CodeToText[province] + CodeToText[city] + CodeToText[area];
     },
 
     //寻人信息跳转

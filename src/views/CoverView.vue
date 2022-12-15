@@ -315,9 +315,11 @@ export default {
       }
     },
     codeToText(province, city, area, detail) {
-      return (
-        CodeToText[province] + CodeToText[city] + CodeToText[area] + detail
-      );
+      if (detail != null)
+        return (
+          CodeToText[province] + CodeToText[city] + CodeToText[area] + detail
+        );
+      else return CodeToText[province] + CodeToText[city] + CodeToText[area];
     },
     //获取筛选后的信息，分页显示
     getSearchInfo(data) {

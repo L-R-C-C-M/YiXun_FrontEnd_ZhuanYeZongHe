@@ -5,7 +5,7 @@
       <el-header style="padding: 0">
         <InfoHeader />
       </el-header>
-      <el-main style="min-height: 600px">
+      <el-main style="min-height: 650px">
         <el-row>
           <el-button @click="goBack()" type="text" class="return"
             >&lt;&lt;返回</el-button
