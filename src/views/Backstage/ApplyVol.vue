@@ -7,7 +7,7 @@
   </el-header>
 
   <el-main style="background-color: rgba(245, 249, 250, 1)">
-    <el-card v-if="review_status == 0" style="height: 100%; width: 100%">
+    <el-card v-if="review_status == 0" style="height: fit-content; width: 100%">
       <div style="margin-top: 20px">
         <span style="font-size: 150%">请完善您的个人信息</span>
       </div>
