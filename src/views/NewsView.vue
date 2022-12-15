@@ -62,7 +62,7 @@
               {{ news_list[index].NewsContent.substring(0, 150) }}
             </div> -->
             <div
-              v-html="news_list[index].NewsContent.substring(0, 150)"
+              v-html="news_list[index].NewsContent.substring(0, 120)"
               class="text"
             ></div>
           </div>
