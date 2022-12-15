@@ -10,19 +10,19 @@ import { CodeToText } from "element-china-area-data";
 import { forEach, random } from "lodash";
 export default {
   name: "gaodeMap",
-  setup () {
+  setup() {
     const map = shallowRef(null);
     return {
       map,
     };
   },
   methods: {
-    codeToText (province, city, area, detail) {
+    codeToText(province, city, area, detail) {
       return (
         CodeToText[province] + CodeToText[city] + CodeToText[area] + detail
       );
     },
-    mouseoverPoint (e) {
+    mouseoverPoint(e) {
       AMapLoader.load({}).then((AMap) => {
         var infoWindow = new AMap.InfoWindow({
           offset: new AMap.Pixel(0, -30),
@@ -31,7 +31,7 @@ export default {
         // infoWindow.open(this.map, e.target.getPosition());
       });
     },
-    initMap () {
+    initMap() {
       AMapLoader.load({
         key: "a8eaad565d2a2a529b5d8093f8e19e98", // 申请好的Web端开发者Key，首次调用 load 时必填
         version: "2.0", // 指定要加载的 JSAPI 的版本，缺省时默认为 1.4.15
@@ -41,7 +41,8 @@ export default {
           // viewMode: "3D",
           zoom: 12,
           zooms: [2, 22],
-          // center: [105.602725, 37.076636],
+          center: [121.215252, 31.286054],
+          //center: [105.602725, 37.076636],
           mapStyle: "amap://styles/whitesmoke", //设置地图的显示样式
         });
         // this.map.setMapStyle("amap://styles/46614e92f13c9e88edb6aa4c64eed3a4");
@@ -90,11 +91,16 @@ export default {
             var markerNum = res.data.data.aroundSearchInfo.length;
             var i = 1;
             for (i = 1; i <= markerNum; i++) {
-              var weidu = positionCenter[1] + Math.random() * 0.04 - Math.random() * 0.04
+              var weidu =
+                positionCenter[1] + Math.random() * 0.04 - Math.random() * 0.04;
               if (i <= 10) {
-                var jingdu = positionCenter[0] + Math.random() * 0.04 - Math.random() * 0.04
+                var jingdu =
+                  positionCenter[0] +
+                  Math.random() * 0.04 -
+                  Math.random() * 0.04;
               } else {
-                var jingdu = positionCenter[0] + Math.random() * 0.4 - Math.random() * 0.4
+                var jingdu =
+                  positionCenter[0] + Math.random() * 0.4 - Math.random() * 0.4;
               }
               let marker = new AMap.Marker({
                 position: [jingdu, weidu],
@@ -123,7 +129,7 @@ export default {
     },
   },
   // },
-  mounted () {
+  mounted() {
     //DOM初始化完成进行地图初始化
     this.initMap();
   },

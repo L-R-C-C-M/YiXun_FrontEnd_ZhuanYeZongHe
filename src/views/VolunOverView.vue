@@ -9,16 +9,10 @@
     <el-main class="mainBlock">
       <div class="overBlock">
         <el-col class="toptext">志愿活动</el-col>
-        <router-link
-          to="/volunAct"
-          class="linktext"
-        >更多>></router-link>
+        <router-link to="/volunAct" class="linktext">更多>></router-link>
         <!--el-link class="linktext">更多>></!--el-link-->
         <el-divider />
-        <el-row
-          type="flex"
-          justify-content="flex-start"
-        >
+        <el-row type="flex" justify-content="flex-start">
           <!--列元素居中-->
           <!-- <el-col
             v-for="actitem in volActAll"
@@ -60,11 +54,9 @@
                 人数：{{ actitem.SignupPeople }}/{{ actitem.Needpeople }}人
               </div>
               <div>
-                <el-button
-                  type="primary"
-                  class="button"
-                  round
-                >了解详情</el-button>
+                <el-button type="primary" class="button" round
+                  >了解详情</el-button
+                >
               </div>
             </div>
           </el-card>
@@ -72,25 +64,26 @@
         </el-row>
       </div>
 
-      <div class="overBlock">
+      <!--div class="overBlock">
         <el-col class="toptext">志愿机构</el-col>
         <router-link
           to="/volunInst"
           class="linktext"
         >更多>></router-link>
-        <!--el-link class="linktext">更多>></!--el-link-->
         <el-divider />
         <el-row
           type="flex"
           justify-content="flex-start"
-        >
-          <!--列元素居中-->
-          <!-- <el-col
+      -->
+
+      <!--列元素居中-->
+      <!--旧版已注释 <el-col
             v-for="institem in volInstAll.slice(0, 4)"
             :key="institem.VolInstId"
             :span="6"
           > -->
-          <el-card
+
+      <!--el-card
             v-for="institem in volInstAll.slice(0, 4)"
             :key="institem.VolInstId"
             @click="goInstInfo(institem.VolInstId)"
@@ -98,8 +91,9 @@
             :body-style="{ padding: '0px' }"
           >
             <el-row style="padding: 10% 5% 0">
-              <el-col :span="6">
-                <!-- <el-avatar
+              <el-col :span="6"-->
+
+      <!--旧版已注释 <el-avatar
                   v-if="institem.InstPicUrl != null"
                   shape="square"
                   :src="institem.InstPicUrl"
@@ -110,21 +104,24 @@
                   src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
                   fit="cover"
                 /> -->
-                <el-image
+
+      <!--el-image
                   v-if="institem.InstPicUrl"
                   style="width: 50px; height: 50px"
                   :src="institem.InstPicUrl"
                   fit="cover"
-                />
-                <!--默认头像-->
-                <el-image
+                /-->
+      <!--默认头像-->
+      <!--el-image
                   v-else
                   style="width: 50px; height: 50px"
                   :src="pic"
                   fit="cover"
-                />
-                <!-- <el-avatar shape="square" :src="pic" fit="fill" /> -->
-              </el-col>
+                /-->
+
+      <!--旧版已注释 <el-avatar shape="square" :src="pic" fit="fill" /> -->
+
+      <!--/el-col>
               <el-col :span="18">
                 <div style="
                     color: #67bbff;
@@ -162,24 +159,16 @@
                 <div>成立时间</div>
               </el-col>
             </el-row>
-          </el-card>
-          <!-- </el-col> -->
+          </!--el-card>
         </el-row>
-      </div>
+      </div-->
 
       <div class="overBlock">
         <el-col class="toptext">志愿者排行榜</el-col>
         <el-divider />
-        <el-row
-          type="flex"
-          justify="space-around"
-          style="align-items: center"
-        >
+        <el-row type="flex" justify="space-around" style="align-items: center">
           <!--列元素居中-->
-          <el-col
-            :span="11"
-            class="rank"
-          >
+          <el-col :span="11" class="rank">
             <el-row
               v-for="(volunteer, index) in volRank.slice(0, 5)"
               :key="index"
@@ -214,15 +203,14 @@
                   color: #2e74b6;
                 "
                 :span="5"
-              >{{ volunteer.VolunteerTime }}</el-col>
+                >{{ volunteer.VolunteerTime }}</el-col
+              >
               <el-col
                 style="justify-content: flex-start; text-align: left"
                 :span="4"
-              >小时</el-col>
-              <el-col
-                :style="rankColor(index + 1)"
-                :span="6"
-              >{{
+                >小时</el-col
+              >
+              <el-col :style="rankColor(index + 1)" :span="6">{{
                 "No." + (index + 1)
               }}</el-col>
             </el-row>
@@ -231,10 +219,7 @@
 
           <!--el-divider direction="vertical" /-->
 
-          <el-col
-            :span="11"
-            class="rank"
-          >
+          <el-col :span="11" class="rank">
             <el-row
               v-for="(volunteer, index) in volRank.slice(5, 10)"
               :key="index"
@@ -262,15 +247,14 @@
                   color: #2e74b6;
                 "
                 :span="5"
-              >{{ volunteer.VolunteerTime }}</el-col>
+                >{{ volunteer.VolunteerTime }}</el-col
+              >
               <el-col
                 style="justify-content: flex-start; text-align: left"
                 :span="4"
-              >小时</el-col>
-              <el-col
-                :style="rankColor(index + 6)"
-                :span="6"
-              >{{
+                >小时</el-col
+              >
+              <el-col :style="rankColor(index + 6)" :span="6">{{
                 "No." + (index + 6)
               }}</el-col>
             </el-row>
@@ -296,12 +280,12 @@ export default {
     MainHeader,
     Footer,
   },
-  setup () {
+  setup() {
     const defaultImg =
       'this.src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"';
     const currentDate = ref(new Date());
     let volActAll = ref([]);
-    let volInstAll = ref([]);
+    //let volInstAll = ref([]);
     let volRank = ref([]);
     let pageNum = ref(1);
     let pageSize = ref(4);
@@ -320,16 +304,16 @@ export default {
         console.log("请求失败", err);
       });
 
-    api
-      .getVolInst(pageNum.value, pageSize.value)
-      .then((res) => {
-        console.log("请求成功", res);
-        volInstAll.value = res.data.data.volInst_list;
-        console.log("获取数据", volInstAll.value);
-      })
-      .catch((err) => {
-        console.log("请求失败", err);
-      });
+    // api
+    //   .getVolInst(pageNum.value, pageSize.value)
+    //   .then((res) => {
+    //     console.log("请求成功", res);
+    //     volInstAll.value = res.data.data.volInst_list;
+    //     console.log("获取数据", volInstAll.value);
+    //   })
+    //   .catch((err) => {
+    //     console.log("请求失败", err);
+    //   });
 
     api
       .getVolRank()
@@ -349,14 +333,14 @@ export default {
       pic,
       currentDate,
       volActAll,
-      volInstAll,
+      //volInstAll,
       volRank,
       pageNum,
       pageSize,
     };
   },
   computed: {
-    rankColor () {
+    rankColor() {
       return (rankNum) => {
         // 使用JavaScript闭包，进行传值操作
         // console.log("序号", rankNum);
@@ -374,10 +358,10 @@ export default {
     },
   },
   methods: {
-    codeToText (province, city, area) {
+    codeToText(province, city, area) {
       return CodeToText[province] + CodeToText[city] + CodeToText[area];
     },
-    goActInfo (actID) {
+    goActInfo(actID) {
       console.log("志愿活动id:", actID);
       //跳转至活动详情页面
       this.$router.push({
@@ -386,7 +370,7 @@ export default {
         query: { act_id: actID },
       });
     },
-    goInstInfo (instID) {
+    goInstInfo(instID) {
       console.log("志愿机构id:", instID);
       //跳转至机构详情页面
       this.$router.push({

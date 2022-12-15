@@ -23,10 +23,7 @@
         <el-divider />
         <div v-if="volActList.length == 0">无相关内容</div>
         <!--div width="600px"-->
-        <el-row
-          type="flex"
-          justify-content="flex-start"
-        >
+        <el-row type="flex" justify-content="flex-start">
           <!--列元素居中-->
           <!-- <el-col
             v-for="actitem in volActList"
@@ -69,11 +66,9 @@
                 人数：{{ actitem.SignupPeople }}/{{ actitem.Needpeople }}人
               </div>
               <div>
-                <el-button
-                  type="primary"
-                  class="button"
-                  round
-                >了解详情</el-button>
+                <el-button type="primary" class="button" round
+                  >了解详情</el-button
+                >
               </div>
             </div>
           </el-card>
@@ -106,7 +101,7 @@ import Footer from "@/views/Frontstage/Footer.vue";
 import { Search } from "@element-plus/icons-vue";
 export default {
   name: "ref",
-  data () {
+  data() {
     return {
       inputAct: "",
       // currentPage: 1, //页码
@@ -118,7 +113,7 @@ export default {
     Footer,
   },
 
-  setup () {
+  setup() {
     const currentDate = ref(new Date());
     // let input = ref("");
     // console.log("输入内容", input);
@@ -137,18 +132,18 @@ export default {
     console.log(pageSize.value);
     //获取所有的志愿活动列表
     //.getVolAct(pageNum.value, pageSize.value)
-    api
-      .getVolAct(currentPage.value, pageSize.value)
-      .then((res) => {
-        console.log("请求成功", res);
-        volActList.value = res.data.data.activity_list;
-        //volActAll.value = res.data.volActAll;
-        total.value = res.data.data.total;
-        //console.log("获取数据", this.volActList);
-      })
-      .catch((err) => {
-        console.log("请求失败", err);
-      });
+    // api
+    //   .getVolAct(currentPage.value, pageSize.value)
+    //   .then((res) => {
+    //     console.log("请求成功", res);
+    //     volActList.value = res.data.data.activity_list;
+    //     //volActAll.value = res.data.volActAll;
+    //     total.value = res.data.data.total;
+    //     //console.log("获取数据", this.volActList);
+    //   })
+    //   .catch((err) => {
+    //     console.log("请求失败", err);
+    //   });
 
     return {
       Search,
@@ -163,14 +158,14 @@ export default {
       // volActSearch,
     };
   },
-  mounted () {
+  mounted() {
     this.getBeforePage();
   },
   methods: {
-    codeToText (province, city, area) {
+    codeToText(province, city, area) {
       return CodeToText[province] + CodeToText[city] + CodeToText[area];
     },
-    goActInfo (actID) {
+    goActInfo(actID) {
       console.log("志愿活动id:", actID);
       //跳转至活动详情页面
       this.$router.push({
@@ -180,13 +175,13 @@ export default {
       });
     },
     //搜索志愿活动
-    goSearchAct () {
+    goSearchAct() {
       this.ifSearch = true;
       this.currentPage = 1;
       sessionStorage.setItem("currentPage", 1);
       this.goonSearchAct();
     },
-    goonSearchAct () {
+    goonSearchAct() {
       api
         .getActSearch(this.inputAct, this.currentPage, this.pageSize)
         .then((res) => {
@@ -199,7 +194,7 @@ export default {
         });
     },
     //获取之前存储的页码，便于详情页跳转返回原页面
-    getBeforePage () {
+    getBeforePage() {
       //如果有这个就读取缓存里面的数据，没有的话当前页码设为1
       if (sessionStorage.getItem("currentPage")) {
         this.currentPage = Number(sessionStorage.getItem("currentPage"));
@@ -207,40 +202,42 @@ export default {
         this.currentPage = 1;
       }
       //清掉缓存里面的数据，防止对其他页面存的currentpage造成影响
-      sessionStorage.removeItem("currentPage");
-      if (this.ifSearch) this.goonSearchAct();
-      else {
-        api
-          .getVolAct(this.currentPage, this.pageSize)
-          .then((res) => {
-            console.log("请求成功", res);
-            this.volActList = res.data.data.activity_list;
-            this.total = res.data.data.total;
-          })
-          .catch((err) => {
-            console.log("请求失败", err);
-          });
-      }
+      // sessionStorage.removeItem("currentPage");
+      // if (this.ifSearch) this.goonSearchAct();
+      // else {
+      //   api
+      //     .getVolAct(this.currentPage, this.pageSize)
+      //     .then((res) => {
+      //       console.log("请求成功", res);
+      //       this.volActList = res.data.data.activity_list;
+      //       this.total = res.data.data.total;
+      //     })
+      //     .catch((err) => {
+      //       console.log("请求失败", err);
+      //     });
+      // }
+      this.goonSearchAct();
     },
     //更新分页
-    handleCurrentChange (newPage) {
+    handleCurrentChange(newPage) {
       console.log("新的页面", newPage);
       this.currentPage = newPage; //重新指定当前页
-      sessionStorage.setItem("currentPage", newPage);
-      if (this.ifSearch) this.goonSearchAct();
-      else {
-        api
-          .getVolAct(this.currentPage, this.pageSize)
-          .then((res) => {
-            console.log("请求成功", res);
-            this.volActList = res.data.data.activity_list;
-            this.total = res.data.data.total;
-          })
-          .catch((err) => {
-            console.log("请求失败", err);
-          });
-      }
+      this.goonSearchAct();
       //页码保存进sessionstorage
+      sessionStorage.setItem("currentPage", newPage);
+      // if (this.ifSearch) this.goonSearchAct();
+      // else {
+      //   api
+      //     .getVolAct(this.currentPage, this.pageSize)
+      //     .then((res) => {
+      //       console.log("请求成功", res);
+      //       this.volActList = res.data.data.activity_list;
+      //       this.total = res.data.data.total;
+      //     })
+      //     .catch((err) => {
+      //       console.log("请求失败", err);
+      //     });
+      // }
     },
   },
 };
@@ -253,7 +250,7 @@ export default {
   background-size: cover;
 }
 .mainBlock {
-  min-height: 500px;
+  min-height: 600px;
   background-color: #f4f6f9;
   position: relative;
   padding: 2% 3% 2%;

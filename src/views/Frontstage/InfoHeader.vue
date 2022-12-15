@@ -18,10 +18,10 @@
           :src="require('../../../image/logo.png')"
           fit="contain"
         />
-        <div class="flex-grow"/>
+        <div class="flex-grow" />
         <el-menu-item index="/">首页</el-menu-item>
         <el-menu-item index="/volunOver">志愿活动</el-menu-item>
-        <el-menu-item index="/forum">寻人论坛</el-menu-item>
+        <!--el-menu-item index="/forum">寻人论坛</!--el-menu-item-->
         <el-menu-item index="/news">寻人资讯</el-menu-item>
         <el-menu-item index="/department">相关部门信息</el-menu-item>
         <el-avatar
@@ -36,10 +36,7 @@
           src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
           @click="gobackStage"
         ></el-avatar>
-        <el-menu-item
-          v-if="!loginState"
-          index="/login"
-        >登录</el-menu-item>
+        <el-menu-item v-if="!loginState" index="/login">登录</el-menu-item>
       </el-menu>
     </el-header>
   </div>
@@ -50,11 +47,12 @@ import { reactive, ref } from "vue";
 import api from "/src/api/index";
 export default {
   name: "InfoHeader",
-  setup () {
+  setup() {
     let loginState = reactive(false);
-    let userHead = ref(
-      "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
-    ); //默认图片
+    // let userHead = ref(
+    //   "https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
+    // ); //默认图片
+    let userHead = ref("");
     let user_type = reactive("");
     let user_id = reactive();
     let homepage = reactive("/"); //个人主页路径
@@ -88,7 +86,7 @@ export default {
     };
   },
   methods: {
-    gobackStage () {
+    gobackStage() {
       if (this.user_type == "user") {
         //普通用户
         this.$router.push({ path: "/UserBackstage/UserHomePage" });

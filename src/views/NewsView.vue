@@ -14,10 +14,7 @@
         <!-- 这是搜索框 -->
         <el-row>
           <el-col>
-            <div
-              class="demo-input-size"
-              style="margin: 10px"
-            >
+            <div class="demo-input-size" style="margin: 10px">
               <el-input
                 type="text"
                 v-model="search_info"
@@ -29,19 +26,15 @@
                 @clear="clear"
                 @keyup.enter="getSearch"
               />
-              <el-button
-                style="margin-left: 5px"
-                @click="getSearch"
-              >搜索</el-button>
+              <el-button style="margin-left: 5px" @click="getSearch"
+                >搜索</el-button
+              >
             </div>
           </el-col>
         </el-row>
         <!-- 这是筛选按钮 -->
         <el-row>
-          <el-col
-            :span="6"
-            :offset="2"
-          >
+          <el-col :span="6" :offset="2">
             <el-button @click="getType1">全部</el-button>
             <el-button @click="getType2">寻人新闻</el-button>
             <el-button @click="getType3">寻人政策</el-button>
@@ -65,9 +58,13 @@
             </div>
 
             <div class="title">{{ news_list[index].Title }}</div>
-            <div class="text">
+            <!-- <div class="text">
               {{ news_list[index].NewsContent.substring(0, 150) }}
-            </div>
+            </div> -->
+            <div
+              v-html="news_list[index].NewsContent.substring(0, 150)"
+              class="text"
+            ></div>
           </div>
         </div>
 
@@ -102,7 +99,7 @@ export default {
     Footer,
     Search,
   },
-  data () {
+  data() {
     return {
       news_list: [], //资讯信息
       currentPage: 1, //页码
@@ -114,7 +111,7 @@ export default {
     };
   },
 
-  mounted () {
+  mounted() {
     this.getBeforePage();
   },
   //离开页面时清除页码存储  呃呃好像destroyed并没有执行
@@ -126,7 +123,7 @@ export default {
 
   methods: {
     //点击跳转
-    goNewsInfo (news_id) {
+    goNewsInfo(news_id) {
       console.log("资讯id:", news_id);
       //跳转至资讯详情页面
       this.$router.push({
@@ -136,7 +133,7 @@ export default {
     },
 
     //获取之前存储的页码，便于详情页跳转返回原页面、原类型
-    getBeforePage () {
+    getBeforePage() {
       //如果有页码就读取缓存里面的数据，没有的话当前页码设为1
       if (sessionStorage.getItem("currentPage")) {
         this.currentPage = Number(sessionStorage.getItem("currentPage"));
@@ -158,7 +155,7 @@ export default {
     },
 
     //获取寻人资讯卡片信息
-    getNewsCard () {
+    getNewsCard() {
       api
         .newsCard(this.news_type, this.currentPage, this.pagesize)
         .then((res) => {
@@ -172,7 +169,7 @@ export default {
         });
     },
     //搜索寻人资讯
-    searchNewsInfo () {
+    searchNewsInfo() {
       api
         .searchNews(this.search, this.currentPage, this.pagesize)
 
@@ -188,24 +185,24 @@ export default {
         });
     },
     //获取搜索框信息
-    getSearch () {
+    getSearch() {
       this.search = this.search_info;
       this.searchNewsInfo();
     },
     //分类筛选
-    getType1 () {
+    getType1() {
       this.news_type = "全部";
       //类型保存进sessionstorage
       sessionStorage.setItem("newsType", "全部");
       this.getNewsCard();
     },
-    getType2 () {
+    getType2() {
       this.news_type = "寻人新闻";
       //类型保存进sessionstorage
       sessionStorage.setItem("newsType", "寻人新闻");
       this.getNewsCard();
     },
-    getType3 () {
+    getType3() {
       this.news_type = "寻人政策";
       //类型保存进sessionstorage
       sessionStorage.setItem("newsType", "寻人政策");
@@ -213,7 +210,7 @@ export default {
     },
 
     //分页
-    handleCurrentChange (newPage) {
+    handleCurrentChange(newPage) {
       console.log(newPage);
       this.currentPage = newPage; //重新指定当前页
       this.getNewsCard();

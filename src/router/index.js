@@ -82,14 +82,14 @@ const routes = [
     // which is lazy-loaded when the route is visited.
     component: () => import("../views/VolunActView.vue")
   },
-  {
-    path: '/volunInst',
-    name: 'volunInst',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import("../views/VolunInstView.vue")
-  },
+  // {
+  //   path: '/volunInst',
+  //   name: 'volunInst',
+  //   // route level code-splitting
+  //   // this generates a separate chunk (about.[hash].js) for this route
+  //   // which is lazy-loaded when the route is visited.
+  //   component: () => import("../views/VolunInstView.vue")
+  // },
   {
     path: '/volunActInfo',
     name: 'volunActInfo',
@@ -98,17 +98,17 @@ const routes = [
     // which is lazy-loaded when the route is visited.
     component: () => import("../views/VolunActInfoView.vue")
   },
-  {
-    path: '/volunInstInfo',
-    name: 'volunInstInfo',
-    component: () => import("../views/VolunInstInfoView.vue")
-  },
+  // {
+  //   path: '/volunInstInfo',
+  //   name: 'volunInstInfo',
+  //   component: () => import("../views/VolunInstInfoView.vue")
+  // },
   // 寻人论坛主界面
-  {
-    path: "/forum",
-    name: "forum",
-    component: () => import("../views/ForumView.vue"),
-  },
+  // {
+  //   path: "/forum",
+  //   name: "forum",
+  //   component: () => import("../views/ForumView.vue"),
+  // },
   // 寻人资讯主界面
   {
     path: "/news",

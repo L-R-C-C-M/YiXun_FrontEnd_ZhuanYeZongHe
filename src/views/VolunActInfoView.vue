@@ -5,13 +5,11 @@
       <el-header style="padding: 0">
         <InfoHeader />
       </el-header>
-      <el-main style="min-height: 100%">
+      <el-main style="min-height: 600px">
         <el-row>
-          <el-button
-            @click="goBack()"
-            type="text"
-            class="return"
-          >&lt;&lt;返回</el-button>
+          <el-button @click="goBack()" type="text" class="return"
+            >&lt;&lt;返回</el-button
+          >
           <!--el-button @click="prev()">返回</!--el-button-->
         </el-row>
         <el-row>
@@ -40,7 +38,7 @@
               </div>
               <div>服务时间：{{ volActInfo.activity_expTime }}</div>
               <div>服务地点：{{ volActInfo.activity_address }}</div>
-              <div>发起机构：{{ volActInfo.activity_inst }}</div>
+              <!-- <div>发起机构：{{ volActInfo.activity_inst }}</div> -->
               <div>联络方式：{{ volActInfo.activity_contactMethod }}</div>
             </div>
 
@@ -55,7 +53,8 @@
               class="actButton"
               round
               disabled
-            >志愿者可报名</el-button>
+              >志愿者可报名</el-button
+            >
             <!--普通用户且报名人数已满或已到报名时间，则报名结束-->
             <el-button
               v-show="
@@ -68,7 +67,8 @@
               class="actButton"
               round
               disabled
-            >报名结束</el-button>
+              >报名结束</el-button
+            >
             <!--是志愿者但已到活动时间或报名人数已满，则报名结束-->
             <el-button
               v-show="
@@ -81,7 +81,8 @@
               class="actButton"
               round
               disabled
-            >报名结束</el-button>
+              >报名结束</el-button
+            >
 
             <!--是志愿者且报名人数未满、报名时间未截止，则可以报名-->
             <el-button
@@ -95,21 +96,16 @@
               class="actButton"
               round
               @click="goSignUp()"
-            >{{ signup }}</el-button>
+              >{{ signup }}</el-button
+            >
           </div>
         </el-row>
         <el-col class="toptext">活动详情</el-col>
         <el-divider />
-        <div
-          v-if="volActInfo.activity_content == null"
-          class="text"
-        >
+        <div v-if="volActInfo.activity_content == null" class="text">
           暂无活动介绍
         </div>
-        <div
-          v-if="volActInfo.activity_content != null"
-          class="text"
-        >
+        <div v-if="volActInfo.activity_content != null" class="text">
           {{ volActInfo.activity_content }}
         </div>
       </el-main>
@@ -131,7 +127,7 @@ export default {
     InfoHeader,
     Footer,
   },
-  setup () {
+  setup() {
     const currentDate = ref(new Date());
     console.log("当前时间", currentDate);
     const route = useRoute();
@@ -197,16 +193,16 @@ export default {
       userType,
     };
   },
-  mounted () {
+  mounted() {
     // const act_id = this.$route.query.act_id;
     // console.log("mounted接收到的志愿活动id", act_id);
     //this.checkApplyState();
   },
   methods: {
-    goBack () {
+    goBack() {
       this.$router.back();
     },
-    goSignUp () {
+    goSignUp() {
       if (this.loginState) {
         api
           .getSignUp(this.vol_id, this.act_id)

@@ -4,7 +4,7 @@
       <el-header style="padding: 0">
         <InfoHeader />
       </el-header>
-      <el-main style="background-color: #f5f5f5;padding: 0">
+      <el-main style="background-color: #f5f5f5; padding: 0">
         <!-- 这里是页面内容 -->
         <!-- 地图定位到当前地点并显示其周围信息 -->
         <gaodeMap></gaodeMap>
@@ -13,24 +13,23 @@
             @click="goReleaseMissingInfo()"
             color="#044C90"
             :dark="isDark"
-          >发布寻人信息</el-button>
+            >发布寻人信息</el-button
+          >
         </div>
-        <div
-          class="slogen"
-          background-image="../../image/map-test.png"
-        >
+        <div class="slogen" background-image="../../image/map-test.png">
           千里寻人，你我助力
         </div>
         <Search @onEvent="getSearchInfo"></Search>
 
         <div
-          style="text-align: left;margin-left: 3%; margin-right: 1%; margin-bottom: 1%"
+          style="
+            text-align: left;
+            margin-left: 3%;
+            margin-right: 1%;
+            margin-bottom: 1%;
+          "
         >
-          <h style="
-              font-size: 8px;
-              font-weight: 600;
-              color: #c2c2c2;
-            ">
+          <h style="font-size: 8px; font-weight: 600; color: #c2c2c2">
             共搜索到
             <h style="color: #2e74b6"> {{ searchNum }}条 </h>寻人信息
           </h>
@@ -52,7 +51,8 @@
                 <el-col :span="8">
                   <div class="thePhoto">
                     <el-image
-                      style="width: 100%;
+                      style="
+                        width: 100%;
                         height: 220px;
                         border-radius: 10px 10px 0 0;
                       "
@@ -116,64 +116,73 @@
         <div id="app">
           <kinesis-container class="container">
             <kinesis-element>
-              <kinesis-element 
-                  tag="img"
-                  :src="require('../../image/cover_show3.png')"
-                  :strength="10"
-                  type="rotate"
-                  transformOrigin="50% 300%"
-                  axis="x"/>
-            <kinesis-element 
-                  tag="img"
-                  :src="require('../../image/cover_show2.png')"
-                  :strength="-10"
-                  type="rotate"
-                  transformOrigin="50% 300%"
-                  axis="x" />
-            <kinesis-element 
-                  tag="img"
-                  :src="require('../../image/cover_show1.png')"
-                  :strength="10"
-                  type="depth"
-                  />
+              <kinesis-element
+                tag="img"
+                :src="require('../../image/cover_show3.png')"
+                :strength="10"
+                type="rotate"
+                transformOrigin="50% 300%"
+                axis="x"
+              />
+              <kinesis-element
+                tag="img"
+                :src="require('../../image/cover_show2.png')"
+                :strength="-10"
+                type="rotate"
+                transformOrigin="50% 300%"
+                axis="x"
+              />
+              <kinesis-element
+                tag="img"
+                :src="require('../../image/cover_show1.png')"
+                :strength="10"
+                type="depth"
+              />
 
               <div class="box2-2">
-                  <div class="box-div"
-                    @mouseenter="mouseEnter(0)" 
-                    @mouseleave="mouseLeave" 
-                    :class="{color: changeIndex === 0}"
-                    >
-                    <el-icon class="box_icon" ><Document /></el-icon>
-                    已发布启事 {{ padding1(itemNum, length) }}个
-                  </div>
-                  <div class="box-div"
-                  @mouseenter="mouseEnter(1)" 
-                    @mouseleave="mouseLeave" 
-                    :class="{color: changeIndex === 1}"
-                    >
-                    <el-icon class="box_icon" ><DocumentChecked /></el-icon>
-                    共收到线索 {{ padding1(clueNum, length) }}条</div>
-                  <div class="box-div"
-                  :class="{color: changeIndex === 2}"
-                  @mouseenter="mouseEnter(2)" 
-                    @mouseleave="mouseLeave" 
-                    :style="active">
-                    <el-icon class="box_icon" ><Connection/></el-icon>
-                    累计已帮助 {{ padding1(peopleNum, length) }}人</div>
-                  <div class="box-div"
-                  @mouseenter="mouseEnter(3)" 
-                    @mouseleave="mouseLeave" 
-                    :class="{color: changeIndex === 3}">
-                    <el-icon class="box_icon" ><User /></el-icon>
-                    注册志愿者 {{ padding1(volNum, length) }}人
-                  </div>
+                <div
+                  class="box-div"
+                  @mouseenter="mouseEnter(0)"
+                  @mouseleave="mouseLeave"
+                  :class="{ color: changeIndex === 0 }"
+                >
+                  <el-icon class="box_icon"><Document /></el-icon>
+                  已发布启事 {{ padding1(itemNum, length) }}个
+                </div>
+                <div
+                  class="box-div"
+                  @mouseenter="mouseEnter(1)"
+                  @mouseleave="mouseLeave"
+                  :class="{ color: changeIndex === 1 }"
+                >
+                  <el-icon class="box_icon"><DocumentChecked /></el-icon>
+                  共收到线索 {{ padding1(clueNum, length) }}条
+                </div>
+                <div
+                  class="box-div"
+                  :class="{ color: changeIndex === 2 }"
+                  @mouseenter="mouseEnter(2)"
+                  @mouseleave="mouseLeave"
+                  :style="active"
+                >
+                  <el-icon class="box_icon"><Connection /></el-icon>
+                  累计已帮助 {{ padding1(peopleNum, length) }}人
+                </div>
+                <div
+                  class="box-div"
+                  @mouseenter="mouseEnter(3)"
+                  @mouseleave="mouseLeave"
+                  :class="{ color: changeIndex === 3 }"
+                >
+                  <el-icon class="box_icon"><User /></el-icon>
+                  注册志愿者 {{ padding1(volNum, length) }}人
+                </div>
               </div>
-
             </kinesis-element>
 
             <!-- background-circles-props -->
             <kinesis-element>
-              <div class="circle circle-purple" ></div>
+              <div class="circle circle-purple"></div>
             </kinesis-element>
             <kinesis-element>
               <div class="circle circle-purple1"></div>
@@ -206,7 +215,7 @@ import AMapLoader from "@amap/amap-jsapi-loader";
 import { CodeToText } from "element-china-area-data";
 import QueryString from "qs";
 import { ElMessage } from "element-plus";
-import { KinesisContainer, KinesisElement} from "vue-kinesis"
+import { KinesisContainer, KinesisElement } from "vue-kinesis";
 import { Connection, Document, DocumentChecked } from "@element-plus/icons-vue";
 
 export default {
@@ -220,9 +229,9 @@ export default {
     KinesisElement,
     Document,
     DocumentChecked,
-    Connection
-},
-  data () {
+    Connection,
+  },
+  data() {
     return {
       changeIndex: -1,
       user_id: "",
@@ -269,52 +278,49 @@ export default {
       lostInfoList: [],
     };
   },
-  mounted () {
+  mounted() {
     if ((this.user_id = sessionStorage.getItem("userid") != null)) {
       this.loginState = true;
     }
     this.handleCurrentChange(1);
     //已发布启事
     api.GetSearchInfoNum().then((res) => {
-      if(res.data!=null)
-        this.itemNum = res.data;
+      if (res.data != null) this.itemNum = res.data;
     });
     //共收到线索
     api.GetCluesNum().then((res) => {
-      if(res.data!=null)
-        this.clueNum = res.data;
+      if (res.data != null) this.clueNum = res.data;
     });
     //累计已帮助
     api.GetFoundInfoNum().then((res) => {
-      if(res.data!=null)
-        this.peopleNum = res.data;
+      if (res.data != null) this.peopleNum = res.data;
     });
     //已注册志愿者
     api.GetVolunteerNum().then((res) => {
-      if(res.data!=null)
-        this.volNum = res.data;
+      if (res.data != null) this.volNum = res.data;
     });
   },
   methods: {
-    mouseEnter: function(index){
-      this.changeIndex = index;        },
+    mouseEnter: function (index) {
+      this.changeIndex = index;
+    },
     mouseLeave: function () {
       this.changeIndex = -1;
-        },
+    },
 
-    changeString (myData) {
+    changeString(myData) {
       if (myData) return myData;
       else {
         return "不详";
       }
     },
-    codeToText (province, city, area, detail) {
+    codeToText(province, city, area, detail) {
       return (
         CodeToText[province] + CodeToText[city] + CodeToText[area] + detail
       );
     },
     //获取筛选后的信息，分页显示
-    getSearchInfo (data) {
+    getSearchInfo(data) {
       data.pageNum = this.LostInfo.pageNum;
       data.pageSize = this.LostInfo.pageSize;
       this.allInfo = 0;
@@ -431,7 +437,7 @@ export default {
           }
         });
     },
-    clickPhoto (SearchinfoId) {
+    clickPhoto(SearchinfoId) {
       console.log(SearchinfoId);
       //点击跳转到寻人信息的详情页
       this.$router.push({
@@ -441,7 +447,7 @@ export default {
         },
       });
     },
-    goReleaseMissingInfo () {
+    goReleaseMissingInfo() {
       if (!this.loginState) {
         ElMessage({
           message: "请先登录",
@@ -452,7 +458,7 @@ export default {
       this.$router.push({ path: "/up_missingperson", query: {} });
     },
     // 监听 页码值 改变的事件
-    handleCurrentChange (newPage) {
+    handleCurrentChange(newPage) {
       //把最新的页码（newPage）赋值给 动态的 pagenum
       this.LostInfo.pageNum = newPage;
       if (this.allInfo) {
@@ -481,7 +487,8 @@ export default {
               };
               var item = this.lostInfoList[i];
               //寻人信息id
-              item.SearchinfoId = res.data.data.searchInfo_list[i].search_info_id;
+              item.SearchinfoId =
+                res.data.data.searchInfo_list[i].search_info_id;
               item.SearchinfoId = this.changeString(item.SearchinfoId);
               //寻人类型
               item.SearchType = res.data.data.searchInfo_list[i].search_type;
@@ -510,7 +517,9 @@ export default {
               );
               //失踪人照片
               // item.SearchinfoPhotoURL = res.data.data.searchInfo_list[i].SearchinfoPhotoURL;
-              if (res.data.data.searchInfo_list[i].search_info_photourl != null) {
+              if (
+                res.data.data.searchInfo_list[i].search_info_photourl != null
+              ) {
                 item.SearchinfoPhotoURL =
                   res.data.data.searchInfo_list[i].search_info_photourl;
               }
@@ -531,7 +540,7 @@ export default {
       }
     },
     //迭代方法补0
-    padding1 (num, length) {
+    padding1(num, length) {
       num = parseInt(num);
       for (var len = (num + "").length; len < length; len = num.length) {
         num = "0" + num;
@@ -695,7 +704,7 @@ h {
   padding-bottom: 15rem;
   margin-top: 40px;
   height: 30px;
-  background-color: #32495E;
+  background-color: #32495e;
 }
 
 .circle {
@@ -738,51 +747,51 @@ h {
   left: 60%;
 }
 
-.container img{
-  border-radius:10px;
+.container img {
+  border-radius: 10px;
   width: 150px;
   height: 150px;
-  position: absolute; 
-  left:20%;
+  position: absolute;
+  left: 20%;
   margin-top: 50px;
 }
 
 .box2-2 {
-        /*vw是相对视口（viewport）的宽度而定的，长度等于视口宽度的1/100*/
-        /*vh是相对视口（viewport）的高度而定的，长度等于视口高度的1/100*/
-        width: 40vw;
-        display: grid; /* 开启grid布局*/
-        grid-template-columns: repeat(2, 50%); /*设置4列，每一列占总宽度的25% */
-        grid-template-rows: repeat(2, 30%); /*设置3行， 每一行占总宽度的30% */
-        grid-column-gap: 1vh; /*列间距*/
-       grid-row-gap: 1vh; /*行间距*/
-       border-radius:10px;
-        position: absolute; 
-        right:20%;
-         margin-top: 50px;
-    }
-    .box-div {
-        background-color: white;
-        border-radius:10px;
-        height: 75px;
-        display: flex;
-        /*实现水平居中*/
-        align-items: center;
-        /*实现垂直居中*/
-        justify-content: center;
-        /*文字大小颜色*/
-        font-size: 18px;
-        color: #200741;
-    }
-  .box_icon{
-    font-size: 30px;
-    margin-right: 18px;
-  }
+  /*vw是相对视口（viewport）的宽度而定的，长度等于视口宽度的1/100*/
+  /*vh是相对视口（viewport）的高度而定的，长度等于视口高度的1/100*/
+  width: 40vw;
+  display: grid; /* 开启grid布局*/
+  grid-template-columns: repeat(2, 50%); /*设置4列，每一列占总宽度的25% */
+  grid-template-rows: repeat(2, 30%); /*设置3行， 每一行占总宽度的30% */
+  grid-column-gap: 1vh; /*列间距*/
+  grid-row-gap: 1vh; /*行间距*/
+  border-radius: 10px;
+  position: absolute;
+  right: 20%;
+  margin-top: 50px;
+}
+.box-div {
+  background-color: white;
+  border-radius: 10px;
+  height: 75px;
+  display: flex;
+  /*实现水平居中*/
+  align-items: center;
+  /*实现垂直居中*/
+  justify-content: center;
+  /*文字大小颜色*/
+  font-size: 18px;
+  color: #200741;
+}
+.box_icon {
+  font-size: 30px;
+  margin-right: 18px;
+}
 
-  .color{
-        background-color: #2e74b6;
-        color:#ffffff;
-    }
+.color {
+  background-color: #2e74b6;
+  color: #ffffff;
+}
 </style>
 
 

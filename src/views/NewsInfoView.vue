@@ -1,6 +1,6 @@
 <!-- @author:杨芾卉-寻人信息详情页面 -->
 <template>
-  <el-container style="height: fit-content;height: 100%;">
+  <el-container style="height: fit-content; height: 100%">
     <el-header style="padding: 0">
       <InfoHeader />
     </el-header>
@@ -9,10 +9,7 @@
       <!--ReportInfoView></!--ReportInfoView-->
       <div class="container">
         <div class="box">
-          <div
-            class="quit"
-            onclick="window.open('/news','_self')"
-          >
+          <div class="quit" onclick="window.open('/news','_self')">
             {{ icon }}<span>返回</span>
           </div>
           <div class="title">
@@ -20,9 +17,10 @@
           </div>
           <div class="time">发布时间：{{ this.newstime }}</div>
           <div class="line"></div>
-          <div class="text mt_20">
+          <!-- <div class="text mt_20">
             {{ this.newscontent }}
-          </div>
+          </div> -->
+          <div v-html="this.newscontent" class="text mt_20"></div>
           <!-- <div class="text">
             7月4日，澎海新闻从公安部获悉，在夏季治安打击整治“百日行动”中，为深入推进打击拐卖妇女儿童犯罪专项行动，充分运用科技
             力量打拐寻亲，公安部近日公布全国5000余个免费采血点信息，进一步便利广大群众及时就近采血，助力被拐家庭早日实现团圆。
@@ -48,7 +46,7 @@ import { useRoute } from "vue-router";
 import api from "/src/api/index";
 
 export default {
-  data () {
+  data() {
     return {
       icon: "<<",
       newsid: null,
@@ -61,7 +59,7 @@ export default {
   components: { InfoHeader, Footer },
 
   methods: {
-    getNewsDetail () {
+    getNewsDetail() {
       api
         .newsInfo(this.newsid)
         .then((res) => {
@@ -76,12 +74,12 @@ export default {
         });
     },
   },
-  mounted () {
+  mounted() {
     this.newsid = this.$route.query.NewsId;
     console.log("mounted接收到的id：", this.newsid);
     this.getNewsDetail();
   },
-  setup () {
+  setup() {
     // const route = useRoute();
     // const NewsId = route.query.NewsId; //接收主页面传来的参数
   },

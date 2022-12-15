@@ -323,7 +323,7 @@ const api = {
     },
     //1.8.7 通过举报
     passClueRepo(clueId) {
-        return axios.put(path.baseUrl + path.passClueRepo,{ params: { clueId: clueId } })
+        return axios.put(path.baseUrl + path.passClueRepo, { params: { clueId: clueId } })
     },
     //1.8.8 拒绝举报
     denyClueRepo(cluerepoid) {
@@ -348,10 +348,10 @@ const api = {
     },
 
     //1.1-2管理员发布志愿活动
-    releaseVolActivity(act_name, act_content, act_time, need_people, act_province, act_city, act_area, act_address, contact_method, volInst_Id) {
+    releaseVolActivity(act_name, act_content, act_time, need_people, act_province, act_city, act_area, act_address, contact_method) {
         return axios.post(path.baseUrl + path.releaseVolActivity, {
             act_name: act_name, act_content: act_content, act_time: act_time, need_people: need_people,
-            act_province: act_province, act_city: act_city, act_area: act_area, act_address: act_address, contact_method: contact_method, volInst_Id: volInst_Id
+            act_province: act_province, act_city: act_city, act_area: act_area, act_address: act_address, contact_method: contact_method
         })
     },
     //1.1-3返回所有志愿机构id和名称
@@ -376,10 +376,10 @@ const api = {
     },
 
     //1.1-2管理员发布志愿活动
-    releaseVolActivity(act_name, act_content, act_time, need_people, act_province, act_city, act_area, act_address, contact_method, volInst_Id) {
+    releaseVolActivity(act_name, act_content, act_time, need_people, act_province, act_city, act_area, act_address, contact_method) {
         return axios.post(path.baseUrl + path.releaseVolActivity, {
             act_name: act_name, act_content: act_content, act_time: act_time, need_people: need_people,
-            act_province: act_province, act_city: act_city, act_area: act_area, act_address: act_address, contact_method: contact_method, volInst_Id: volInst_Id
+            act_province: act_province, act_city: act_city, act_area: act_area, act_address: act_address, contact_method: contact_method
         })
     },
     //发布志愿活动图片
@@ -435,7 +435,7 @@ const api = {
         return axios.delete(path.baseUrl + path.userDeleteClue, { params: { userid: userid, clueid: clueid } })
     },
     //注册志愿者数
-    GetVolunteerNum(){
+    GetVolunteerNum() {
         return axios.get(path.baseUrl + path.getVolunteerNum);
     }
 }

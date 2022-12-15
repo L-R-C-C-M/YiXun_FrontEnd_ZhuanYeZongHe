@@ -52,7 +52,7 @@
           ></el-input>
         </el-form-item>
 
-        <el-form-item
+        <!-- <el-form-item
           label="志愿机构"
           style="margin-bottom: 3%; margin-top: 2%"
         >
@@ -69,7 +69,7 @@
             >
             </el-option>
           </el-select>
-        </el-form-item>
+        </el-form-item> -->
 
         <el-form-item label="活动人数" style="margin-bottom: 3%; width: 200px">
           <el-input
@@ -144,9 +144,9 @@ export default {
         act_area: "",
         act_address: "",
         contact_method: "",
-        volInst_Id: "",
+        //volInst_Id: "",
         imageurl: "",
-        volAct_id:'',
+        volAct_id: "",
       },
       volInstOptions: [],
       value1: [],
@@ -180,14 +180,17 @@ export default {
           this.activity.act_city,
           this.activity.act_area,
           this.activity.act_address,
-          this.activity.contact_method,
-          this.activity.volInst_Id
+          this.activity.contact_method
+          //this.activity.volInst_Id
         )
         .then((res) => {
           console.log(res.data);
-          this.activity.volAct_id=res.data.data.volAct_id
+          this.activity.volAct_id = res.data.data.volAct_id;
           if (res.data.status == true) {
-            api.addVolActivityPic(this.activity.volAct_id, this.activity.imageurl);
+            api.addVolActivityPic(
+              this.activity.volAct_id,
+              this.activity.imageurl
+            );
             this.$message({
               type: "success",
               message: "发布成功!",
