@@ -198,8 +198,8 @@ export default {
     return {
       options: regionData,
       selectedOptions: [],
-      //user_id: JSON.parse(sessionStorage.getItem("userid")),
-      user_id: 1,
+      user_id: JSON.parse(sessionStorage.getItem("userid")),
+      //user_id: 1,
       form: {},
       isChange: [false, false, false, false, false],
       isEdit: false,
