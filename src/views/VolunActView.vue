@@ -10,13 +10,7 @@
       </el-header>
       <el-main class="mainBlock">
         <el-row class="search">
-          <el-input
-            v-model="inputAct"
-            placeholder="请输入志愿活动名..."
-            :prefix-icon="Search"
-            clearable
-            @change="goSearchAct"
-          />
+          <el-input v-model="inputAct" placeholder="请输入志愿活动名..." :prefix-icon="Search" clearable @change="goSearchAct" />
         </el-row>
         <el-col class="toptext">志愿活动</el-col>
         <!--el-link class="linktext">更多>></!--el-link-->
@@ -31,26 +25,11 @@
             :span="6"
           > -->
           <!--el-card的背景图片还未更改使用变量-->
-          <el-card
-            v-for="actitem in volActList"
-            :key="actitem.VolActId"
-            @click="goActInfo(actitem.VolActId)"
-            class="mycard"
-            :body-style="{ padding: '0px' }"
-          >
-            <el-image
-              v-if="actitem.ActPicUrl == null"
-              style="width: 100%; height: 150px"
-              :src="pic"
-              fit="cover"
-            />
+          <el-card v-for="actitem in volActList" :key="actitem.VolActId" class="mycard" :body-style="{ padding: '0px' }">
+            <el-image v-if="actitem.ActPicUrl == null" style="width: 100%; height: 150px" :src="pic" fit="cover" />
 
-            <el-image
-              v-if="actitem.ActPicUrl != null"
-              style="width: 100%; height: 150px"
-              :src="actitem.ActPicUrl"
-              fit="cover"
-            />
+            <el-image v-if="actitem.ActPicUrl != null" style="width: 100%; height: 150px" :src="actitem.ActPicUrl"
+              fit="cover" />
 
             <div class="bottom">
               <div style="color: #67bbff; font-size: 15px; margin: 0 0 10px">
@@ -66,9 +45,7 @@
                 人数：{{ actitem.SignupPeople }}/{{ actitem.Needpeople }}人
               </div>
               <div>
-                <el-button type="primary" class="button" round
-                  >了解详情</el-button
-                >
+                <el-button type="primary" class="button" round @click="goActInfo(actitem.VolActId)">了解详情</el-button>
               </div>
             </div>
           </el-card>
@@ -77,13 +54,8 @@
         <!--/!--div-->
         <div class="Parent">
           <!--分页-->
-          <el-pagination
-            v-model:page-size="pageSize"
-            v-model:current-page="currentPage"
-            :total="total"
-            layout="total,prev, pager, next, jumper"
-            @current-change="handleCurrentChange"
-          />
+          <el-pagination v-model:page-size="pageSize" v-model:current-page="currentPage" :total="total"
+            layout="total,prev, pager, next, jumper" @current-change="handleCurrentChange" />
         </div>
       </el-main>
       <Footer></Footer>
@@ -100,23 +72,15 @@ import MainHeader from "@/views/Frontstage/MainHeader.vue";
 import Footer from "@/views/Frontstage/Footer.vue";
 import { Search } from "@element-plus/icons-vue";
 export default {
-  name: "ref",
-  data() {
-    return {
-      inputAct: "",
-      // currentPage: 1, //页码
-      // pagesize: 8, //每页的数量
-    };
-  },
+  name: "VolunActView",
   components: {
     MainHeader,
     Footer,
   },
 
   setup() {
+    const inputAct = ref("");
     const currentDate = ref(new Date());
-    // let input = ref("");
-    // console.log("输入内容", input);
     let volActList = ref([]);
     // let volActAll = ref([]);
     // let volActSearch = ref([]);
@@ -126,9 +90,6 @@ export default {
     let ifSearch = ref(false);
     let pic =
       "https://yixun-picture.oss-cn-shanghai.aliyuncs.com/user_head/1.jpeg";
-    //let inputAct = ref("就很好");
-    //axios
-    //.get("/api/volAct")
     console.log(pageSize.value);
     //获取所有的志愿活动列表
     //.getVolAct(pageNum.value, pageSize.value)
@@ -146,6 +107,7 @@ export default {
     //   });
 
     return {
+      inputAct,
       Search,
       ifSearch,
       pic,
@@ -174,11 +136,14 @@ export default {
         query: { act_id: actID },
       });
     },
+
     //搜索志愿活动
     goSearchAct() {
-      this.ifSearch = true;
+      //this.ifSearch = true;
       this.currentPage = 1;
-      sessionStorage.setItem("currentPage", 1);
+      //sessionStorage.setItem("volact_ifSearch", this.ifSearch);
+      sessionStorage.setItem("volact_searchKey", this.inputAct);
+      sessionStorage.setItem("volact_currentPage", this.currentPage);
       this.goonSearchAct();
     },
     goonSearchAct() {
@@ -196,11 +161,28 @@ export default {
     //获取之前存储的页码，便于详情页跳转返回原页面
     getBeforePage() {
       //如果有这个就读取缓存里面的数据，没有的话当前页码设为1
-      if (sessionStorage.getItem("currentPage")) {
-        this.currentPage = Number(sessionStorage.getItem("currentPage"));
-      } else {
-        this.currentPage = 1;
+      if (sessionStorage.getItem("volact_currentPage")) {
+        this.currentPage = Number(sessionStorage.getItem("volact_currentPage"));
       }
+      // else {
+      //   this.currentPage = 1;
+      // }
+
+      if (sessionStorage.getItem("volact_searchKey")) {
+        this.inputAct = sessionStorage.getItem("volact_searchKey");
+      }
+      // else {
+      //   this.currentPage = 1;
+      // }
+
+      // if (sessionStorage.getItem("volact_ifSearch")) {
+      //   this.ifSearch = sessionStorage.getItem("volact_ifSearch");
+      // }
+      // else {
+      //   this.currentPage = 1;
+      // }
+
+
       //清掉缓存里面的数据，防止对其他页面存的currentpage造成影响
       // sessionStorage.removeItem("currentPage");
       // if (this.ifSearch) this.goonSearchAct();
@@ -249,6 +231,7 @@ export default {
   background-image: url(../../image/volun.png);
   background-size: cover;
 }
+
 .mainBlock {
   min-height: 600px;
   background-color: #f4f6f9;
@@ -257,29 +240,36 @@ export default {
   width: 100%;
   height: 100%;
 }
+
 .Parent {
   display: flex;
 }
+
 .el-pagination {
   margin: auto;
 }
+
 .toptext {
   height: 30px;
   text-align: left;
   color: #2e74b6;
   font-size: 30px;
-} /*格式调整*/
+}
+
+/*格式调整*/
 .linktext {
   float: right;
   text-align: right;
   color: grey;
   font-size: 12px;
 }
+
 .el-divider {
   background-color: #67bbff;
   /*height: 36px;*/
   margin: 20px 0;
 }
+
 /*.card-header {
   display: flex;
   justify-content: space-between;
@@ -290,6 +280,7 @@ export default {
   text-align: right;
   width: 250px;
 }
+
 .mycard {
   border-radius: 10%;
   background-color: #ffffff;
@@ -322,6 +313,7 @@ export default {
   margin-top: 0%;
   margin-bottom: 5px;
 }
+
 /*.bottom {
   line-height: 12px;
   display: flex;
@@ -337,6 +329,7 @@ export default {
   font-size: 10px;
   margin-bottom: 5px;
 }
+
 /*.cardImage {
   width: 100%;
   display: block;

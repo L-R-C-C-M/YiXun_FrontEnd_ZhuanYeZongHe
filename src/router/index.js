@@ -173,10 +173,20 @@ const routes = [
         name: 'releasedNews',
         component: () => import('../views/Backstage/ReleasedNews.vue')
       },
-      {
+      {//已发布的志愿活动
+        path: 'releasedActivity',
+        name: 'releasedActivity',
+        component: () => import('../views/Backstage/ReleasedActivity.vue')
+      },
+      {//发布志愿活动
         path: 'releaseActivity',
         name: 'releaseActivity',
         component: () => import('../views/Backstage/ReleaseActivity.vue')
+      },
+      {//修改志愿活动
+        path: 'modifyActivity',
+        name: 'modifyActivity',
+        component: () => import('../views/Backstage/ModifyActivity.vue')
       },
       {
         path: 'volReview',

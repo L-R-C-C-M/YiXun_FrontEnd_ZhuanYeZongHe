@@ -4,13 +4,10 @@
     <!-- 头部区 -->
     <el-header>
       <div>
-        <el-image
-          style="height: 70%; width: 50%"
-          :src="require('../../image/logo.png')"
-          fit="contain"
-          @click="backHome()"
-        />
-        <span>志愿者后台系统</span>
+        <el-image style="height: 70%; width: 50%" :src="require('../../image/logo.png')" fit="contain"
+          @click="backHome()" />
+        <!--名称太长-->
+        <span>工作人员后台</span>
       </div>
       <el-button class="exit-button" type="info" @click="logout">
         <el-icon style="vertical-align: middle">
@@ -44,7 +41,7 @@ export default {
       window.sessionStorage.clear();
       this.$router.push("/");
     },
-    backHome(){
+    backHome() {
       this.$router.push("/");
     }
   },
@@ -56,6 +53,7 @@ html,
 body {
   height: 100%;
 }
+
 .home-container .el-header {
   background-color: #202741;
   height: 70px;
@@ -65,15 +63,18 @@ body {
   padding-right: 30;
   align-items: center; //元素上下居中
   color: #b5c4d0;
-  > div {
+
+  >div {
     //内嵌的div样式
     display: flex;
     align-items: center; //Logo和文字上下居中
+
     span {
       margin-left: 15px; //文字左侧设置间距，防止与Logo紧贴
     }
   }
 }
+
 .home-container .el-main {
   background-color: #eaedf1;
 }

@@ -2,6 +2,7 @@
 <template>
   <el-header>
     <el-breadcrumb separator="/">
+      <el-breadcrumb-item>志愿活动管理</el-breadcrumb-item>
       <el-breadcrumb-item>发布志愿活动</el-breadcrumb-item>
     </el-breadcrumb>
   </el-header>
@@ -9,30 +10,18 @@
     <el-card style="height: max-content; width: 100%">
       <div style="margin-left: 3%; margin-top: 3%; margin-right: 5%">
         <el-form-item label="活动名称" style="margin-bottom: 3%; width: 500px">
-          <el-input
-            v-model="this.activity.act_name"
-            :autosize="{ minRows: 1 }"
-            type="textarea"
-            placeholder="请输入活动名称"
-          ></el-input>
+          <el-input v-model="this.activity.act_name" :autosize="{ minRows: 1 }" type="textarea"
+            placeholder="请输入活动名称"></el-input>
         </el-form-item>
 
         <el-form-item label="活动图片">
           <div style="text-align: left">
-            <el-upload
-              class="avatar-uploader"
-              action
-              :auto-upload="false"
-              ref="upload"
-              :show-file-list="false"
-              :on-change="onUploadChange"
-            >
-              <img
-                v-if="this.activity.imageurl"
-                :src="this.activity.imageurl"
-                class="avatar"
-              />
-              <el-icon v-else class="avatar-uploader-icon"><Plus /></el-icon>
+            <el-upload class="avatar-uploader" action :auto-upload="false" ref="upload" :show-file-list="false"
+              :on-change="onUploadChange">
+              <img v-if="this.activity.imageurl" :src="this.activity.imageurl" class="avatar" />
+              <el-icon v-else class="avatar-uploader-icon">
+                <Plus />
+              </el-icon>
             </el-upload>
             <div slot="tip" class="el-upload__tip">
               只能上传jpg/png文件，且不超过5M
@@ -40,19 +29,12 @@
           </div>
         </el-form-item>
 
-        <el-form-item
-          label="活动内容"
-          style="margin-bottom: 3%; margin-top: 2%"
-        >
-          <el-input
-            v-model="activity.act_content"
-            :autosize="{ minRows: 10 }"
-            type="textarea"
-            placeholder="请输入活动内容"
-          ></el-input>
+        <el-form-item label="活动内容" style="margin-bottom: 3%; margin-top: 2%">
+          <el-input v-model="activity.act_content" :autosize="{ minRows: 10 }" type="textarea"
+            placeholder="请输入活动内容"></el-input>
         </el-form-item>
 
-        <!-- <el-form-item
+      <!-- <el-form-item
           label="志愿机构"
           style="margin-bottom: 3%; margin-top: 2%"
         >
@@ -69,49 +51,27 @@
             >
             </el-option>
           </el-select>
-        </el-form-item> -->
+              </el-form-item> -->
 
-        <el-form-item label="活动人数" style="margin-bottom: 3%; width: 200px">
-          <el-input
-            v-model="activity.need_people"
-            type="number"
-            placeholder="请输入活动人数"
-          ></el-input>
+        <el-form-item label="活动人数" style="margin-bottom: 3%; width: 300px">
+          <el-input v-model="activity.need_people" type="number" placeholder="请输入活动人数"></el-input>
         </el-form-item>
 
         <el-form-item label="活动时间" style="margin-bottom: 3%">
-          <el-date-picker
-            v-model="value1"
-            type="datetimerange"
-            range-separator="至"
-            start-placeholder="开始日期"
-            end-placeholder="结束日期"
-          >
+          <el-date-picker v-model="value1" type="datetimerange" range-separator="至" start-placeholder="开始日期"
+            end-placeholder="结束日期">
           </el-date-picker>
         </el-form-item>
 
         <el-form-item label="活动地址" style="margin-bottom: 3%">
-          <el-cascader
-            size="default"
-            :options="options"
-            v-model="selectedOptions"
-            placeholder="省-市-区"
-            @change="handleChange"
-          >
+          <el-cascader size="default" :options="options" v-model="selectedOptions" placeholder="省-市-区"
+            @change="handleChange">
           </el-cascader>
-          <el-input
-            style="width: auto"
-            v-model="activity.act_address"
-            autocomplete="off"
-            placeholder="详细地址"
-          ></el-input>
+          <el-input style="width: auto" v-model="activity.act_address" autocomplete="off" placeholder="详细地址"></el-input>
         </el-form-item>
 
         <el-form-item label="联系方式" style="margin-bottom: 3%; width: 300px">
-          <el-input
-            v-model="activity.contact_method"
-            placeholder="请输入联系方式"
-          ></el-input>
+          <el-input v-model="activity.contact_method" placeholder="请输入联系方式"></el-input>
         </el-form-item>
 
         <div>
@@ -122,7 +82,7 @@
   </el-main>
 </template>
     
-    <script>
+<script>
 import { ref } from "vue";
 import api from "/src/api/index";
 import { regionData } from "element-china-area-data";
@@ -262,7 +222,7 @@ export default {
 };
 </script>
     
-    <style  scoped>
+<style  scoped>
 h6 {
   color: rgb(184, 184, 184);
 }
@@ -283,9 +243,11 @@ h6 {
   position: relative;
   overflow: hidden;
 }
+
 .avatar-uploader .el-upload:hover {
   border-color: #409eff;
 }
+
 .avatar-uploader-icon {
   font-size: 28px;
   color: #8c939d;
@@ -294,6 +256,7 @@ h6 {
   line-height: 178px;
   text-align: center;
 }
+
 .avatar {
   width: 178px;
   height: 178px;

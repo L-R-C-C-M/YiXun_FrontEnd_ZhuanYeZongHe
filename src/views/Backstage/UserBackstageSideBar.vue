@@ -2,25 +2,26 @@
 <template>
   <!-- 侧边栏 -->
   <el-aside width="200px" style="background-color: #323a52">
-    <el-menu
-      background-color="#323A52"
-      text-color="#fff"
-      active-text-color="#2C9EF7"
-      router
-    >
+    <el-menu background-color="#323A52" text-color="#fff" active-text-color="#2C9EF7" router>
       <el-menu-item index="/UserBackstage/UserHomePage">
-        <el-icon><User /></el-icon>
+        <el-icon>
+          <User />
+        </el-icon>
         <span>主页</span>
       </el-menu-item>
 
       <el-menu-item index="/UserBackstage/PersonalInfo">
-        <el-icon><setting /></el-icon>
+        <el-icon>
+          <setting />
+        </el-icon>
         <span>个人信息</span>
       </el-menu-item>
 
       <el-menu-item index="/UserBackstage/ApplyVol">
-        <el-icon><setting /></el-icon>
-        <span>申请成为志愿者</span>
+        <el-icon>
+          <setting />
+        </el-icon>
+        <span>申请成为工作人员</span>
       </el-menu-item>
     </el-menu>
   </el-aside>

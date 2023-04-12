@@ -1,6 +1,7 @@
 const base = {
     //公共路径
-    baseUrl: "http://121.40.111.217:3300",
+    //baseUrl: "http://121.40.111.217:3300",
+    baseUrl: "http://localhost:3300",
     //1.3 获取用户信息*
     userInfo: "/api/UserInfo/GetUserInfo",
     //1.3-2 修改个人信息*
@@ -26,7 +27,7 @@ const base = {
     ScreenSearchInfo: "/api/MainPage/ScreenSearchInfo",
     //该地址码处的寻人信息*
     GetSearchInfoPos: "/api/MainPage/GetSearchInfoPos",
- 
+
     //--完成--//
     //csy
     //4.1.1 获取志愿活动 =====> *
@@ -98,6 +99,15 @@ const base = {
     addVolActivityPic: "/api/Administrator/AddVolActivityPic",
     //1.1-3返回所有志愿机构id和名称
     getAllVolInst: "/api/Administrator/GetAllVolInst",
+
+
+    //修改志愿活动
+    modifyVolActivity: "/api/Administrator/ChangeVolActivity",
+
+    //删除志愿活动
+    deleteVolActivity: "/api/Administrator/DeleteVolActivity",
+
+
     //baseUrl0: "http://8.130.101.207:5927",
     //baseUrl1: "http://8.130.101.207:10105",
     //1.3 获取用户信息 *

@@ -40,10 +40,12 @@ const api = {
     GetFoundInfoNum() {
         return axios.get(path.baseUrl + path.GetFoundInfoNum)
     },
+
     // 首页展示信息
     // ScreenSearchInfo(lost){
     //     return axios.get(path.baseUrl + path.ScreenSearchInfo,{params:{}})
     // }
+
     //初始展示全部寻人信息
     GetAllSearchInfo(pageNum, pageSize) {
         return axios.get(path.baseUrl + path.GetAllSearchInfo, { params: { pageNum: pageNum, pageSize: pageSize } })
@@ -96,6 +98,7 @@ const api = {
     getVolAct(pageNum, pageSize) {
         return axios.get(path.baseUrl + path.volAct, { params: { pageNum: pageNum, pageSize: pageSize } })
     },
+
     //4.1.2 搜索志愿活动
     getActSearch(act_name, pageNum, pageSize) {
         return axios.post(path.baseUrl + path.searchAct, { "search": act_name, "pageNum": pageNum, "pageSize": pageSize })
@@ -354,10 +357,11 @@ const api = {
             act_province: act_province, act_city: act_city, act_area: act_area, act_address: act_address, contact_method: contact_method
         })
     },
-    //1.1-3返回所有志愿机构id和名称
-    getAllVolInst() {
-        return axios.get(path.baseUrl + path.getAllVolInst)
-    },
+
+    // //1.1-3返回所有志愿机构id和名称
+    // getAllVolInst() {
+    //     return axios.get(path.baseUrl + path.getAllVolInst)
+    // },
     //1.3-2 修改个人信息
     changeUserInfo(user_id, user_name, user_phone, user_email, user_province, user_city, user_area, user_address) {
         return axios.put(path.baseUrl + path.changeUserInfo, { user_id: user_id, user_name: user_name, user_phone: user_phone, user_email: user_email, user_province: user_province, user_city: user_city, user_area: user_area, user_address: user_address })
@@ -386,6 +390,22 @@ const api = {
     addVolActivityPic(volAct_id, volAct_pic) {
         return axios.put(path.baseUrl + path.addVolActivityPic, { volAct_id: volAct_id, volAct_pic: volAct_pic })
     },
+
+    //新增
+
+    //管理员修改志愿活动
+    modifyVolActivity(act_id, act_name, act_content, act_time, need_people, act_province, act_city, act_area, act_address, contact_method) {
+        return axios.put(path.baseUrl + path.modifyVolActivity, {
+            act_id: act_id, act_name: act_name, act_content: act_content, act_time: act_time, need_people: need_people,
+            act_province: act_province, act_city: act_city, act_area: act_area, act_address: act_address, contact_method: contact_method
+        })
+    },
+
+    //管理员删除志愿活动
+    deleteVolActivity(act_id) {
+        return axios.delete(path.baseUrl + path.deleteVolActivity, { params: { actId: act_id } })
+    },
+
     //1.1-3返回所有志愿机构id和名称
     getAllVolInst() {
         return axios.get(path.baseUrl + path.getAllVolInst)
