@@ -4,22 +4,9 @@
       <InfoHeader />
     </el-header> -->
     <el-header style="height: fit-content; padding: 0">
-      <el-menu
-        router
-        :default-active="activeIndex"
-        class="up-menu"
-        mode="horizontal"
-        background-color="#202741"
-        text-color="#FFFFFF"
-        active-text-color="#2E74B6"
-        :ellipsis="false"
-        @select="handleSelect"
-      >
-        <el-image
-          style="height: 70%; width: 20%"
-          :src="require('../../image/logo.png')"
-          fit="contain"
-        />
+      <el-menu router :default-active="activeIndex" class="up-menu" mode="horizontal" background-color="#202741"
+        text-color="#FFFFFF" active-text-color="#2E74B6" :ellipsis="false" @select="handleSelect">
+        <el-image style="height: 70%; width: 20%" :src="require('../../image/logo.png')" fit="contain" />
         <!-- <div class="flex-grow" />
         <el-menu-item index="/cover">寻人首页</el-menu-item>
         <el-menu-item index="/volunOver">志愿活动</el-menu-item>
@@ -32,7 +19,7 @@
     <el-main>
       <!-- 这里是页面内容 -->
       <div style="margin: 40px auto; height: 550px; width: 800px">
-        <RegisterCard />
+        <RegisterCard style="box-shadow: 10px 10px 10px 0 #666;" />
       </div>
       <!-- <span>注册</span> -->
       <!-- <div style="height: 550px; width: 800px">
@@ -79,9 +66,11 @@ export default {
   width: 100%;
   align-items: center;
 }
+
 .el-main {
   background-color: #f4f6f9;
 }
+
 /* .el-footer {
   background-color: #202741;
   color: #dddcdc;

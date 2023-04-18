@@ -2,75 +2,31 @@
 <!-- 可封装在页面主体部分，整体高度占父容器100%，宽度占100% -->
 <template>
   <div class="body">
-    <el-image
-      class="left-image"
-      :src="require('../../../image/log-in.png')"
-      fit="fill"
-    />
+    <el-image class="left-image" :src="require('../../../image/log-in.png')" fit="fill" />
     <div class="message-card">
-      <el-image
-        style="height: 15%; width: 100%"
-        :src="require('../../../image/logo.png')"
-        fit="contain"
-      />
+      <el-image style="height: 15%; width: 100%" :src="require('../../../image/logo.png')" fit="contain" />
       <div class="input">
         <!--           ref="ruleFormRef" -->
-        <el-form
-          ref="ruleFormRef"
-          :model="registForm"
-          status-icon
-          :rules="rules"
-        >
+        <el-form ref="ruleFormRef" :model="registForm" status-icon :rules="rules">
           <el-form-item prop="userName">
-            <el-input
-              v-model="registForm.userName"
-              type="text"
-              placeholder="用户名"
-              autocomplete="off"
-            />
+            <el-input v-model="registForm.userName" type="text" placeholder="用户名" autocomplete="off" />
           </el-form-item>
           <el-form-item prop="userEmail">
-            <el-input
-              v-model="registForm.userEmail"
-              type="email"
-              placeholder="邮箱"
-              autocomplete="off"
-            />
+            <el-input v-model="registForm.userEmail" type="email" placeholder="邮箱" autocomplete="off" />
           </el-form-item>
           <el-form-item prop="phoneNumber">
-            <el-input
-              v-model="registForm.phoneNumber"
-              placeholder="手机号"
-              show-word-limit
-              style="margin-right: 3%"
-              autocomplete="off"
-            />
+            <el-input v-model="registForm.phoneNumber" placeholder="手机号" show-word-limit autocomplete="off" />
           </el-form-item>
           <el-form-item prop="password">
-            <el-input
-              v-model="registForm.password"
-              type="password"
-              placeholder="密码"
-              show-password
-              autocomplete="off"
-            />
+            <el-input v-model="registForm.password" type="password" placeholder="密码" show-password autocomplete="off" />
           </el-form-item>
           <el-form-item prop="confirmPassword">
-            <el-input
-              v-model="registForm.confirmPassword"
-              type="password"
-              placeholder="确认密码"
-              show-password
-              autocomplete="off"
-            />
+            <el-input v-model="registForm.confirmPassword" type="password" placeholder="确认密码" show-password
+              autocomplete="off" />
           </el-form-item>
 
           <div>
-            <el-button
-              @click="goRegister"
-              type="primary"
-              style="width:40%"
-            >注册</el-button>
+            <el-button @click="goRegister" type="primary" style="width:40%">注册</el-button>
           </div>
         </el-form>
       </div>
@@ -78,13 +34,13 @@
   </div>
 </template>
  
- <script>
+<script>
 // @ is an alias to /src
 import { reactive, ref } from "vue";
 // import { FormInstance, FormRules } from "element-plus";
 import api from "/src/api/index";
 export default {
-  data () {
+  data() {
 
     const validatePass = (rule, value, callback) => {
       if (value === "") {
@@ -171,7 +127,7 @@ export default {
     };
   },
   methods: {
-    goRegister () {
+    goRegister() {
       //点击以后，调用api看是否注册成功
       api
         .Regist(
@@ -188,17 +144,17 @@ export default {
             "userid",
             JSON.stringify(res.data.data.user_id)
           );
-              //路径跳转
+          //路径跳转
           this.$router.push({
             path: "/addInfo",
             //params: {  }, path和params不能同时使用，会使params失效，要用params需要将path替代为name(router名)
-            query: { user_id: this.userId},
+            query: { user_id: this.userId },
           });
         })
         .catch((err) => {
           console.log("注册失败", err.data);
         })
-    
+
     }
   },
 };
@@ -217,6 +173,7 @@ const input = ref("");
   flex-direction: row;
   justify-content: space-between;
 }
+
 .left-image {
   height: 100%;
   width: 50%;
@@ -224,6 +181,7 @@ const input = ref("");
   border-top-left-radius: 20px;
   border-bottom-left-radius: 20px;
 }
+
 .message-card {
   height: 100%;
   width: 50%;
@@ -236,16 +194,19 @@ const input = ref("");
   padding-right: 5%;
   box-sizing: border-box;
 }
+
 .input {
   width: 100%;
-  height: 60%;
+  height: 70%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
+
 .el-link {
   font-size: 10px;
 }
+
 .tip {
   display: flex;
   flex-direction: row;

@@ -9,26 +9,19 @@
         <!-- 地图定位到当前地点并显示其周围信息 -->
         <gaodeMap></gaodeMap>
         <div id="release">
-          <el-button
-            @click="goReleaseMissingInfo()"
-            color="#044C90"
-            :dark="isDark"
-            >发布寻人信息</el-button
-          >
+          <el-button @click="goReleaseMissingInfo()" color="#044C90" :dark="isDark">发布寻人信息</el-button>
         </div>
         <div class="slogen" background-image="../../image/map-test.png">
           千里寻人，你我助力
         </div>
         <Search @onEvent="getSearchInfo"></Search>
 
-        <div
-          style="
-            text-align: left;
-            margin-left: 3%;
-            margin-right: 1%;
-            margin-bottom: 1%;
-          "
-        >
+        <div style="
+                        text-align: left;
+                        margin-left: 3%;
+                        margin-right: 1%;
+                        margin-bottom: 1%;
+                      ">
           <h style="font-size: 8px; font-weight: 600; color: #c2c2c2">
             共搜索到
             <h style="color: #2e74b6"> {{ searchNum }}条 </h>寻人信息
@@ -37,27 +30,14 @@
 
         <div class="containerFlex">
           <!-- 使用flex布局 -->
-          <div
-            class="PhotoContainer"
-            v-for="(item, index) in lostInfoList"
-            :key="index"
-          >
+          <div class="PhotoContainer" v-for="(item, index) in lostInfoList" :key="index">
             <!-- 被寻人照片 -->
-            <div
-              class="PhotoOnly"
-              @click="clickPhoto(lostInfoList[index].SearchinfoId)"
-            >
+            <div class="PhotoOnly" @click="clickPhoto(lostInfoList[index].SearchinfoId)">
               <el-row>
                 <el-col :span="8">
                   <div class="thePhoto">
-                    <el-image
-                      style="
-                        width: 100%;
-                        height: 220px;
-                        border-radius: 10px 10px 0 0;
-                      "
-                      :src="lostInfoList[index].SearchinfoPhotoURL"
-                    >
+                    <el-image style="width: 100%;height: 220px;border-radius: 10px 10px 0 0;"
+                      :src="lostInfoList[index].SearchinfoPhotoURL" fit="cover">
                     </el-image>
                   </div>
                 </el-col>
@@ -99,82 +79,47 @@
          <lostInformationBlock :fenyexinxi="LostInfo"></lostInformationBlock> -->
         <!-- 分页器 -->
         <div class="demo-pagination-block">
-          <el-pagination
-            v-model:currentPage="LostInfo.pageNum"
-            v-model:page-size="LostInfo.pageSize"
-            :small="small"
-            :disabled="disabled"
-            :background="background"
-            :pager-count="5"
-            layout="prev, pager, next, jumper"
-            :total="total"
-            @size-change="handleSizeChange"
-            @current-change="handleCurrentChange"
-          />
+          <el-pagination v-model:currentPage="LostInfo.pageNum" v-model:page-size="LostInfo.pageSize" :small="small"
+            :disabled="disabled" :background="background" :pager-count="5" layout="prev, pager, next, jumper"
+            :total="total" @size-change="handleSizeChange" @current-change="handleCurrentChange" />
         </div>
 
         <div id="app">
           <kinesis-container class="container">
             <kinesis-element>
-              <kinesis-element
-                tag="img"
-                :src="require('../../image/cover_show3.png')"
-                :strength="10"
-                type="rotate"
-                transformOrigin="50% 300%"
-                axis="x"
-              />
-              <kinesis-element
-                tag="img"
-                :src="require('../../image/cover_show2.png')"
-                :strength="-10"
-                type="rotate"
-                transformOrigin="50% 300%"
-                axis="x"
-              />
-              <kinesis-element
-                tag="img"
-                :src="require('../../image/cover_show1.png')"
-                :strength="10"
-                type="depth"
-              />
+              <kinesis-element tag="img" :src="require('../../image/cover_show3.png')" :strength="10" type="rotate"
+                transformOrigin="50% 300%" axis="x" />
+              <kinesis-element tag="img" :src="require('../../image/cover_show2.png')" :strength="-10" type="rotate"
+                transformOrigin="50% 300%" axis="x" />
+              <kinesis-element tag="img" :src="require('../../image/cover_show1.png')" :strength="10" type="depth" />
 
               <div class="box2-2">
-                <div
-                  class="box-div"
-                  @mouseenter="mouseEnter(0)"
-                  @mouseleave="mouseLeave"
-                  :class="{ color: changeIndex === 0 }"
-                >
-                  <el-icon class="box_icon"><Document /></el-icon>
+                <div class="box-div" @mouseenter="mouseEnter(0)" @mouseleave="mouseLeave"
+                  :class="{ color: changeIndex === 0 }">
+                  <el-icon class="box_icon">
+                    <Document />
+                  </el-icon>
                   已发布启事 {{ padding1(itemNum, length) }}个
                 </div>
-                <div
-                  class="box-div"
-                  @mouseenter="mouseEnter(1)"
-                  @mouseleave="mouseLeave"
-                  :class="{ color: changeIndex === 1 }"
-                >
-                  <el-icon class="box_icon"><DocumentChecked /></el-icon>
+                <div class="box-div" @mouseenter="mouseEnter(1)" @mouseleave="mouseLeave"
+                  :class="{ color: changeIndex === 1 }">
+                  <el-icon class="box_icon">
+                    <DocumentChecked />
+                  </el-icon>
                   共收到线索 {{ padding1(clueNum, length) }}条
                 </div>
-                <div
-                  class="box-div"
-                  :class="{ color: changeIndex === 2 }"
-                  @mouseenter="mouseEnter(2)"
-                  @mouseleave="mouseLeave"
-                  :style="active"
-                >
-                  <el-icon class="box_icon"><Connection /></el-icon>
+                <div class="box-div" :class="{ color: changeIndex === 2 }" @mouseenter="mouseEnter(2)"
+                  @mouseleave="mouseLeave" :style="active">
+                  <el-icon class="box_icon">
+                    <Connection />
+                  </el-icon>
                   累计已帮助 {{ padding1(peopleNum, length) }}人
                 </div>
-                <div
-                  class="box-div"
-                  @mouseenter="mouseEnter(3)"
-                  @mouseleave="mouseLeave"
-                  :class="{ color: changeIndex === 3 }"
-                >
-                  <el-icon class="box_icon"><User /></el-icon>
+                <div class="box-div" @mouseenter="mouseEnter(3)" @mouseleave="mouseLeave"
+                  :class="{ color: changeIndex === 3 }">
+                  <el-icon class="box_icon">
+                    <User />
+                  </el-icon>
                   注册志愿者 {{ padding1(volNum, length) }}人
                 </div>
               </div>
@@ -564,6 +509,7 @@ export default {
   /* margin-right: 8%; */
   text-align: right;
 }
+
 .slogen {
   z-index: 1;
   color: #2e74b6;
@@ -573,15 +519,19 @@ export default {
   font-size: 40px;
   font-weight: bold;
 }
+
 .el-row:first-child {
   margin-top: 20px;
 }
+
 .el-row:last-child {
   margin-bottom: 20px;
 }
+
 .el-col {
   border-radius: 4px;
 }
+
 .grid-content {
   border-radius: 4px;
   background-color: #2e74b6;
@@ -591,6 +541,7 @@ export default {
   margin-top: 5px;
   min-height: 36px;
 }
+
 .grid-content-right {
   color: #2e74b6;
 }
@@ -599,21 +550,26 @@ export default {
   display: flex;
   align-items: center;
 }
+
 .slider-demo-block .el-slider {
   margin-top: 0;
   margin-left: 12px;
 }
+
 .last-page {
   margin-top: 40px;
   background-color: #32495e;
 }
+
 .last-page .bottom-style {
   padding-top: 20px;
   display: flex;
 }
+
 .last-page .bottom-style .logo-bottom {
   width: 60%;
 }
+
 .last-page .bottom-style .hand {
   display: flex;
   width: 60%;
@@ -621,10 +577,12 @@ export default {
   margin-bottom: 0;
   margin-left: 40px;
 }
+
 .total-number {
   margin-left: 0;
   padding-top: 70px;
 }
+
 .total-item {
   color: #ffffff;
   font-size: 25px;
@@ -634,6 +592,7 @@ export default {
   line-height: 35px;
   padding-top: 5px;
 }
+
 /* 分页器 */
 /* .demonstration {
   margin: 0 auto;
@@ -642,37 +601,47 @@ export default {
   /* height: 100%; */
   height: 100%;
 }
+
 .informationBlock {
   padding-left: 5%;
   padding-top: 5%;
   padding-bottom: 8%;
   display: inline-block;
 }
+
 .informationBlock .line {
   padding-top: 10px;
   padding-right: 12px;
   float: inline-start;
 }
+
 .informationBlock .tableTitle {
   color: #2e74b6;
   font-weight: 700;
 }
+
 h {
   font-size: 12px;
 }
+
 .containerFlex {
   display: flex;
-  flex-direction: row; /*容器内成员的排列方式为从左到右*/
-  flex-wrap: wrap; /*换行方式，放不下就换行*/
-  justify-content: flex-start; /*项目在主轴上的对齐方式*/
+  flex-direction: row;
+  /*容器内成员的排列方式为从左到右*/
+  flex-wrap: wrap;
+  /*换行方式，放不下就换行*/
+  justify-content: flex-start;
+  /*项目在主轴上的对齐方式*/
   align-content: flex-start;
 }
+
 .PhotoContainer {
   width: 450px;
   height: 220px;
   margin-bottom: 20px;
   margin-left: 25px;
 }
+
 .PhotoOnly {
   width: 95%;
   height: 100%;
@@ -685,6 +654,7 @@ h {
   cursor: pointer;
   /* -webkit-transition: all 200ms ease-in; */
 }
+
 .demo-pagination-block {
   /* height: 100px; */
   /* margin-left: 30%; */
@@ -694,6 +664,7 @@ h {
   /* text-align: center; */
   display: flex;
 }
+
 .el-pagination {
   margin: auto;
 }
@@ -731,6 +702,7 @@ h {
   right: -2%;
   bottom: 17%;
 }
+
 .circle.circle-purple2 {
   background-color: #f2eafa;
   opacity: 0.1;
@@ -762,16 +734,22 @@ h {
   /*vw是相对视口（viewport）的宽度而定的，长度等于视口宽度的1/100*/
   /*vh是相对视口（viewport）的高度而定的，长度等于视口高度的1/100*/
   width: 40vw;
-  display: grid; /* 开启grid布局*/
-  grid-template-columns: repeat(2, 50%); /*设置4列，每一列占总宽度的25% */
-  grid-template-rows: repeat(2, 30%); /*设置3行， 每一行占总宽度的30% */
-  grid-column-gap: 1vh; /*列间距*/
-  grid-row-gap: 1vh; /*行间距*/
+  display: grid;
+  /* 开启grid布局*/
+  grid-template-columns: repeat(2, 50%);
+  /*设置4列，每一列占总宽度的25% */
+  grid-template-rows: repeat(2, 30%);
+  /*设置3行， 每一行占总宽度的30% */
+  grid-column-gap: 1vh;
+  /*列间距*/
+  grid-row-gap: 1vh;
+  /*行间距*/
   border-radius: 10px;
   position: absolute;
   right: 20%;
   margin-top: 50px;
 }
+
 .box-div {
   background-color: white;
   border-radius: 10px;
@@ -785,6 +763,7 @@ h {
   font-size: 18px;
   color: #200741;
 }
+
 .box_icon {
   font-size: 30px;
   margin-right: 18px;

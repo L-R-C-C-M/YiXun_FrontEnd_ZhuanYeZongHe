@@ -26,7 +26,7 @@
             <el-table :data="tableData" style="width: 100%" header-align="center">
                 <!--el-table-column type="selection" width="55" align="center"/-->
                 <el-table-column prop="VolActId" label="志愿活动编号" align="center" />
-                <el-table-column prop="VolActName" label="资讯标题" align="center" />
+                <el-table-column prop="VolActName" label="志愿活动标题" align="center" />
                 <el-table-column prop="ReleaseTime" label="发布时间" align="center" />
                 <!-- <el-table-column prop= "administrator_id" label="管理员编号" align="center"/> -->
                 <!-- <el-table-column prop="need_people" label="所需人数" align="center"/> -->

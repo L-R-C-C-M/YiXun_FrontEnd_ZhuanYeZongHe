@@ -3,88 +3,47 @@
 <template>
   <div class="body">
     <el-image
-      style="
-        height: 100%;
-        width: 50%;
-        background-color: #000;
-        border-top-left-radius: 20px;
-        border-bottom-left-radius: 20px;
-      "
-      :src="require('../../../image/log-in.png')"
-      fit="fill"
-    />
+      style="height: 100%;width: 50%;background-color: #000;border-top-left-radius: 20px;border-bottom-left-radius: 20px;"
+      :src="require('../../../image/log-in.png')" fit="fill" />
     <div class="message-card">
-      <el-image
-        style="height: 20%; width: 100%"
-        :src="require('../../../image/logo.png')"
-        fit="contain"
-      />
-      <el-form
-        ref="checkForm"
-        :model="loginForm"
-        label-width="80px"
-        justify="center"
-        style="max-width: 500px"
-        :rules="rules"
-      >
-        <el-form-item
-          label="手机号"
-          prop="inputPhonenumber"
-        >
-          <el-input
-            v-model="loginForm.inputPhonenumber"
-            placeholder="手机号"
-          />
+      <el-image style="height: 20%; width: 100%" :src="require('../../../image/logo.png')" fit="contain" />
+      <el-form ref="checkForm" :model="loginForm" label-width="80px" justify="center" style="max-width: 500px"
+        :rules="rules">
+        <el-form-item label="手机号" prop="inputPhonenumber">
+          <el-input v-model="loginForm.inputPhonenumber" placeholder="手机号" />
         </el-form-item>
-        <el-form-item
-          label="密码"
-          prop="inputPassword"
-        >
-          <el-input
-            v-model="loginForm.inputPassword"
-            type="password"
-            show-password
-            placeholder="密码"
-          />
+        <el-form-item label="密码" prop="inputPassword">
+          <el-input v-model="loginForm.inputPassword" type="password" show-password placeholder="密码" />
         </el-form-item>
       </el-form>
-      <div style="
-          
-          height: 15%;
-          margin: 0% auto;
-          /* width: 50%;display: flex;
-          flex-direction: column;
-          justify-content: space-between; */
-
-        ">
-        <el-button
-          @click="checkUser('checkForm')"
-          type="primary"
-          style=""
-        >登录</el-button>
+      <div
+        style="height: 15%;margin-right: 0%;/*margin: 0% auto;/* width: 50%;display: flex;flex-direction: column;justify-content: space-between; */">
+        <el-row type="flex" justify="end">
+          <el-button @click="checkUser('checkForm')" type="primary" style="width:40%;">登 录</el-button>
+          <el-button @click="goRegister()" type="primary" style="width: 40%;" plain>注 册</el-button>
+        </el-row>
       </div>
 
-      <div class="tip">
-        <!-- <el-link>忘记密码</el-link> -->
-        <!-- <el-link>没有账号？立即注册</el-link> -->
-        <!-- <router-link to="/cover" class="registerLink">看一看</router-link> -->
-        <router-link
-          to="/register"
-          class="registerLink"
-        >没有账号？立即注册</router-link>
+    <div>
+        <!-- <el-link>忘记密码</el-link>
+                                                                                        <el-link>没有账号？立即注册</el-link> -->
+      <!-- <router-link to="/cover" class="registerLink">看一看</router-link> -->
+        <!-- <el-row type="flex" justify="end"><router-link to="/register"
+                                      class="registerLink">没有账号？立即注册</router-link></el-row> -->
+        <el-row type="flex" justify="end"><router-link to="/register" class="registerLink">忘记密码</router-link></el-row>
       </div>
     </div>
   </div>
 </template>
  
- <script>
+<script>
 // @ is an alias to /src
 //import axios from "axios";
 import api from "/src/api/index";
 import { reactive, ref } from "vue";
 import { ElMessage } from "element-plus";
 export default {
-  data () {
+  data() {
     return {
       identity: "",
       user_id: "",
@@ -113,7 +72,7 @@ export default {
     };
   },
   methods: {
-    checkUser (formEl) {
+    checkUser(formEl) {
       //console.log(this.loginForm.inputPhonenumber);
       this.$refs[formEl].validate((valid) => {
         if (!valid) {
@@ -180,7 +139,7 @@ export default {
                   window.sessionStorage.setItem(
                     "token",
                     JSON.stringify(res.data.data.user_token)
-                  ); 
+                  );
                   this.$router.push({
                     //登陆成功跳转到寻人首页
                     path: "/",
@@ -191,11 +150,11 @@ export default {
                     "administratorid",
                     JSON.stringify(res.data.data.id)
                   ); //保存管理员id
-                   //保存token
+                  //保存token
                   window.sessionStorage.setItem(
                     "token",
                     JSON.stringify(res.data.data.user_token)
-                  ); 
+                  );
                   this.$router.push({
                     //管理员登陆成功跳转到管理员后台
                     path: "/backstage",
@@ -219,6 +178,11 @@ export default {
         }
       });
     },
+    goRegister() {
+      this.$router.push({
+        path: "/register",
+      });
+    }
   },
   //注释掉的代码是获取数据用的，加载界面的同时会获取数据
   // mounted(){
@@ -243,6 +207,7 @@ export default {
   flex-direction: row;
   justify-content: space-between;
 }
+
 .message-card {
   height: 100%;
   width: 50%;
@@ -255,14 +220,14 @@ export default {
   padding-right: 5%;
   box-sizing: border-box;
 }
+
 .registerLink {
   font-size: 10px;
 }
-.tip {
-  /* display: flex; */
+
+/* .tip {
   text-align: right;
-  /* flex-direction: row; */
-  /* justify-content: space-between; */
-}
+  padding-right: 0%;
+} */
 </style>
  

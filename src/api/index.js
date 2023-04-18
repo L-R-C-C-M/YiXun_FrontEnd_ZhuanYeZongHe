@@ -326,7 +326,7 @@ const api = {
     },
     //1.8.7 通过举报
     passClueRepo(clueId) {
-        return axios.put(path.baseUrl + path.passClueRepo, { params: { clueId: clueId } })
+        return axios.put(path.baseUrl + path.passClueRepo, null, { params: { clueId: clueId } })
     },
     //1.8.8 拒绝举报
     denyClueRepo(cluerepoid) {

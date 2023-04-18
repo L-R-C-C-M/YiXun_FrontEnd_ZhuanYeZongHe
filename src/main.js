@@ -9,10 +9,13 @@ import ElementPlus from 'element-plus'
 
 
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
+import locale from 'element-plus/lib/locale/lang/zh-cn'
 //createApp(App).use(ElementPlus).use(store).use(router).mount('#app')
 const app = createApp(App)
+app.use(ElementPlus, { locale });
 //app.config.globalProperties.$axios = axios
-app.use(ElementPlus).use(store).use(router).mount('#app')
+//.use(ElementPlus)
+app.use(store).use(router).mount('#app')
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
     app.component(key, component)
 }
