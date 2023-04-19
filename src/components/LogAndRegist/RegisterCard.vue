@@ -8,12 +8,18 @@
       <div class="input">
         <!--           ref="ruleFormRef" -->
         <el-form ref="ruleFormRef" :model="registForm" status-icon :rules="rules">
-          <el-form-item prop="userName">
-            <el-input v-model="registForm.userName" type="text" placeholder="用户名" autocomplete="off" />
-          </el-form-item>
           <el-form-item prop="userEmail">
             <el-input v-model="registForm.userEmail" type="email" placeholder="邮箱" autocomplete="off" />
           </el-form-item>
+          <el-form-item prop="inputChecknum">
+            <el-input v-model="inputChecknum" type="text" placeholder="邮箱验证码" autocomplete="off"> <template #append>
+                <el-button @click="getChecknum" :disabled="totaltime < 60">{{ content }}</el-button>
+              </template></el-input>
+          </el-form-item>
+          <el-form-item prop="userName">
+            <el-input v-model="registForm.userName" type="text" placeholder="用户名" autocomplete="off" />
+          </el-form-item>
+
           <el-form-item prop="phoneNumber">
             <el-input v-model="registForm.phoneNumber" placeholder="手机号" show-word-limit autocomplete="off" />
           </el-form-item>
@@ -39,9 +45,10 @@
 import { reactive, ref } from "vue";
 // import { FormInstance, FormRules } from "element-plus";
 import api from "/src/api/index";
+import { ElMessage } from "element-plus";
+import { escapeRegExp } from "lodash";
 export default {
   data() {
-
     const validatePass = (rule, value, callback) => {
       if (value === "") {
         callback(new Error("请输入密码"));
@@ -62,7 +69,12 @@ export default {
         callback();
       }
     }
+
     return {
+      totaltime: 60,
+      content: "获取验证码",
+      emailcheck: "",
+      inputChecknum: "",
       registForm: reactive({
         userName: "",
         userEmail: "",
@@ -126,34 +138,115 @@ export default {
       ruleFormRef: ref(),
     };
   },
+  // setup() {
+  //   const handleTimeChange = () => {
+  //     //console.log("显示", isDisposed.value)
+  //     if (time.value <= 0) {
+  //       isDisposed = false;
+  //       time.value = 10;
+  //     } else {
+  //       setTimeout(() => {
+  //         time.value--;
+  //         handleTimeChange();
+  //       }, 1000);
+  //     }
+  //   };
+
+  //   const time = ref(10);
+  //   const isDisposed = false;
+  //   return { time, isDisposed }
+  // },
   methods: {
-    goRegister() {
-      //点击以后，调用api看是否注册成功
-      api
-        .Regist(
-          this.registForm.userName,
-          Number(this.registForm.phoneNumber),
-          this.registForm.userEmail,
-          this.registForm.password
-        )
-        .then((res) => {
-          console.log('注册成功', res.data)
-          this.userId = res.data.data.user_id;
-          console.log(this.userId);
-          window.sessionStorage.setItem(
-            "userid",
-            JSON.stringify(res.data.data.user_id)
-          );
-          //路径跳转
-          this.$router.push({
-            path: "/addInfo",
-            //params: {  }, path和params不能同时使用，会使params失效，要用params需要将path替代为name(router名)
-            query: { user_id: this.userId },
+    getChecknum() {
+      api.getEmailCheckNum(this.registForm.userEmail).then((res) => {
+        console.log("验证码返回", res);
+        if (res.status == 200) {
+          if (res.data == false) {
+            ElMessage({
+              message: "当前邮箱已注册",
+              type: "error",
+            });
+          }
+          else {
+            console.log("获取验证码成功")
+            ElMessage({
+              message: "验证码已发送",
+              type: "success",
+            });
+            this.emailcheck = res.data;
+            //this.isDisposed = true;
+            //this.handleTimeChange;
+            const clock = window.setInterval(() => {
+              this.content = '已发送(' + this.totaltime + 's)'
+              this.totaltime--
+              if (this.totaltime < 0) {
+                this.totaltime = 60
+                this.content = "重新发送验证码"
+                //this.emailcheck = ''
+                window.clearInterval(clock)
+              }
+            }, 1000)
+          }
+        }
+        else {
+          ElMessage({
+            message: "验证码发送失败，请稍后重试",
+            type: "error",
           });
-        })
-        .catch((err) => {
-          console.log("注册失败", err.data);
-        })
+          console.log("获取验证码失败")
+        }
+      })
+    },
+    goRegister() {
+      // console.log("emailcheck", this.emailcheck);
+      // console.log("inputcheck", this.inputChecknum);
+      if (this.emailcheck == this.inputChecknum) {
+        api
+          .Regist(
+            this.registForm.userName,
+            Number(this.registForm.phoneNumber),
+            this.registForm.userEmail,
+            this.registForm.password
+          )
+          .then((res) => {
+            if (res.data.status) {
+              console.log('注册成功', res.data)
+              ElMessage({
+                message: "注册成功!",
+                type: "success",
+              });
+              this.userId = res.data.data.user_id;
+              console.log(this.userId);
+              window.sessionStorage.setItem(
+                "userid",
+                JSON.stringify(res.data.data.user_id)
+              );
+              //路径跳转
+              this.$router.push({
+                path: "/addInfo",
+                query: { user_id: this.userId },
+              });
+            }
+            else {
+              console.log("注册失败", res.data)
+              ElMessage({
+                message: "注册失败!",
+                type: "error",
+              });
+            }
+
+          })
+          .catch((err) => {
+            console.log("注册失败", err.data);
+          })
+      }
+      else {
+        ElMessage({
+          message: "验证码错误!",
+          type: "error",
+        });
+      }
+
 
     }
   },

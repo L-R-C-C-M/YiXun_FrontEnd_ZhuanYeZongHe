@@ -2,86 +2,43 @@
 <!-- 可封装在页面主体部分，整体高度占父容器100%，宽度占100% -->
 <template>
   <div class="body">
-    <el-image
-      class="left-image"
-      :src="require('../../../image/log-in.png')"
-      fit="fill"
-    />
+    <el-image class="left-image" :src="require('../../../image/log-in.png')" fit="fill" />
     <div class="message-card">
-      <el-image
-        style="height: 15%; width: 100%"
-        :src="require('../../../image/logo.png')"
-        fit="contain"
-      />
+      <el-image style="height: 15%; width: 100%" :src="require('../../../image/logo.png')" fit="contain" />
 
       <div class="input">
         <span style="text-align: left; padding-bottom: 5px">上传头像</span>
         <div style="text-align: center">
-          <el-upload
-            class="avatar-uploader"
-            action
-            :auto-upload="false"
-            ref="upload"
-            :show-file-list="false"
-            :on-change="onUploadChange"
-          >
-            <img
-              v-if="this.user_head"
-              :src="this.user_head"
-              class="avatar"
-            />
-            <el-icon
-              v-else
-              class="avatar-uploader-icon"
-            >
+          <el-upload class="avatar-uploader" action :auto-upload="false" ref="upload" :show-file-list="false"
+            :on-change="onUploadChange">
+            <img v-if="this.user_head" :src="this.user_head" class="avatar" />
+            <el-icon v-else class="avatar-uploader-icon">
               <Plus />
             </el-icon>
           </el-upload>
         </div>
         <span style="text-align: left; padding-bottom: 5px">性别</span>
-        <el-select
-          v-model="user_gender"
-          placeholder="性别"
-        >
-          <el-option
-            v-for="item in genderOptions"
-            :key="item.value"
-            :label="item.label"
-            :value="item.label"
-          >
+        <el-select v-model="user_gender" placeholder="性别">
+          <el-option v-for="item in genderOptions" :key="item.value" :label="item.label" :value="item.label">
           </el-option>
         </el-select>
         <span style="text-align: left; padding-top: 10px">地址</span>
         <div id="app">
-          <el-cascader
-            style="width: 190px"
-            :options="options"
-            v-model="selectedOptions"
-            placeholder="省-市-区"
-            @change="handleChange"
-          >
+          <el-cascader style="width: 190px" :options="options" v-model="selectedOptions" placeholder="省-市-区"
+            @change="handleChange">
           </el-cascader>
-          <el-input
-            size="samll"
-            style="width: 130px"
-            v-model="user_address"
-            autocomplete="off"
-            placeholder="详细地址"
-          ></el-input>
+          <el-input size="samll" style="width: 130px" v-model="user_address" autocomplete="off"
+            placeholder="详细地址"></el-input>
         </div>
         <span style="text-align: center; padding-top: 30px">
-          <el-button
-            type="primary"
-            @click="save"
-            style="width:40%"
-          >提 交</el-button>
+          <el-button type="primary" @click="save" style="width:40%">提 交</el-button>
         </span>
       </div>
     </div>
   </div>
 </template>
  
- <script>
+<script>
 // @ is an alias to /src
 import { ref } from "vue";
 
@@ -90,7 +47,7 @@ const input = ref("");
 import api from "/src/api/index";
 import { regionData } from "element-china-area-data";
 export default {
-  data () {
+  data() {
     return {
       user_id: 0,
       user_gender: "",
@@ -117,18 +74,18 @@ export default {
       ],
     };
   },
-  mounted () {
+  mounted() {
     this.user_id = this.$route.query.user_id;
     console.log("mounted接收到的id：", this.user_id);
   },
   methods: {
-    handleChange (value) {
+    handleChange(value) {
       this.user_province = value[0];
       this.user_city = value[1];
       this.user_area = value[2];
     },
     //选择上传图片
-    onUploadChange (file) {
+    onUploadChange(file) {
       const isIMAGE =
         file.raw.type === "image/jpeg" ||
         file.raw.type === "image/png" ||
@@ -151,7 +108,7 @@ export default {
       };
     },
 
-    save () {
+    save() {
       console.log(this.user_id);
       api
         .upLoadInfo(
@@ -170,7 +127,12 @@ export default {
               type: "success",
               message: "填写成功",
             });
-            //this.$router.push("/backstage");//登录跳转
+
+            this.$router.push({
+              //登陆成功跳转到登录界面
+              path: "/login",
+            });
+
           } else {
             this.$message({
               type: "error",
@@ -194,6 +156,7 @@ export default {
   flex-direction: row;
   justify-content: space-between;
 }
+
 .left-image {
   height: 100%;
   width: 50%;
@@ -201,6 +164,7 @@ export default {
   border-top-left-radius: 20px;
   border-bottom-left-radius: 20px;
 }
+
 .message-card {
   height: 100%;
   width: 50%;
@@ -213,6 +177,7 @@ export default {
   padding-right: 5%;
   box-sizing: border-box;
 }
+
 .input {
   width: 100%;
   height: 80%;
@@ -220,6 +185,7 @@ export default {
   flex-direction: column;
   justify-content: space-between;
 }
+
 .avatar-uploader .el-upload {
   border: 3px dashed #761a1a;
   border-radius: 6px;
@@ -227,9 +193,11 @@ export default {
   position: relative;
   overflow: hidden;
 }
+
 .avatar-uploader .el-upload:hover {
   border-color: #409eff;
 }
+
 .avatar-uploader-icon {
   font-size: 28px;
   color: #8c939d;
@@ -238,6 +206,7 @@ export default {
   line-height: 1px;
   text-align: center;
 }
+
 .avatar {
   width: 150px;
   height: 150px;

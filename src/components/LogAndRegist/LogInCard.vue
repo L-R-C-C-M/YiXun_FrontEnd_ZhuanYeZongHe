@@ -24,14 +24,52 @@
         </el-row>
       </div>
 
-    <div>
-        <!-- <el-link>忘记密码</el-link>
-                                                                                        <el-link>没有账号？立即注册</el-link> -->
-      <!-- <router-link to="/cover" class="registerLink">看一看</router-link> -->
-        <!-- <el-row type="flex" justify="end"><router-link to="/register"
-                                      class="registerLink">没有账号？立即注册</router-link></el-row> -->
-        <el-row type="flex" justify="end"><router-link to="/register" class="registerLink">忘记密码</router-link></el-row>
+      <div>
+        <!-- <el-link>忘记密码</el-link><el-link>没有账号？立即注册</el-link> -->
+        <!-- <el-row type="flex" justify="end"><router-link to="/register" class="registerLink">没有账号？立即注册</router-link></el-row> -->
+        <!-- <el-row type="flex" justify="end"><router-link to="/register" class="registerLink">忘记密码</router-link></el-row> -->
+        <el-row type="flex" justify="end"><el-button @click="dialogFormVisible = true"
+            type="text">忘记密码</el-button></el-row>
       </div>
+      <el-dialog v-model="dialogFormVisible" title="找回密码" align-center>
+
+        <el-form ref="ruleFormRef" :model="findPasswordForm" status-icon :rules="rules">
+          <el-form-item prop="userEmail">
+            <el-input v-model="findPasswordForm.userEmail" type="email" placeholder="邮箱" autocomplete="off" />
+          </el-form-item>
+          <el-form-item prop="inputChecknum">
+            <el-input v-model="inputChecknum" type="text" placeholder="邮箱验证码" autocomplete="off"> <template #append>
+                <el-button @click="getChecknum" :disabled="totaltime < 60">{{ content }}</el-button>
+              </template></el-input>
+          </el-form-item>
+          <el-form-item prop="password">
+            <el-input v-model="findPasswordForm.password" type="password" placeholder="密码" show-password
+              autocomplete="off" />
+          </el-form-item>
+          <el-form-item prop="confirmPassword">
+            <el-input v-model="findPasswordForm.confirmPassword" type="password" placeholder="确认密码" show-password
+              autocomplete="off" />
+          </el-form-item>
+        </el-form>
+
+        <template #footer>
+          <span class="dialog-footer">
+            <el-button @click="dialogFormVisible = false">取消</el-button>
+            <el-button type="primary" @click="findPassword">
+              确认
+            </el-button>
+          </span>
+        </template>
+      </el-dialog>
+
+      <el-dialog v-model="dialogTableVisible" title="Shipping address">
+        <el-table :data="gridData">
+          <el-table-column property="date" label="Date" width="150" />
+          <el-table-column property="name" label="Name" width="200" />
+          <el-table-column property="address" label="Address" />
+        </el-table>
+      </el-dialog>
+
     </div>
   </div>
 </template>
@@ -44,13 +82,42 @@ import { reactive, ref } from "vue";
 import { ElMessage } from "element-plus";
 export default {
   data() {
+    const validatePass = (rule, value, callback) => {
+      if (value === "") {
+        callback(new Error("请输入密码"));
+      } else {
+        if (this.findPasswordForm.confirmPassword !== "") {
+          console.log("这个值到底存在吗", this.$refs.ruleFormRef.validateField(registForm.confirmPassword))
+        }
+        callback();
+      }
+    };
+    const validatePass2 = (rule, value, callback) => {
+      if (value === "") {
+        callback(new Error("请再次输入密码"));
+      } else if (value !== this.findPasswordForm.password) {
+        callback(new Error("两次输入密码不一致!"));
+      } else {
+        callback();
+      }
+    }
     return {
+      dialogFormVisible: false,
+      totaltime: 60,
+      content: "获取验证码",
+      emailcheck: "",
+      inputChecknum: "",
       identity: "",
       user_id: "",
       vol_id: "",
       loginForm: reactive({
         inputPassword: "",
         inputPhonenumber: "",
+      }),
+      findPasswordForm: reactive({
+        userEmail: "",
+        password: "",
+        confirmPassword: "",
       }),
       // phonenumber: "手机号",
       // password: "密码",
@@ -68,7 +135,37 @@ export default {
         inputPassword: [
           { required: true, message: "此项不能为空", trigger: "blur" },
         ],
+
+        userEmail: [
+          {
+            required: true,
+            message: "请输入邮箱",
+            trigger: "blur",
+          },
+          {
+            required: true,
+            pattern: /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/,
+            message: "邮箱格式不正确",
+            trigger: "blur",
+          },
+        ],
+        password: [
+          {
+            min: 6,
+            max: 18,
+            message: "密码长度需在6-18个字符之间", trigger: "blur"
+          },
+          { validator: validatePass, trigger: "blur" }
+        ],
+        confirmPassword: [
+          {
+            min: 6,
+            max: 18,
+            message: "密码长度需在6-18个字符之间", trigger: "blur"
+          },
+          { validator: validatePass2, trigger: "blur", required: true },],
       },
+      ruleFormRef: ref(),
     };
   },
   methods: {
@@ -89,7 +186,6 @@ export default {
             .then((res) => {
               console.log("登录请求成功", res.data);
               if (res.data.status) {
-
                 ElMessage({
                   message: "登陆成功!",
                   type: "success",
@@ -182,6 +278,9 @@ export default {
       this.$router.push({
         path: "/register",
       });
+    },
+    findPassword() {
+
     }
   },
   //注释掉的代码是获取数据用的，加载界面的同时会获取数据

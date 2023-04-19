@@ -8,6 +8,11 @@ const base = {
     changeUserInfo: "/api/UserInfo/ChangeUserInfo",
     //用户登录*
     userLogin: "/api/LogIn/LogInCheck",//这里去掉了api
+
+    //注册时获取邮箱验证码
+    emailCheckNum: "/api/LogIn/GetVerification",
+    //修改密码时获取验证码
+    pwChangeEmailChecknum: "/api/LogIn/GetVerificationToVerify",
     //10.3 注册用户*
     Regist: "/api/LogIn/Regist",
     //10.4 添加用户地址，头像，性别*

@@ -19,6 +19,15 @@ const api = {
     getUserHead(user_id) {
         return axios.get(path.baseUrl + path.userInfo, { params: { user_id: user_id } })
     },
+    //获取邮箱验证码
+    getEmailCheckNum(email_addr) {
+        return axios.post(path.baseUrl + path.emailCheckNum, null, { params: { email: email_addr } })
+    },
+
+    //修改密码时获取邮箱验证码
+    //getpwChangeEmail
+
+
     //10.3 注册用户
     Regist(user_name, user_phone, user_email, user_password) {
         return axios.post(path.baseUrl + path.Regist, { user_name: user_name, user_phone: user_phone, user_email: user_email, user_password: user_password })
