@@ -17,7 +17,7 @@ app.use(ElementPlus, { locale });
 //.use(ElementPlus)
 app.use(store).use(router).mount('#app')
 for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
-    app.component(key, component)
+    app.component(key, component)
 }
 
 //引入高德地图API

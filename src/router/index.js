@@ -54,6 +54,12 @@ const routes = [
     name: 'up_missingperson',
     component: () => import('../views/UpmissingpersonView.vue')
   },
+  {
+    path: '/change_missingperson',
+    name: 'change_missingperson',
+    component: () => import('../views/ChangeMissingperInfo.vue')
+  },
+
   // {
   //   path: '/about',
   //   name: 'about',
@@ -235,7 +241,11 @@ const routes = [
       {
         path: "ApplyVol",
         component: () => import('../views/Backstage/ApplyVol.vue')
-      }
+      },
+      {
+        path: "ChangePassword",
+        component: () => import('../views/Backstage/ChangePassword.vue')
+      },
     ]
   },
   //志愿者后台//

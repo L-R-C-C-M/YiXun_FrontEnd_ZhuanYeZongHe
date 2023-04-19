@@ -311,7 +311,8 @@ export default {
     }, 
     //提交表单 
     onSubmit (formEl) { 
-      console.log(this.form); 
+      console.log("form表单："); 
+      console.log(this.form.birthday); 
  
       this.$refs[formEl].validate((valid) => { 
         if (!valid) { 

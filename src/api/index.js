@@ -184,6 +184,10 @@ const api = {
     getMissingpersonInfo(id) {
         return axios.get(path.baseUrl + path.getMissingpersonInfoUrl, { params: { search_id: id } })
     },
+    //获取寻人信息的所有内容
+    getMissingpersonInfoAll(id) {
+        return axios.get(path.baseUrl + path.getMissingpersonInfoAllUrl, { params: { searchinfoId: id } })
+    },
     //发布线索
     upClue(user_id, searchinfo_id, clue_content) {
         return axios.post(path.baseUrl + path.upClueUrl, {
@@ -248,6 +252,32 @@ const api = {
             }
         )
     },
+    changeMisspersonInfo(search_type, sought_people_name, sought_people_gender,
+        sought_people_height, sought_people_detail, sought_people_birthday, sought_people_state,
+        isreport, searchinfo_lostdate, contact_method, province_id, city_id, area_id, address_detail) {
+        return axios.post(path.baseUrl + path.upMissingpersonUrl, {
+            search_type: search_type,
+            sought_people_name: sought_people_name,
+            sought_people_gender: sought_people_gender,
+            sought_people_height: sought_people_height,
+            sought_people_detail: sought_people_detail,
+            sought_people_birthday: sought_people_birthday,
+            sought_people_state: sought_people_state,
+            isreport: isreport,
+            searchinfo_lostdate: searchinfo_lostdate,
+            contact_method: contact_method,
+            province_id: province_id,
+            city_id: city_id,
+            area_id: area_id,
+            address_detail: address_detail,
+        },
+            {
+                headers: {
+                    'Content-Type': 'application/json;charset=UTF-8'
+                }
+            }
+        )
+    },
     addPicture(searchInfo_id, searchInfo_pic) {
         return axios.put(path.baseUrl + path.addPictureUrl, { searchInfo_id: searchInfo_id, searchInfo_pic: searchInfo_pic })
     },
@@ -258,6 +288,15 @@ const api = {
                 userid: userid,
                 infoid: infoid
             }
+        })
+    },
+    //修改密码
+    changePassword(user_id,user_password,new_password){
+
+        return axios.put(path.baseUrl+path.changePasswordUrl,{
+            user_id:user_id,
+            user_password:user_password,
+            new_password:new_password
         })
     },
 

@@ -11,26 +11,18 @@
         <h3>我发布的寻人信息</h3>
         <div class="containerFlex" style="margin-bottom: 10px">
           <!-- 使用flex布局 -->
-          <div
-            class="PhotoContainer"
-            v-for="item in searchInfo_list"
-            :key="item.search_info_id"
-          >
+          <div class="PhotoContainer" v-for="item in searchInfo_list" :key="item.search_info_id">
             <div class="PhotoOnly" @click="clickPhoto(item.search_info_id)">
               <el-row class="myRow">
                 <el-col :span="8">
                   <div class="thePhoto" style="margin-left: 10%">
-                    <img
-                      fit="cover"
-                      style="
-                        width: 100%;
-                        height: 100%;
-                        border-radius: 10px 10px 0 0;
-                        box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
-                          rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
-                      "
-                      :src="item.search_info_photourl"
-                    />
+                    <img fit="cover" style="
+                          width: 100%;
+                          height: 100%;
+                          border-radius: 10px 10px 0 0;
+                          box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+                            rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+                        " :src="item.search_info_photourl" />
                   </div>
                 </el-col>
                 <el-col :span="16">
@@ -71,24 +63,15 @@
               </el-row>
             </div>
             <div style="margin-top: 15px; text-align: center">
-              <el-button
-                type="primary"
-                size="small"
-                @click="deleteInfo(item.search_info_id)"
-                >删 除</el-button
-              >
+              <el-button type="primary" size="small" @click="changeInfo(item.search_info_id)">修 改</el-button>
+              <el-button type="danger" size="small" @click="deleteInfo(item.search_info_id)">删 除</el-button>
             </div>
           </div>
         </div>
         <div class="Parent">
           <!--分页-->
-          <el-pagination
-            v-model:page-size="pagesize_info"
-            :current-page.sync="currentPage_info"
-            :total="total_info"
-            layout="total,prev, pager, next, jumper"
-            @current-change="handleCurrentChange_info"
-          />
+          <el-pagination v-model:page-size="pagesize_info" :current-page.sync="currentPage_info" :total="total_info"
+            layout="total,prev, pager, next, jumper" @current-change="handleCurrentChange_info" />
         </div>
       </div>
     </el-card>
@@ -98,25 +81,11 @@
         <h3>我发布的寻人线索</h3>
         <el-card>
           <el-table :data="clue_list" style="width: 100%" header-align="center">
-            <el-table-column
-              prop="ClueDate"
-              label="发布时间"
-              width="200"
-              align="center"
-            />
-            <el-table-column
-              prop="ClueContent"
-              label="线索内容"
-              align="center"
-            />
+            <el-table-column prop="ClueDate" label="发布时间" width="200" align="center" />
+            <el-table-column prop="ClueContent" label="线索内容" align="center" />
             <el-table-column fixed="right" label="操作" width="120">
               <template #default="scope">
-                <el-button
-                  link
-                  type="primary"
-                  size="small"
-                  @click.prevent="deleteClue(scope.$index)"
-                >
+                <el-button link type="primary" size="small" @click.prevent="deleteClue(scope.$index)">
                   删除
                 </el-button>
               </template>
@@ -124,13 +93,8 @@
           </el-table>
           <div class="Parent">
             <!--分页-->
-            <el-pagination
-              v-model:page-size="pagesize"
-              :current-page.sync="currentPage"
-              :total="total"
-              layout="total,prev, pager, next, jumper"
-              @current-change="handleCurrentChange"
-            />
+            <el-pagination v-model:page-size="pagesize" :current-page.sync="currentPage" :total="total"
+              layout="total,prev, pager, next, jumper" @current-change="handleCurrentChange" />
           </div>
         </el-card>
       </div>
@@ -141,24 +105,16 @@
       <div style="text-align: left; margin-left: 3%">
         <h3>我关注的寻人信息</h3>
         <div class="containerFlex" style="margin-bottom: 2%">
-          <div
-            class="PhotoContainer"
-            v-for="item in follow_list"
-            :key="item.search_info_id"
-          >
+          <div class="PhotoContainer" v-for="item in follow_list" :key="item.search_info_id">
             <div class="PhotoOnly" @click="clickPhoto(item.search_info_id)">
               <el-row class="myRow">
                 <el-col :span="8">
                   <div class="thePhoto" style="margin-left: 10%">
-                    <img
-                      fit="cover"
-                      style="
-                        width: 100%;
-                        height: 100%;
-                        border-radius: 10px 10px 0 0;
-                      "
-                      :src="item.search_info_photourl"
-                    />
+                    <img fit="cover" style="
+                          width: 100%;
+                          height: 100%;
+                          border-radius: 10px 10px 0 0;
+                        " :src="item.search_info_photourl" />
                   </div>
                 </el-col>
                 <el-col :span="16">
@@ -202,13 +158,8 @@
         </div>
         <div class="Parent">
           <!--分页-->
-          <el-pagination
-            v-model:page-size="pagesize_follow"
-            :current-page.sync="currentPage_follow"
-            :total="total_follow"
-            layout="total,prev, pager, next, jumper"
-            @current-change="handleCurrentChange_follow"
-          />
+          <el-pagination v-model:page-size="pagesize_follow" :current-page.sync="currentPage_follow" :total="total_follow"
+            layout="total,prev, pager, next, jumper" @current-change="handleCurrentChange_follow" />
         </div>
       </div>
     </el-card>
@@ -266,6 +217,12 @@ export default {
             });
           }
         });
+    },
+    //修改寻人信息
+    changeInfo(info_id){
+      console.log("info_id:");
+      console.log(info_id);
+      this.$router.push({ path: "/change_missingperson", query: {SearchInfo: info_id,} });
     },
     //删除寻人信息
     deleteInfo(info_id) {
@@ -381,6 +338,7 @@ export default {
 .Parent {
   display: flex;
 }
+
 .el-header {
   background-color: rgba(255, 255, 255, 1);
   height: 60px;
@@ -400,6 +358,7 @@ export default {
 .el-row:last-child {
   margin-bottom: 0;
 }
+
 .el-card {
   margin-bottom: 20px;
 }
@@ -411,16 +370,19 @@ export default {
 .thePhoto {
   height: 100%;
 }
+
 .informationBlock {
   padding-left: 5%;
   padding-top: 5%;
   padding-bottom: 8%;
   display: inline-block;
 }
+
 .informationBlock .line {
   padding-top: 10px;
   float: inline-start;
 }
+
 .informationBlock .tableTitle {
   color: #2e74b6;
   font-weight: 700;
@@ -432,17 +394,22 @@ h {
 
 .containerFlex {
   display: flex;
-  flex-direction: row; /*容器内成员的排列方式为从左到右*/
-  flex-wrap: wrap; /*换行方式，放不下就换行*/
-  justify-content: flex-start; /*项目在主轴上的对齐方式*/
+  flex-direction: row;
+  /*容器内成员的排列方式为从左到右*/
+  flex-wrap: wrap;
+  /*换行方式，放不下就换行*/
+  justify-content: flex-start;
+  /*项目在主轴上的对齐方式*/
   align-content: flex-start;
 }
+
 .PhotoContainer {
   width: 360px;
   height: 100%;
   margin-bottom: 20px;
   margin-right: 1.5%;
 }
+
 .PhotoOnly {
   width: 95%;
   height: 100%;

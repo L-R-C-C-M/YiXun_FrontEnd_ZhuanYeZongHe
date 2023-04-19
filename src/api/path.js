@@ -81,6 +81,8 @@ const base = {
     //gjj
     //获取寻人详情页 *
     getMissingpersonInfoUrl: "/api/SearchInfo/GetSearchInfo",
+    //获取寻人信息所有内容
+    getMissingpersonInfoAllUrl:"/api/SearchInfo/GetSearchInfoToChange",
     //发布线索 *
     upClueUrl: "/api/UserOperation/AddSearchPeopleClue",
     //发布线索举报 *
@@ -90,8 +92,13 @@ const base = {
     //录入寻人信息*
     upMissingpersonUrl: "/api/UserOperation/AddSearchPeopleInfo",
     addPictureUrl: "/api/UserOperation/AddSearchInfoPic",
+    //修改寻人信息
+    changeMisspersonInfoUrl:"/api/UserOperation/UserChangeSearchInfo",
     //关注寻人信息 *
     followMisUrl: "/api/UserOperation/UserFocus",
+    //修改密码
+
+    changePasswordUrl:"/api/UserInfo/ChangePassword",
 
 
     //公共路径

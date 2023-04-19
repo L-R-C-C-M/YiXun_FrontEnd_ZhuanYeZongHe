@@ -83,7 +83,8 @@
           v-for="clue in this.MissInfo.search_clue"
           :key="clue.ClueContent"
         >
-          <div class="text">| {{ clue.ClueContent }}</div>
+          <div class="text">| {{ clue.ClueContent }} <sup style="font-size:12px;color:crimson">{{ clueForm.report_state}}</sup></div>
+          
           <div style="padding: 9px">
             <el-button
               type="primary"
@@ -95,7 +96,7 @@
           </div>
         </el-row>
 
-        <el-col class="toptext">跟进志愿者</el-col>
+        <el-col class="toptext">跟进工作人员</el-col>
 
         <el-row
           v-for="vol in this.MissInfo.search_vols"
@@ -267,6 +268,7 @@ export default {
     }
     const clueForm = reactive({
       report_content: "",
+      report_state:"待核实",
     });
     return {
       user_id,
@@ -276,6 +278,7 @@ export default {
       MissID,
     };
   },
+  
   mounted () {
     api
       .getMissingpersonInfo(this.MissID)
