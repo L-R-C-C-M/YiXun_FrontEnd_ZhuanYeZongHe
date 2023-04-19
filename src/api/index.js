@@ -25,8 +25,14 @@ const api = {
     },
 
     //修改密码时获取邮箱验证码
-    //getpwChangeEmail
+    getpwChangeEmailCheckNum(email_addr) {
+        return axios.post(path.baseUrl + path.pwChangeEmailChecknum, null, { params: { email: email_addr } })
+    },
 
+    //找回密码处修改密码
+    findPassword(user_id, new_password) {
+        return axios.put(path.baseUrl + path.findPasswordChange, { user_id: user_id, new_password: new_password })
+    },
 
     //10.3 注册用户
     Regist(user_name, user_phone, user_email, user_password) {
@@ -36,7 +42,6 @@ const api = {
     upLoadInfo(user_id, user_gender, user_province, user_city, user_area, user_address, user_head) {
         return axios.put(path.baseUrl + path.upLoadInfo, { user_id: user_id, user_gender: user_gender, user_province: user_province, user_city: user_city, user_area: user_area, user_address: user_address, user_head: user_head })
     },
-
 
     GetSearchInfoNum() {
         return axios.get(path.baseUrl + path.GetSearchInfoNum)

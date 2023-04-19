@@ -31,7 +31,7 @@
         <el-row type="flex" justify="end"><el-button @click="dialogFormVisible = true"
             type="text">忘记密码</el-button></el-row>
       </div>
-      <el-dialog v-model="dialogFormVisible" title="找回密码" align-center>
+      <el-dialog v-model="dialogFormVisible" title="找回密码" align-center width="30%">
 
         <el-form ref="ruleFormRef" :model="findPasswordForm" status-icon :rules="rules">
           <el-form-item prop="userEmail">
@@ -279,7 +279,76 @@ export default {
         path: "/register",
       });
     },
+    getChecknum() {
+      api.getpwChangeEmailCheckNum(this.findPasswordForm.userEmail).then((res) => {
+        console.log("验证码返回", res);
+        if (res.data.status) {
+          if (res.data.data.isRegisted == "false") {
+            ElMessage({
+              message: "当前邮箱未注册",
+              type: "error",
+            });
+          }
+          else {
+            console.log("获取验证码成功")
+            ElMessage({
+              message: "验证码已发送",
+              type: "success",
+            });
+            this.user_id = res.data.data.user_id;
+            this.emailcheck = res.data.data.verification;
+            //this.isDisposed = true;
+            //this.handleTimeChange;
+            const clock = window.setInterval(() => {
+              this.content = '已发送(' + this.totaltime + 's)'
+              this.totaltime--
+              if (this.totaltime < 0) {
+                this.totaltime = 60
+                this.content = "重新发送验证码"
+                //this.emailcheck = ''
+                window.clearInterval(clock)
+              }
+            }, 1000)
+          }
+        }
+        else {
+          ElMessage({
+            message: "验证码发送失败，请稍后重试",
+            type: "error",
+          });
+          console.log("获取验证码失败")
+        }
+      })
+    },
     findPassword() {
+      if (this.emailcheck == this.inputChecknum) {
+        api.findPassword(this.user_id, this.findPasswordForm.password).then((res) => {
+          console.log("修改密码返回", res);
+          if (res.data.status) {
+            console.log("修改密码成功")
+            this.dialogFormVisible = false;
+            ElMessage({
+              message: "密码已修改！",
+              type: "success",
+            });
+            this.$router.push({
+              path: "/login",
+            });
+          }
+          else {
+            ElMessage({
+              message: "修改失败，请稍后重试！",
+              type: "error",
+            });
+          }
+        })
+      }
+      else {
+        ElMessage({
+          message: "验证码错误!",
+          type: "error",
+        });
+      }
 
     }
   },

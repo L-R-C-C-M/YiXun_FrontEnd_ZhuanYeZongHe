@@ -13,6 +13,8 @@ const base = {
     emailCheckNum: "/api/LogIn/GetVerification",
     //修改密码时获取验证码
     pwChangeEmailChecknum: "/api/LogIn/GetVerificationToVerify",
+    //找回密码时修改密码
+    findPasswordChange: "/api/LogIn/ForgetPassword",
     //10.3 注册用户*
     Regist: "/api/LogIn/Regist",
     //10.4 添加用户地址，头像，性别*
