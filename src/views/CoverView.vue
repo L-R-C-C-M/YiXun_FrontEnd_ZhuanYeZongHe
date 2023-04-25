@@ -4,7 +4,7 @@
       <el-header style="padding: 0">
         <InfoHeader />
       </el-header>
-      <el-main style="background-color: #f5f5f5; padding: 0">
+      <el-main style="background-color: #f5f5f5;">
         <!-- 这里是页面内容 -->
         <!-- 地图定位到当前地点并显示其周围信息 -->
         <gaodeMap></gaodeMap>
@@ -74,15 +74,20 @@
           </div>
         </div>
         <!-- 分页 -->
-        <!-- <div class="demo-pagination-block">
 
-         <lostInformationBlock :fenyexinxi="LostInfo"></lostInformationBlock> -->
         <!-- 分页器 -->
         <div class="demo-pagination-block">
           <el-pagination v-model:currentPage="LostInfo.pageNum" v-model:page-size="LostInfo.pageSize" :small="small"
             :disabled="disabled" :background="background" :pager-count="5" layout="prev, pager, next, jumper"
             :total="total" @size-change="handleSizeChange" @current-change="handleCurrentChange" />
         </div>
+
+       <div>
+        <el-image
+      style=" margin-top: 120px;"
+      :src="require('../../image/process.png')"
+      :fit="scale-down"></el-image>
+       </div>
 
         <div id="app">
           <kinesis-container class="container">
@@ -675,7 +680,6 @@ h {
 
 .container {
   padding-bottom: 15rem;
-  margin-top: 40px;
   height: 30px;
   background-color: #32495e;
 }

@@ -5,7 +5,7 @@
       <el-header class="myHeader3">
         <MainHeader />
         <div style="margin-top: 100px; font-size: 30px; color: white">
-          志愿活动
+          志愿支持
         </div>
       </el-header>
       <el-main class="mainBlock">
@@ -18,13 +18,6 @@
         <div v-if="volActList.length == 0">无相关内容</div>
         <!--div width="600px"-->
         <el-row type="flex" justify-content="flex-start">
-          <!--列元素居中-->
-          <!-- <el-col
-            v-for="actitem in volActList"
-            :key="actitem.VolActId"
-            :span="6"
-          > -->
-          <!--el-card的背景图片还未更改使用变量-->
           <el-card v-for="actitem in volActList" :key="actitem.VolActId" class="mycard" :body-style="{ padding: '0px' }">
             <el-image v-if="actitem.ActPicUrl == null" style="width: 100%; height: 150px" :src="pic" fit="cover" />
 
@@ -58,6 +51,110 @@
             layout="total,prev, pager, next, jumper" @current-change="handleCurrentChange" />
         </div>
       </el-main>
+
+      <el-main class="mainBlock">
+        <el-col class="toptext">志愿捐助</el-col>
+        <el-divider />
+        <el-row :gutter="30">
+        <el-col :span="7" :offset="2"><div class="donate-record-card">
+          <div style="padding-top: 15px; ">历史捐款总额</div>
+          <div style="padding-top: 35px; color: #67bbff;font-weight:bolder;font-size: larger">{{donateCount}}</div>
+        </div></el-col>
+        <el-col :span="7" :offset="2" ><div class="donate-record-card">
+          <div style="padding-top: 15px; ">历史捐款人次</div>
+          <div style="padding-top: 35px; color: #67bbff;font-weight:bolder; font-size: larger">{{donateHead}}</div>
+        </div></el-col>
+        <el-col :span="2" :offset="2">
+          <el-button type="primary" class="donate-button">我要捐款</el-button>
+        </el-col>
+      </el-row>
+      </el-main>
+
+      <el-main class="mainBlock">
+        <el-row class="toptext">
+          <el-col :span="12"> 捐款记录 </el-col>
+          <el-col :span="12"> 善款去向 </el-col>
+        </el-row>
+        <el-divider />
+      
+      <div class="overBlock">
+        <el-row
+          type="flex"
+          justify="space-around"
+        >
+          <!--列元素居中-->
+          <el-col
+            :span="11"
+            class="rank"
+          >
+            <el-row
+              v-for="(income, index) in incomeList"
+              :key="index"
+              class="ranktop"
+              style="align-items: center"
+            >
+              <el-image
+                style="width: 50px; height: 50px; border-radius: 50%"
+                :src="income.userHeadUrl"
+                fit="cover"
+              />
+              <el-col :span="6">{{ income.phoneNum.substring(0,3)+"****"+ income.phoneNum.substring(7,11)}}</el-col>
+              <el-col
+                style="
+                  justify-content: flex-end;
+                  text-align: right;
+                  font-weight: bold;
+                  color: #2e74b6;
+
+                "
+                :span="5"
+              >{{ income.amount }}</el-col>
+              <el-col
+                style="justify-content: flex-start; text-align: left"
+                :span="4"
+              >元</el-col>
+              <el-col
+                :span="6"
+              >{{
+                income.time
+              }}</el-col>
+            </el-row>
+          </el-col>
+          <div class="divideLine"></div>
+
+          <el-col
+            :span="11"
+            class="rank" >
+            <el-row
+              v-for="(income, index) in incomeList"
+              :key="index"
+              class="ranktop outcome-record"
+              style="align-items: center"
+            >
+              <el-col  :span="12" :offset="2" type="flex" justify="left">
+
+                <el-row  style= "margin-bottom: 30px;">
+                  <el-col>{{ income.amount }}</el-col>
+                </el-row>
+                <el-row>
+                  <el-col :span="12">
+                    <div >历史捐款人次</div>
+                    <div style="color: #67bbff;font-weight:bolder; font-size: larger">{{donateHead}}</div>
+                  </el-col>
+                  <el-col :span="12">
+                    <div >历史捐款人次</div>
+                    <div style="color: #67bbff;font-weight:bolder; font-size: larger">{{donateHead}}</div>
+                  </el-col>
+                </el-row>
+              </el-col>
+              <el-col :span="8" style="font-size:small" >本项目自2022年12月29日上线以来，共筹集善款1053.67元，本项目2023年1月4日至2023年1月28日期间，组织志愿者开展项目前期调研工作，了解残障儿童的基础情况及需求。</el-col>
+            </el-row>
+          </el-col>
+
+        </el-row>
+      </div>
+
+      </el-main>
       <Footer></Footer>
     </el-container>
   </div>
@@ -71,6 +168,7 @@ import { ref } from "vue";
 import MainHeader from "@/views/Frontstage/MainHeader.vue";
 import Footer from "@/views/Frontstage/Footer.vue";
 import { Search } from "@element-plus/icons-vue";
+import { defaultDocument } from "@vueuse/core";
 export default {
   name: "VolunActView",
   components: {
@@ -82,7 +180,7 @@ export default {
     const inputAct = ref("");
     const currentDate = ref(new Date());
     let volActList = ref([]);
-    // let volActAll = ref([]);
+    let incomeList = ref([{"userHeadUrl":"https://yixun-picture.oss-cn-shanghai.aliyuncs.com/user_head/1.jpeg","phoneNum":"19969779835","amount":12878787832,"time":"2023-04-02"}]);
     // let volActSearch = ref([]);
     let currentPage = ref(1);
     let pageSize = ref(8);
@@ -90,22 +188,9 @@ export default {
     let ifSearch = ref(false);
     let pic =
       "https://yixun-picture.oss-cn-shanghai.aliyuncs.com/user_head/1.jpeg";
+    let donateCount=ref(200000);
+    let donateHead=ref(100000);
     console.log(pageSize.value);
-    //获取所有的志愿活动列表
-    //.getVolAct(pageNum.value, pageSize.value)
-    // api
-    //   .getVolAct(currentPage.value, pageSize.value)
-    //   .then((res) => {
-    //     console.log("请求成功", res);
-    //     volActList.value = res.data.data.activity_list;
-    //     //volActAll.value = res.data.volActAll;
-    //     total.value = res.data.data.total;
-    //     //console.log("获取数据", this.volActList);
-    //   })
-    //   .catch((err) => {
-    //     console.log("请求失败", err);
-    //   });
-
     return {
       inputAct,
       Search,
@@ -116,8 +201,9 @@ export default {
       pageSize,
       total,
       volActList,
-      // volActAll,
-      // volActSearch,
+      donateCount,
+      donateHead,
+      incomeList
     };
   },
   mounted() {
@@ -171,33 +257,6 @@ export default {
       if (sessionStorage.getItem("volact_searchKey")) {
         this.inputAct = sessionStorage.getItem("volact_searchKey");
       }
-      // else {
-      //   this.currentPage = 1;
-      // }
-
-      // if (sessionStorage.getItem("volact_ifSearch")) {
-      //   this.ifSearch = sessionStorage.getItem("volact_ifSearch");
-      // }
-      // else {
-      //   this.currentPage = 1;
-      // }
-
-
-      //清掉缓存里面的数据，防止对其他页面存的currentpage造成影响
-      // sessionStorage.removeItem("currentPage");
-      // if (this.ifSearch) this.goonSearchAct();
-      // else {
-      //   api
-      //     .getVolAct(this.currentPage, this.pageSize)
-      //     .then((res) => {
-      //       console.log("请求成功", res);
-      //       this.volActList = res.data.data.activity_list;
-      //       this.total = res.data.data.total;
-      //     })
-      //     .catch((err) => {
-      //       console.log("请求失败", err);
-      //     });
-      // }
       this.goonSearchAct();
     },
     //更新分页
@@ -207,19 +266,6 @@ export default {
       this.goonSearchAct();
       //页码保存进sessionstorage
       sessionStorage.setItem("currentPage", newPage);
-      // if (this.ifSearch) this.goonSearchAct();
-      // else {
-      //   api
-      //     .getVolAct(this.currentPage, this.pageSize)
-      //     .then((res) => {
-      //       console.log("请求成功", res);
-      //       this.volActList = res.data.data.activity_list;
-      //       this.total = res.data.data.total;
-      //     })
-      //     .catch((err) => {
-      //       console.log("请求失败", err);
-      //     });
-      // }
     },
   },
 };
@@ -233,7 +279,6 @@ export default {
 }
 
 .mainBlock {
-  min-height: 600px;
   background-color: #f4f6f9;
   position: relative;
   padding: 2% 3% 2%;
@@ -329,9 +374,48 @@ export default {
   font-size: 10px;
   margin-bottom: 5px;
 }
+.donate-record-card{
+  border-radius: 15px;
+  height: 150px;
+  background:  #ffffff;
+  margin-top: 15px;
 
-/*.cardImage {
-  width: 100%;
-  display: block;
-}*/
+}
+  .donate-button {
+    border-radius: 5px;
+    height: 50px;
+    background-color:#2e74b6;
+    margin-top: 65px;
+    font-size:medium;
+}
+.overBlock {
+  margin-bottom: 5%;
+}
+.divideLine {
+  position: absolute;
+  /*right: 10px;*/
+  width: 1px;
+  height: 100%;
+  background-image: linear-gradient(
+    to bottom,
+    #044c90 0%,
+    #044c90 80%,
+    transparent 50%
+  );
+  background-size: 100% 18px;
+  background-repeat: repeat-y;
+}
+
+.ranktop {
+  background-color: #ffffff;
+  border-radius: 20px;
+}
+.outcome-record{
+  height:150px;
+}
+
+.rank {
+  padding: 1% 2% 2%;
+}
+
 </style>

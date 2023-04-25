@@ -7,9 +7,9 @@
         <el-image style="height: 70%; width: 20%" :src="require('../../../image/logo.png')" fit="contain" />
         <div class="flex-grow" />
         <el-menu-item index="/">首页</el-menu-item>
-        <el-menu-item index="/volunAct">志愿活动</el-menu-item>
+        <el-menu-item index="/volunAct">志愿支持</el-menu-item>
         <!-- <el-menu-item index="/volunOver">志愿活动</el-menu-item> -->
-        <el-menu-item index="/news">志愿支持</el-menu-item>
+       <!-- <el-menu-item index="/news">志愿支持</el-menu-item> -->
         <!--el-menu-item index="/forum">寻人论坛</!--el-menu-item-->
       <!-- <el-menu-item index="/news">寻人资讯</el-menu-item>
           <el-menu-item index="/department">相关部门信息</el-menu-item> -->
