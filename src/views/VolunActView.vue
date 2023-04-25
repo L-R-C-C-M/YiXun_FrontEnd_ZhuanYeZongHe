@@ -131,23 +131,23 @@
               class="ranktop outcome-record"
               style="align-items: center"
             >
-              <el-col  :span="12" :offset="2" type="flex" justify="left">
+              <el-col  :span="12" :offset="2" type="flex" justify="left" class="financeOutBox_middle">
 
-                <el-row  style= "margin-bottom: 30px;">
+                <el-row  style= "margin-bottom:30px;font-weight:bolder;font-size: larger;height:40%;align-items: center;">
                   <el-col>{{ income.amount }}</el-col>
                 </el-row>
-                <el-row>
-                  <el-col :span="12">
-                    <div >历史捐款人次</div>
+                <el-row style="height:60%;align-items: center;">
+                  <el-col :span="12" class="financeOutBox_inner">
+                    <div class="financeOutText">历史捐款人次</div>
                     <div style="color: #67bbff;font-weight:bolder; font-size: larger">{{donateHead}}</div>
                   </el-col>
-                  <el-col :span="12">
-                    <div >历史捐款人次</div>
-                    <div style="color: #67bbff;font-weight:bolder; font-size: larger">{{donateHead}}</div>
+                  <el-col :span="12" class="financeOutBox_inner">
+                    <div class="financeOutText">历史捐款人次</div>
+                    <div style="color: #67bbff;font-weight:bolder; font-size:larger">{{donateHead}}</div>
                   </el-col>
                 </el-row>
               </el-col>
-              <el-col :span="8" style="font-size:small" >本项目自2022年12月29日上线以来，共筹集善款1053.67元，本项目2023年1月4日至2023年1月28日期间，组织志愿者开展项目前期调研工作，了解残障儿童的基础情况及需求。</el-col>
+              <el-col :span="8" style="font-size:small;text-align: left;" >本项目自2022年12月29日上线以来，共筹集善款1053.67元，本项目2023年1月4日至2023年1月28日期间，组织志愿者开展项目前期调研工作，了解残障儿童的基础情况及需求。</el-col>
             </el-row>
           </el-col>
 
@@ -272,6 +272,20 @@ export default {
 </script>
 
 <style scoped>
+.financeOutText{
+  font-size:medium;
+}
+.financeOutBox_middle{
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  justify-content: space-between;
+}
+.financeOutBox_inner{
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
 .myHeader3 {
   height: 300px;
   background-image: url(../../image/volun.png);
