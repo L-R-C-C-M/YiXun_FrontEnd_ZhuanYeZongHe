@@ -227,7 +227,7 @@ export default {
       console.log(SearchinfoId);
       //点击跳转到寻人信息的详情页
       this.$router.push({
-        path: "/missingpersonInfo",
+        path: "/missingpersonInfoForVol",
         query: {
           SearchInfo: SearchinfoId,
         },

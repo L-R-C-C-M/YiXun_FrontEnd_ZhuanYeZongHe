@@ -97,8 +97,11 @@ const base = {
     //关注寻人信息 *
     followMisUrl: "/api/UserOperation/UserFocus",
     //修改密码
-
-    changePasswordUrl: "/api/UserInfo/ChangePassword",
+    changePasswordUrl:"/api/UserInfo/ChangePassword",
+    //线索核实
+    clueVerifyUrl:"/api/Vol/ChangeClueConfirmed",
+    //寻人信息已找到
+    missingperHaveFoundUrl:"/api/Vol/ChangeSearchinfoToFound",
 
 
     //公共路径
