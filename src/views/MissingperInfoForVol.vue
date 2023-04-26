@@ -33,9 +33,13 @@
                 <el-button v-if="!this.isFollow" @click="follow" round>关注寻人信息</el-button>
                 <el-button v-else @click="follow" round>取 消 关 注</el-button>
 
-                <el-button type="primary" round @click="findDialogVisible = true">
+                <el-button  v-if="MissInfo.whether_found=='Y'" type="primary" round @click="findDialogVisible = true" disabled>
                   已 找 到
                 </el-button>
+                <el-button v-else type="primary" round @click="findDialogVisible = true">
+                  已 找 到
+                </el-button>
+
                 <el-dialog v-model="findDialogVisible" title="提示" width="40%">
                   <span>确认该寻人信息已找到？</span>
                   <template #footer>
@@ -83,25 +87,14 @@
             <el-button v-if="clue.WhetherConfirmed=='Y'" size="small" round  disabled >
               核实
             </el-button>
-            <el-button v-else size="small" round @click="clueVerifyDialogVisible = true">
+            <el-button v-else size="small" round @click="openclueVerifyDialog(clue.ClueId)">
               核实
             </el-button>
 
             <el-button type="primary" class="actButton" round size="small" @click="upClueReport(clue.ClueId)">举报
             </el-button>
 
-            <el-dialog v-model="clueVerifyDialogVisible" title="提示" width="40%">
-              <span>确认该条线索已核实？</span>
-              <template #footer>
-                <span class="dialog-footer">
-                  <el-button @click="clueVerifyDialogVisible = false">取 消</el-button>
-                  <el-button type="primary" @click="haveVerifide(clue.ClueId)">
-                    确 认
-                  </el-button>
-                </span>
-              </template>
-
-            </el-dialog>
+          
 
           </div>
 
@@ -164,6 +157,20 @@
               <!-- <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button> -->
             </div>
           </el-dialog>
+        </div>
+        <div>
+          <el-dialog v-model="clueVerifyDialogVisible" title="提示" width="40%">
+              <span>确认该条线索已核实？</span>
+              <template #footer>
+                <span class="dialog-footer">
+                  <el-button @click="clueVerifyDialogVisible = false">取 消</el-button>
+                  <el-button type="primary" @click="haveVerifide(clueID)">
+                    确 认
+                  </el-button>
+                </span>
+              </template>
+
+            </el-dialog>
         </div>
       </el-main>
       <Footer></Footer>
@@ -231,7 +238,23 @@ export default {
   },
 
   mounted() {
+    this.getMissInfo();
+ 
     api
+      .followMis(this.user_id, this.MissID)
+      .then((res) => {
+        console.log("关注按钮接收的数据", res.data);
+        this.isFollow = res.data.data.state;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  },
+  methods: {
+
+    //获取寻人信息详情
+    getMissInfo(){
+      api
       .getMissingpersonInfo(this.MissID)
       .then((res) => {
         console.log("接收到的数据", res);
@@ -248,28 +271,10 @@ export default {
     if (!this.loginState) {
       return;
     }
-    api
-      .followMis(this.user_id, this.MissID)
-      .then((res) => {
-        console.log("关注按钮接收的数据", res.data);
-        this.isFollow = res.data.data.state;
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  },
-  methods: {
-    // goReport() {
-    //   this.$router.push({ path: "/report", query: {} });
-    //   api
-    //     .upMisReport(608, 1, "This is a test!")
-    //     .then(function (response) {
-    //       console.log("发布寻人信息举报", response);
-    //     })
-    //     .catch(function (error) {
-    //       console.log(error);
-    //     });
-    // },
+
+    },
+
+
     goBack() {
       this.$router.back();
     },
@@ -286,8 +291,9 @@ export default {
       console.log("寻人信息ID", this.MissID);
       api
         .upClue(parseInt(this.user_id), parseInt(this.MissID), clueText)
-        .then(function (response) {
+        .then((response) =>{
           console.log("发布线索", response);
+          this.getMissInfo();
           ElMessage({
             message: "线索发布成功",
             type: "success",
@@ -393,11 +399,13 @@ export default {
       .missingperHaveFound(this.MissID)
       .then((res) => {
           console.log("接收的数据", res);
+          this.getMissInfo();
     
         })
         .catch((err) => {
           console.log(err);
         });
+
 
     },
     //寻人线索已核实
@@ -408,12 +416,19 @@ export default {
       .clueVerify(id)
       .then((res) => {
           console.log("接收的数据", res);
-    
+          this.getMissInfo();
         })
         .catch((err) => {
           console.log(err);
         });
+        
       
+    },
+    //打开线索核实提示对话框
+    openclueVerifyDialog(clueid)
+    {
+      this.clueVerifyDialogVisible=true;
+      this.clueID=clueid;
     },
 
 
