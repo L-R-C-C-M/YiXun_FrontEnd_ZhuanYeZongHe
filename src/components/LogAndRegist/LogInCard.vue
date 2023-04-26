@@ -10,10 +10,10 @@
       <el-form ref="checkForm" :model="loginForm" label-width="80px" justify="center" style="max-width: 500px"
         :rules="rules">
         <el-form-item label="手机号" prop="inputPhonenumber">
-          <el-input v-model="loginForm.inputPhonenumber" placeholder="手机号" />
+          <el-input v-model="loginForm.inputPhonenumber" />
         </el-form-item>
         <el-form-item label="密码" prop="inputPassword">
-          <el-input v-model="loginForm.inputPassword" type="password" show-password placeholder="密码" />
+          <el-input v-model="loginForm.inputPassword" type="password" show-password />
         </el-form-item>
       </el-form>
       <div
@@ -62,13 +62,13 @@
         </template>
       </el-dialog>
 
-      <el-dialog v-model="dialogTableVisible" title="Shipping address">
+      <!-- <el-dialog v-model="dialogTableVisible" title="Shipping address">
         <el-table :data="gridData">
           <el-table-column property="date" label="Date" width="150" />
           <el-table-column property="name" label="Name" width="200" />
           <el-table-column property="address" label="Address" />
         </el-table>
-      </el-dialog>
+      </el-dialog> -->
 
     </div>
   </div>

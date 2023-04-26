@@ -19,7 +19,7 @@
           <div style="padding-left:20px;">
             <span style="font-size:large;">待处理线索<br /><br /></span>
             <span style="font-size:xx-large;">{{ clue_repo_notreviewed }}</span>
-                      </div>
+          </div>
         </div>
       </el-col>
 
@@ -34,7 +34,7 @@
             <span style="color: #FFFFFF;font-size:large;">已处理线索<br /><br /></span>
             <span style="color: #FFFFFF;font-size:xx-large;">{{ clue_repo_reviewed }}</span>
           </div>
-           </div>
+        </div>
       </el-col>
     </el-row>
 
@@ -51,14 +51,14 @@
             <el-button type="success" plain size="small" @click="passRepo(scope.row)">通过</el-button>
             <el-button type="danger" plain size="small" @click="rejectRepo(scope.row)">拒绝</el-button>
           </template>
-                  </el-table-column>
+        </el-table-column>
       </el-table>
 
       <!--分页-->
       <el-pagination v-model:currentPage="pagenum" v-model:page-size="pagesize" :page-sizes="[1, 2, 5, 10]" :total="total"
         layout="total, sizes, prev, pager, next, jumper" @size-change="handleSizeChange"
         @current-change="handleCurrentChange" />
-            </el-card>
+    </el-card>
 
   </el-main>
 </template>

@@ -30,7 +30,7 @@
         </el-menu-item-group>
       </el-sub-menu>
 
-    <!-- <el-sub-menu index="3">
+      <!-- <el-sub-menu index="3">
         <template #title>
           <el-icon>
             <DocumentCopy />
@@ -43,7 +43,7 @@
         </el-menu-item-group>
         </el-sub-menu> -->
 
-    <!-- <el-menu-item index="/backstage/releaseActivity">
+      <!-- <el-menu-item index="/backstage/releaseActivity">
         <el-icon><Edit /></el-icon>
             <span>发布志愿活动</span>
           </el-menu-item> -->
@@ -67,6 +67,20 @@
           <el-menu-item index="/backstage/clueReports">线索举报</el-menu-item>
         </el-menu-item-group>
       </el-sub-menu>
+
+      <el-sub-menu index="4">
+        <template #title>
+          <el-icon>
+            <Wallet />
+          </el-icon>
+          <span>财务管理</span>
+        </template>
+        <el-menu-item-group>
+          <!-- <el-menu-item index="/backstage/fundOut">收入明细</el-menu-item> -->
+          <el-menu-item index="/backstage/fundOut">支出明细</el-menu-item>
+        </el-menu-item-group>
+      </el-sub-menu>
+
     </el-menu>
   </el-aside>
 </template>

@@ -34,7 +34,7 @@
             placeholder="请输入活动内容"></el-input>
         </el-form-item>
 
-      <!-- <el-form-item
+        <!-- <el-form-item
           label="志愿机构"
           style="margin-bottom: 3%; margin-top: 2%"
         >
@@ -112,12 +112,6 @@ export default {
       value1: [],
     };
   },
-  mounted() {
-    api.getAllVolInst().then((res) => {
-      console.log(res.data);
-      this.volInstOptions = res.data.data.clue_list;
-    });
-  },
   methods: {
     //三级省市区修改
     handleChange(value) {
@@ -164,8 +158,7 @@ export default {
         });
     },
 
-    //时间处理函数
-    // 给后端发送日期格式
+    //时间处理函数，给后端发送日期格式
     formatDateValue(now) {
       var year = this.dateZero(now.getFullYear()); //取得4位数的年份
       var month = this.dateZero(now.getMonth() + 1); //取得日期中的月份，其中0表示1月，11表示12月

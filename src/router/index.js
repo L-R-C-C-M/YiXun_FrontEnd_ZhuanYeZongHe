@@ -194,6 +194,11 @@ const routes = [
         name: 'modifyActivity',
         component: () => import('../views/Backstage/ModifyActivity.vue')
       },
+      {//支出明细
+        path: 'fundOut',
+        name: 'fundOut',
+        component: () => import('../views/Backstage/FundOut.vue')
+      },
       {
         path: 'volReview',
         name: 'volReview',
