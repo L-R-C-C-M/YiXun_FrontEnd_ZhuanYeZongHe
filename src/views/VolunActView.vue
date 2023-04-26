@@ -13,10 +13,8 @@
           <el-input v-model="inputAct" placeholder="请输入志愿活动名..." :prefix-icon="Search" clearable @change="goSearchAct" />
         </el-row>
         <el-col class="toptext">志愿活动</el-col>
-        <!--el-link class="linktext">更多>></!--el-link-->
         <el-divider />
         <div v-if="volActList.length == 0">无相关内容</div>
-        <!--div width="600px"-->
         <el-row type="flex" justify-content="flex-start">
           <el-card v-for="actitem in volActList" :key="actitem.VolActId" class="mycard" :body-style="{ padding: '0px' }">
             <el-image v-if="actitem.ActPicUrl == null" style="width: 100%; height: 150px" :src="pic" fit="cover" />
@@ -65,7 +63,7 @@
           <div style="padding-top: 35px; color: #67bbff;font-weight:bolder; font-size: larger">{{donateHead}}</div>
         </div></el-col>
         <el-col :span="2" :offset="2">
-          <el-button type="primary" class="donate-button">我要捐款</el-button>
+          <el-button type="primary" class="donate-button" @click="pay">我要捐款</el-button>
         </el-col>
       </el-row>
       </el-main>
@@ -91,7 +89,7 @@
               v-for="(income, index) in incomeList"
               :key="index"
               class="ranktop"
-              style="align-items: center"
+              style="align-items: center;margin-bottom:30px"
             >
               <el-image
                 style="width: 50px; height: 50px; border-radius: 50%"
@@ -105,12 +103,11 @@
                   text-align: right;
                   font-weight: bold;
                   color: #2e74b6;
-
                 "
                 :span="5"
               >{{ income.amount }}</el-col>
               <el-col
-                style="justify-content: flex-start; text-align: left"
+                style="justify-content: flex-start; text-align: left; color: #2e74b6;"
                 :span="4"
               >元</el-col>
               <el-col
@@ -126,28 +123,28 @@
             :span="11"
             class="rank" >
             <el-row
-              v-for="(income, index) in incomeList"
+              v-for="(expense, index) in expenseList"
               :key="index"
               class="ranktop outcome-record"
-              style="align-items: center"
+              style="align-items: center; margin-bottom:30px"
             >
               <el-col  :span="12" :offset="2" type="flex" justify="left" class="financeOutBox_middle">
 
-                <el-row  style= "margin-bottom:30px;font-weight:bolder;font-size: larger;height:40%;align-items: center;">
-                  <el-col>{{ income.amount }}</el-col>
+                <el-row  style= "margin-bottom:20px;font-weight:bolder;font-size: larger;align-items: center;">
+                  <el-col>{{ expense.title }}</el-col>
                 </el-row>
                 <el-row style="height:60%;align-items: center;">
                   <el-col :span="12" class="financeOutBox_inner">
-                    <div class="financeOutText">历史捐款人次</div>
-                    <div style="color: #67bbff;font-weight:bolder; font-size: larger">{{donateHead}}</div>
+                    <div style="color: #67bbff;font-weight:bolder; font-size: larger">{{expense.amount}}元</div>
+                    <div class="financeOutText">支出金额</div>
                   </el-col>
                   <el-col :span="12" class="financeOutBox_inner">
-                    <div class="financeOutText">历史捐款人次</div>
-                    <div style="color: #67bbff;font-weight:bolder; font-size:larger">{{donateHead}}</div>
+                    <div style="color: #67bbff;font-weight:bolder; font-size:larger">{{expense.time}}</div>
+                    <div class="financeOutText">支出时间</div>
                   </el-col>
                 </el-row>
               </el-col>
-              <el-col :span="8" style="font-size:small;text-align: left;" >本项目自2022年12月29日上线以来，共筹集善款1053.67元，本项目2023年1月4日至2023年1月28日期间，组织志愿者开展项目前期调研工作，了解残障儿童的基础情况及需求。</el-col>
+              <el-col :span="8" style="font-size:small;text-align: left;" >{{expense.description}}</el-col>
             </el-row>
           </el-col>
 
@@ -180,7 +177,16 @@ export default {
     const inputAct = ref("");
     const currentDate = ref(new Date());
     let volActList = ref([]);
-    let incomeList = ref([{"userHeadUrl":"https://yixun-picture.oss-cn-shanghai.aliyuncs.com/user_head/1.jpeg","phoneNum":"19969779835","amount":12878787832,"time":"2023-04-02"}]);
+    let incomeList = ref([{"userHeadUrl":"https://yixun-picture.oss-cn-shanghai.aliyuncs.com/user_head/1.jpeg","phoneNum":"19969779835","amount":128787,"time":"2023-04-02"},
+    {"userHeadUrl":"https://yixun-picture.oss-cn-shanghai.aliyuncs.com/user_head/2.jpg","phoneNum":"189697721235","amount":128,"time":"2023-04-02"},
+    {"userHeadUrl":"https://yixun-picture.oss-cn-shanghai.aliyuncs.com/user_head/3.jpg","phoneNum":"13769777578","amount":134,"time":"2023-04-02"},
+    {"userHeadUrl":"https://yixun-picture.oss-cn-shanghai.aliyuncs.com/user_head/4.jpg","phoneNum":"13369770987","amount":10,"time":"2023-04-02"},
+    {"userHeadUrl":"https://yixun-picture.oss-cn-shanghai.aliyuncs.com/user_head/5.jpg","phoneNum":"19969773466","amount":10,"time":"2023-04-02"}
+  
+  ]);
+    let expenseList = ref([{"title":"二月工作人员工资支出","description":"本项目自2022年12月29日上线以来，共筹集善款1053.67元，在此感谢平台爱心用户对本项目的支持！本项目2023年1月4日至2023年1月28日期间，组织志愿者开展项目前期调研工作，了解残障儿童的基础情况及需求。","amount":128787,"time":"2023-04-02"},
+    {"title":"“宝贝回家”志愿宣传活动支出","description":"本项目自2022年12月29日上线以来，共筹集善款1053.67元，在此感谢平台爱心用户对本项目的支持！本项目2023年1月4日至2023年1月28日期间，组织志愿者开展项目前期调研工作，了解残障儿童的基础情况及需求。","amount":1000,"time":"2023-04-01"}
+  ]);
     // let volActSearch = ref([]);
     let currentPage = ref(1);
     let pageSize = ref(8);
@@ -203,13 +209,26 @@ export default {
       volActList,
       donateCount,
       donateHead,
-      incomeList
+      incomeList,
+      expenseList
     };
   },
   mounted() {
     this.getBeforePage();
   },
   methods: {
+    pay(){
+      api
+        .getActSearch(this.inputAct, this.currentPage, this.pageSize)
+        .then((res) => {
+          console.log("搜索成功", res);
+          this.volActList = res.data.data.activity_list;
+          this.total = res.data.data.total;
+        })
+        .catch((err) => {
+          console.log("请求失败", err);
+        });
+    },
     codeToText(province, city, area) {
       return CodeToText[province] + CodeToText[city] + CodeToText[area];
     },
@@ -273,7 +292,7 @@ export default {
 
 <style scoped>
 .financeOutText{
-  font-size:medium;
+  font-size:small;
 }
 .financeOutBox_middle{
   display: flex;

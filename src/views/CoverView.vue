@@ -146,13 +146,13 @@
           </kinesis-container>
         </div>
       </el-main>
-
       <Footer></Footer>
     </el-container>
   </div>
 </template>
 
 <script>
+
 //引入的自定义组件命名必须是Xxxx或xxxXxxx
 import InfoHeader from "@/views/Frontstage/InfoHeader.vue";
 import Footer from "@/views/Frontstage/Footer.vue";
