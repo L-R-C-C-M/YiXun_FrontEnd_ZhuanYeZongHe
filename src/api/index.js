@@ -109,7 +109,7 @@ const api = {
 
 
     //4.1.1 获取志愿活动列表
-    getVolAct(pageNum, pageSize) {
+    getVolActList(pageNum, pageSize) {
         return axios.get(path.baseUrl + path.volAct, { params: { pageNum: pageNum, pageSize: pageSize } })
     },
 
@@ -291,12 +291,12 @@ const api = {
         })
     },
     //修改密码
-    changePassword(user_id,user_password,new_password){
+    changePassword(user_id, user_password, new_password) {
 
-        return axios.put(path.baseUrl+path.changePasswordUrl,{
-            user_id:user_id,
-            user_password:user_password,
-            new_password:new_password
+        return axios.put(path.baseUrl + path.changePasswordUrl, {
+            user_id: user_id,
+            user_password: user_password,
+            new_password: new_password
         })
     },
 
@@ -510,7 +510,31 @@ const api = {
     //注册志愿者数
     GetVolunteerNum() {
         return axios.get(path.baseUrl + path.getVolunteerNum);
+    },
+
+
+    /* 财务管理 */
+    //获取全部支出记录
+    getFundOutList(pagenum, pagesize) {
+        return axios.get(path.baseUrl + path.fundOutList, { params: { pageNum: pagenum, pageSize: pagesize } });
+    },
+    //根据月份筛选支出记录
+    selectFundOut(startTime, endTime, pagenum, pagesize) {
+        return axios.post(path.baseUrl + path.fundOutSelectByMonth, { startTime: startTime, endTime: endTime, pageNum: pagenum, pageSize: pagesize });
+    },
+    //获取全部收入与支出
+    getFundTotal() {
+        return axios.get(path.baseUrl + path.fundTotalForYear);
+    },
+    //添加支出记录
+    addFundOut(amount, id, usage, time) {
+        return axios.post(path.baseUrl + path.addFundOutInfo, { fund_out_amount: amount, administrator_id: id, fund_out_usage: usage, fund_out_time: time });
+    },
+    //删除支出记录
+    deleteFundOut(id) {
+        return axios.delete(path.baseUrl + path.deleteFundOutInfo, { params: { fundOutId: id } });
     }
+
 }
 
 export default api;

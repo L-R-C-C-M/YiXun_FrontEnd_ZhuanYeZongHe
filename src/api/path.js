@@ -82,7 +82,7 @@ const base = {
     //获取寻人详情页 *
     getMissingpersonInfoUrl: "/api/SearchInfo/GetSearchInfo",
     //获取寻人信息所有内容
-    getMissingpersonInfoAllUrl:"/api/SearchInfo/GetSearchInfoToChange",
+    getMissingpersonInfoAllUrl: "/api/SearchInfo/GetSearchInfoToChange",
     //发布线索 *
     upClueUrl: "/api/UserOperation/AddSearchPeopleClue",
     //发布线索举报 *
@@ -93,12 +93,12 @@ const base = {
     upMissingpersonUrl: "/api/UserOperation/AddSearchPeopleInfo",
     addPictureUrl: "/api/UserOperation/AddSearchInfoPic",
     //修改寻人信息
-    changeMisspersonInfoUrl:"/api/UserOperation/UserChangeSearchInfo",
+    changeMisspersonInfoUrl: "/api/UserOperation/UserChangeSearchInfo",
     //关注寻人信息 *
     followMisUrl: "/api/UserOperation/UserFocus",
     //修改密码
 
-    changePasswordUrl:"/api/UserInfo/ChangePassword",
+    changePasswordUrl: "/api/UserInfo/ChangePassword",
 
 
     //公共路径
@@ -193,6 +193,20 @@ const base = {
     //2.5 判断用户是否有正在审核中 *
     // isReviewApply: "/api/LogIn/IsReviewApply",
     isReviewApply: "/api/Vol/IsReviewApply",
+
+    /* 财务管理 */
+    //获取全部支出记录
+    fundOutList: "/api/Finance/GetAllFundOut",
+    //根据月份筛选支出记录
+    fundOutSelectByMonth: "/api/Finance/GetFundOutByYear",
+    //获取全部收入与支出
+    fundTotalForYear: "/api/Finance/GetTotalFinance",
+    //添加支出记录：
+    addFundOutInfo: "/api/Finance/AddFundOut",
+    //删除支出记录
+    deleteFundOutInfo: "/api/Finance/DeleteFundOut",
+
+
 
 }
 

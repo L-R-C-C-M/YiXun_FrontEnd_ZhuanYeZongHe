@@ -1,4 +1,4 @@
-<!-- @author:何懿励-资讯管理-普通用户 -->
+<!-- @author:陈思羽-志愿活动管理-已发布志愿活动 -->
 <template>
     <el-header>
         <el-breadcrumb separator="/">
@@ -67,7 +67,7 @@ export default {
     methods: {
         getAllActivities() {
             api
-                .getVolAct(this.pagenum, this.pagesize)
+                .getVolActList(this.pagenum, this.pagesize)
                 .then((res) => {
                     console.log("请求成功", res);
                     this.tableData = res.data.data.activity_list;
