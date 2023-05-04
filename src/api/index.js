@@ -299,6 +299,19 @@ const api = {
             new_password: new_password
         })
     },
+    
+    //寻人信息已找到
+    missingperHaveFound(searchinfoId){
+        return axios.put(path.baseUrl+path.missingperHaveFoundUrl,null,{params:{searchinfoId:searchinfoId}
+            
+        })
+    },
+    //线索核实
+    clueVerify(clueId){
+        return axios.put(path.baseUrl+path.clueVerifyUrl,null,{params:{
+            clueId:clueId}
+        })
+    },
 
 
     //————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————
