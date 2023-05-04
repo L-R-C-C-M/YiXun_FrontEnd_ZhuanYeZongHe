@@ -533,8 +533,24 @@ const api = {
     //删除支出记录
     deleteFundOut(id) {
         return axios.delete(path.baseUrl + path.deleteFundOutInfo, { params: { fundOutId: id } });
+    },
+    /* 志愿捐款 */
+    //获取捐款总额
+    getDonateCount(){
+        return axios.get(path.baseUrl + path.getDonateCount);
+    },
+    //获取捐款人数
+    getDonateHead(){
+        return axios.get(path.baseUrl + path.getDonateHead);
+    },
+    //获取捐款记录
+    getDonateRecord(pageNum, pageSize){
+        return axios.get(path.baseUrl + path.getDonateRecord,{ params: { pageNum: pageNum, pageSize: pageSize } });
+    },
+    //支付宝支付
+    aliPay(){
+        return axios.put(path.baseUrl + path.aliPay,{ params: { out_trade_no: out_trade_no, subject: subject,total_amount: total_amount } });
     }
-
 }
 
 export default api;

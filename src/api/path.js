@@ -206,7 +206,15 @@ const base = {
     //删除支出记录
     deleteFundOutInfo: "/api/Finance/DeleteFundOut",
 
-
+    /* 志愿捐款 */
+    //获取捐款总额
+    getDonateCount: "/api/Finance/GetDonateCount",
+    //获取捐款人数
+    getDonateHead: "/api/Finance/GetDonateHead",
+    //获取捐款记录
+    getDonateRecord:"/api/Finance/GetAllIncome",
+    //支付宝支付
+    aliPay: "/api/Alipay/pay",
 
 }
 

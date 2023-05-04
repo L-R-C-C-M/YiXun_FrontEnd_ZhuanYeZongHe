@@ -63,7 +63,7 @@
           <div style="padding-top: 35px; color: #67bbff;font-weight:bolder; font-size: larger">{{donateHead}}</div>
         </div></el-col>
         <el-col :span="2" :offset="2">
-          <el-button type="primary" class="donate-button" @click="pay">我要捐款</el-button>
+          <el-button type="primary" class="donate-button"  @click="pay()">我要捐款</el-button>
         </el-col>
       </el-row>
       </el-main>
@@ -116,7 +116,14 @@
                 income.time
               }}</el-col>
             </el-row>
+            <div class="Parent">
+          <!--分页-->
+          <el-pagination v-model:page-size="donatePageSize" v-model:current-page="donatePageNum" :total="donateTotal"
+            layout="total,prev, pager, next, jumper" @current-change="handleCurrentChange_donate" />
+        </div>
+            
           </el-col>
+
           <div class="divideLine"></div>
 
           <el-col
@@ -146,6 +153,11 @@
               </el-col>
               <el-col :span="8" style="font-size:small;text-align: left;" >{{expense.description}}</el-col>
             </el-row>
+            <div class="Parent">
+          <!--分页-->
+          <el-pagination v-model:page-size="donatePageSize" v-model:current-page="donatePageNum" :total="donateTotal"
+            layout="total,prev, pager, next, jumper" @current-change="handleCurrentChange_donate" />
+        </div>
           </el-col>
 
         </el-row>
@@ -177,13 +189,7 @@ export default {
     const inputAct = ref("");
     const currentDate = ref(new Date());
     let volActList = ref([]);
-    let incomeList = ref([{"userHeadUrl":"https://yixun-picture.oss-cn-shanghai.aliyuncs.com/user_head/1.jpeg","phoneNum":"19969779835","amount":128787,"time":"2023-04-02"},
-    {"userHeadUrl":"https://yixun-picture.oss-cn-shanghai.aliyuncs.com/user_head/2.jpg","phoneNum":"189697721235","amount":128,"time":"2023-04-02"},
-    {"userHeadUrl":"https://yixun-picture.oss-cn-shanghai.aliyuncs.com/user_head/3.jpg","phoneNum":"13769777578","amount":134,"time":"2023-04-02"},
-    {"userHeadUrl":"https://yixun-picture.oss-cn-shanghai.aliyuncs.com/user_head/4.jpg","phoneNum":"13369770987","amount":10,"time":"2023-04-02"},
-    {"userHeadUrl":"https://yixun-picture.oss-cn-shanghai.aliyuncs.com/user_head/5.jpg","phoneNum":"19969773466","amount":10,"time":"2023-04-02"}
-  
-  ]);
+    let incomeList = ref([]);
     let expenseList = ref([{"title":"二月工作人员工资支出","description":"本项目自2022年12月29日上线以来，共筹集善款1053.67元，在此感谢平台爱心用户对本项目的支持！本项目2023年1月4日至2023年1月28日期间，组织志愿者开展项目前期调研工作，了解残障儿童的基础情况及需求。","amount":128787,"time":"2023-04-02"},
     {"title":"“宝贝回家”志愿宣传活动支出","description":"本项目自2022年12月29日上线以来，共筹集善款1053.67元，在此感谢平台爱心用户对本项目的支持！本项目2023年1月4日至2023年1月28日期间，组织志愿者开展项目前期调研工作，了解残障儿童的基础情况及需求。","amount":1000,"time":"2023-04-01"}
   ]);
@@ -194,8 +200,11 @@ export default {
     let ifSearch = ref(false);
     let pic =
       "https://yixun-picture.oss-cn-shanghai.aliyuncs.com/user_head/1.jpeg";
-    let donateCount=ref(200000);
-    let donateHead=ref(100000);
+    let donatePageNum = ref(1);
+    let donatePageSize = ref(5);
+    let donateCount=ref();
+    let donateHead=ref();
+    let donateTotal = ref(0);
     console.log(pageSize.value);
     return {
       inputAct,
@@ -210,24 +219,62 @@ export default {
       donateCount,
       donateHead,
       incomeList,
-      expenseList
+      expenseList,
+      donatePageSize,
+      donatePageNum,
+      donateTotal
     };
   },
   mounted() {
     this.getBeforePage();
+    this.getDonateRecord();
+    this.getDonateCount();
+    this.getDonateHead();
   },
   methods: {
-    pay(){
+    getDonateCount(){
       api
-        .getActSearch(this.inputAct, this.currentPage, this.pageSize)
+        .getDonateCount()
         .then((res) => {
-          console.log("搜索成功", res);
-          this.volActList = res.data.data.activity_list;
-          this.total = res.data.data.total;
+          console.log("获取捐款数量成功", res);
+          this.donateCount = res.data;
         })
         .catch((err) => {
-          console.log("请求失败", err);
+          console.log("获取捐款数量失败", err);
         });
+    },
+    getDonateHead(){
+      api
+        .getDonateHead()
+        .then((res) => {
+          console.log("获取捐款人数成功", res);
+          this.donateHead = res.data;
+        })
+        .catch((err) => {
+          console.log("获取捐款人数失败", err);
+        });
+    },
+    getDonateRecord(){
+      api
+        .getDonateRecord(
+          this.donatePageNum,
+          this.donatePageSize
+        )
+        .then((res) => {
+          console.log(res.data);
+          this.incomeList= res.data.data.income;
+          this.donateTotal = res.data.data.total;
+        });
+    },
+    handleCurrentChange_donate(newPage) {
+      this.donatePageNum = newPage; //重新指定当前页
+      this.getDonateRecord();
+    },
+    pay(){
+      //跳转至捐款页面
+      this.$router.push({
+        path: "/donate",
+      });
     },
     codeToText(province, city, area) {
       return CodeToText[province] + CodeToText[city] + CodeToText[area];
@@ -444,7 +491,7 @@ export default {
   border-radius: 20px;
 }
 .outcome-record{
-  height:150px;
+  height:170px;
 }
 
 .rank {
