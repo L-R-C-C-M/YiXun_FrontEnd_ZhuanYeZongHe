@@ -69,6 +69,9 @@
                 </el-col>
               </el-row>
             </div>
+            <div style="margin-top: 15px; text-align: center">
+              <el-button type="danger" size="small" @click="rejectInfo(item.search_info_id)">拒 绝</el-button>
+            </div>
           </div>
         </div>
         <div class="Parent">
@@ -85,74 +88,6 @@
       </div>
     </el-card>
 
-    <el-card style="height: auto; margin-bottom: 2%">
-      <div style="text-align: left; margin-left: 3%">
-        <h3>我报名的志愿活动</h3>
-
-        <el-row
-          style="min-height: 300px"
-          type="flex"
-          justify-content="flex-start"
-        >
-          <!--el-card的背景图片还未更改使用变量-->
-          <el-card
-            v-for="actitem in volActAll"
-            :key="actitem.VolActId"
-            @click="goActInfo(actitem.VolActId)"
-            class="mycard"
-            :body-style="{ padding: '0px' }"
-          >
-            <el-image
-              v-if="actitem.ActPicUrl == null"
-              style="width: 100%; height: 150px"
-              :src="pic"
-              fit="cover"
-            />
-
-            <el-image
-              v-if="actitem.ActPicUrl != null"
-              style="width: 100%; height: 150px"
-              :src="actitem.ActPicUrl"
-              fit="cover"
-            />
-
-            <div class="bottom">
-              <div style="color: #67bbff; font-size: 15px; margin: 0 0 10px">
-                {{ actitem.VolActName }}
-              </div>
-              <div>
-                活动地址：{{
-                  codeToText(
-                    actitem.Province,
-                    actitem.City,
-                    actitem.Area,
-                    actitem.Detail
-                  )
-                }}
-              </div>
-              <div>志愿时间：{{ actitem.ExpTime }}</div>
-              <div>人数：{{ actitem.Needpeople }}人</div>
-              <div>
-                <el-button type="primary" class="button" round
-                  >了解详情</el-button
-                >
-              </div>
-            </div>
-          </el-card>
-        </el-row>
-        <div class="Parent">
-          <!--分页-->
-          <el-pagination
-            align="center"
-            v-model:page-size="pagesize"
-            :current-page.sync="currentPage"
-            :total="total"
-            layout="total,prev, pager, next, jumper"
-            @current-change="handleCurrentChange"
-          />
-        </div>
-      </div>
-    </el-card>
   </el-main>
 </template>
 
@@ -171,15 +106,9 @@ export default {
       currentPage_follow: 1, //页码
       pagesize_follow: 3, //每页的数量
       total_follow: 0, //总条目数
-
-      volActAll: [],
-      currentPage: 1, //页码
-      pagesize: 3, //每页的数量
-      total: 0, //总条目数
     };
   },
   mounted() {
-    this.getVolApplyAct();
     this.getFollowUpInfo();
   },
   methods: {
@@ -192,28 +121,7 @@ export default {
         query: { act_id: actID },
       });
     },
-    //获取志愿活动信息
-    getVolApplyAct() {
-      api
-        .getVolApplyAct(this.volid, this.currentPage, this.pagesize)
-        .then((res) => {
-          console.log("请求成功", res.data);
-          //volActInfo.value = res.data.volActInfo;
-          this.volActAll = res.data.data.vol_act_info;
-          this.total = res.data.data.total;
-          console.log("获取数据", this.volActAll);
-        })
-        .catch((err) => {
-          console.log("请求失败", err);
-        });
-    },
-
-    //更新分页
-    handleCurrentChange(newPage) {
-      console.log(newPage);
-      this.currentPage = newPage; //重新指定当前页
-      this.getVolApplyAct();
-    },
+    
     //区域码转地址
     codeToText(province, city, area, detail) {
       if (detail != null)
@@ -252,6 +160,10 @@ export default {
       this.currentPage_follow = newPage; //重新指定当前页
       this.getFollowUpInfo();
     },
+    //拒绝跟进寻人信息
+    rejectInfo(){
+
+    }
   },
 };
 </script>

@@ -3,20 +3,23 @@
   <el-header>
     <el-breadcrumb separator="/">
       <el-breadcrumb-item>用户管理</el-breadcrumb-item>
-      <el-breadcrumb-item>志愿者</el-breadcrumb-item>
+      <el-breadcrumb-item>工作人员</el-breadcrumb-item>
     </el-breadcrumb>
   </el-header>
   <el-main style="background-color: rgba(245, 249, 250, 1)">
     <el-card>
       <el-row :gutter="20">
-        <el-col :span="1">
-          <span style="text-align: center">搜索</span>
+        <el-col :span="3">
+          <span style="text-align: center;">按姓名搜索</span>
         </el-col>
         <el-col :span="7">
           <el-input></el-input>
         </el-col>
         <el-col :span="2">
-          <el-button type="primary" :icon="Search">search</el-button>
+          <el-button type="primary" :icon="Search">搜索</el-button>
+        </el-col>
+        <el-col :span="3">
+          <span style="text-align: center">按地区搜索</span>
         </el-col>
       </el-row>
     </el-card>
@@ -27,8 +30,7 @@
         <el-table-column prop="user_name" label="用户昵称" align="center" />
         <el-table-column prop="phone_num" label="电话" align="center" />
         <el-table-column prop="mail_num" label="邮箱" align="center" />
-        <el-table-column prop="vol_id" label="志愿者编号" align="center" />
-        <el-table-column prop="vol_time" label="志愿时长" align="center" />
+        <el-table-column prop="vol_id" label="工作人员编号" align="center" />
         <el-table-column
           prop="fundation_time"
           label="创建时间"
@@ -37,10 +39,10 @@
         <!-- <el-table-column prop= "inst_name" label="志愿机构名" align="center"/> -->
         <el-table-column
           prop="info_followup_num"
-          label="跟进寻人信息数量"
+          label="当前跟进寻人信息数量"
           align="center"
         />
-        <el-table-column prop="act_num" label="参与活动数量" align="center" />
+        <el-table-column prop="act_num" label="当前负责志愿活动数量" align="center" />
       </el-table>
 
       <!--分页-->

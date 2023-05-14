@@ -75,7 +75,7 @@
         this.$router.back();
         },
         pay(){
-          const url = 'http://localhost:3300/api/Alipay/pay?out_trade_no=10&subject=益寻公益捐款&total_amount=' +this.num
+          const url = 'http://localhost:3300/api/Alipay/pay?out_trade_no=2&subject=益寻公益捐款&total_amount=' +this.num
           //window.location.href =url
           window.open(url, '_blank');
         }

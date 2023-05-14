@@ -196,21 +196,6 @@ const routes = [
         name: 'releasedNews',
         component: () => import('../views/Backstage/ReleasedNews.vue')
       },
-      {//已发布的志愿活动
-        path: 'releasedActivity',
-        name: 'releasedActivity',
-        component: () => import('../views/Backstage/ReleasedActivity.vue')
-      },
-      {//发布志愿活动
-        path: 'releaseActivity',
-        name: 'releaseActivity',
-        component: () => import('../views/Backstage/ReleaseActivity.vue')
-      },
-      {//修改志愿活动
-        path: 'modifyActivity',
-        name: 'modifyActivity',
-        component: () => import('../views/Backstage/ModifyActivity.vue')
-      },
       {//支出明细
         path: 'fundOut',
         name: 'fundOut',
@@ -270,7 +255,7 @@ const routes = [
       },
     ]
   },
-  //志愿者后台//
+  //工作人员后台//
   {
     path: '/VolBackstage',
     name: 'VolBackstage',
@@ -287,7 +272,28 @@ const routes = [
       {
         path: "VolHomePage",
         component: () => import('../views/Backstage/VolHomePage.vue'),
-      }
+      },
+      {//已发布的志愿活动
+        path: 'releasedActivity',
+        name: 'releasedActivity',
+        component: () => import('../views/Backstage/ReleasedActivity.vue')
+      },
+      {//发布志愿活动
+        path: 'releaseActivity',
+        name: 'releaseActivity',
+        component: () => import('../views/Backstage/ReleaseActivity.vue')
+      },
+      {//修改志愿活动
+        path: 'modifyActivity',
+        name: 'modifyActivity',
+        component: () => import('../views/Backstage/ModifyActivity.vue')
+      },
+      //工作人员信息
+      {
+        path: 'volManagement',
+        name: 'volManagement',
+        component: () => import('../views/Backstage/VolManagement.vue')
+      },
     ]
   },
 

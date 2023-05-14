@@ -138,25 +138,25 @@
               <el-col  :span="12" :offset="2" type="flex" justify="left" class="financeOutBox_middle">
 
                 <el-row  style= "margin-bottom:20px;font-weight:bolder;font-size: larger;align-items: center;">
-                  <el-col>{{ expense.title }}</el-col>
+                  <el-col>{{ expense.fund_out_usage }}</el-col>
                 </el-row>
                 <el-row style="height:60%;align-items: center;">
                   <el-col :span="12" class="financeOutBox_inner">
-                    <div style="color: #67bbff;font-weight:bolder; font-size: larger">{{expense.amount}}元</div>
+                    <div style="color: #67bbff;font-weight:bolder; font-size: larger">{{expense.fund_out_amount}}元</div>
                     <div class="financeOutText">支出金额</div>
                   </el-col>
                   <el-col :span="12" class="financeOutBox_inner">
-                    <div style="color: #67bbff;font-weight:bolder; font-size:larger">{{expense.time}}</div>
+                    <div style="color: #67bbff;font-weight:bolder; font-size:larger">{{expense.fund_out_time}}</div>
                     <div class="financeOutText">支出时间</div>
                   </el-col>
                 </el-row>
               </el-col>
-              <el-col :span="8" style="font-size:small;text-align: left;" >{{expense.description}}</el-col>
+              <el-col :span="8" style="font-size:small;text-align: left;" >{{expense.fund_out_detail}}</el-col>
             </el-row>
             <div class="Parent">
           <!--分页-->
-          <el-pagination v-model:page-size="donatePageSize" v-model:current-page="donatePageNum" :total="donateTotal"
-            layout="total,prev, pager, next, jumper" @current-change="handleCurrentChange_donate" />
+          <el-pagination v-model:page-size="fundOutPageSize" v-model:current-page="fundOutPageNum" :total="fundOutTotal"
+            layout="total,prev, pager, next, jumper" @current-change="handleCurrentChange_fundOut" />
         </div>
           </el-col>
 
@@ -190,9 +190,7 @@ export default {
     const currentDate = ref(new Date());
     let volActList = ref([]);
     let incomeList = ref([]);
-    let expenseList = ref([{"title":"二月工作人员工资支出","description":"本项目自2022年12月29日上线以来，共筹集善款1053.67元，在此感谢平台爱心用户对本项目的支持！本项目2023年1月4日至2023年1月28日期间，组织志愿者开展项目前期调研工作，了解残障儿童的基础情况及需求。","amount":128787,"time":"2023-04-02"},
-    {"title":"“宝贝回家”志愿宣传活动支出","description":"本项目自2022年12月29日上线以来，共筹集善款1053.67元，在此感谢平台爱心用户对本项目的支持！本项目2023年1月4日至2023年1月28日期间，组织志愿者开展项目前期调研工作，了解残障儿童的基础情况及需求。","amount":1000,"time":"2023-04-01"}
-  ]);
+    let expenseList = ref([]);
     // let volActSearch = ref([]);
     let currentPage = ref(1);
     let pageSize = ref(8);
@@ -205,6 +203,9 @@ export default {
     let donateCount=ref();
     let donateHead=ref();
     let donateTotal = ref(0);
+    let fundOutPageNum = ref(1);
+    let fundOutPageSize = ref(2);
+    let fundOutTotal = ref(0);
     console.log(pageSize.value);
     return {
       inputAct,
@@ -222,7 +223,10 @@ export default {
       expenseList,
       donatePageSize,
       donatePageNum,
-      donateTotal
+      donateTotal,
+      fundOutPageNum,
+      fundOutPageSize,
+      fundOutTotal
     };
   },
   mounted() {
@@ -230,6 +234,7 @@ export default {
     this.getDonateRecord();
     this.getDonateCount();
     this.getDonateHead();
+    this.getFundOutRecord();
   },
   methods: {
     getDonateCount(){
@@ -270,6 +275,24 @@ export default {
       this.donatePageNum = newPage; //重新指定当前页
       this.getDonateRecord();
     },
+    getFundOutRecord(){
+      api
+        .getFundOutRecord(
+          this.fundOutPageNum,
+          this.fundOutPageSize
+        )
+        .then((res) => {
+          console.log(res.data);
+          this.expenseList= res.data.data.fund_out;
+          this.fundOutTotal = res.data.data.total;
+        });
+    },
+    handleCurrentChange_fundOut(newPage) {
+      this.fundOutPageNum = newPage; //重新指定当前页
+      this.getFundOutRecord();
+      console.log("换页成功")
+    },
+
     pay(){
       //跳转至捐款页面
       this.$router.push({
