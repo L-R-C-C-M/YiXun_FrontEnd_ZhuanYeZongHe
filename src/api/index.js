@@ -189,11 +189,19 @@ const api = {
         return axios.get(path.baseUrl + path.getMissingpersonInfoAllUrl, { params: { searchinfoId: id } })
     },
     //发布线索
-    upClue(user_id, searchinfo_id, clue_content) {
+    upClue(user_id, searchinfo_id, clue_content,date,detailTime,province,city,area,detailAddress,picNum,clue_pic) {
         return axios.post(path.baseUrl + path.upClueUrl, {
             user_id: user_id,
             searchinfo_id: searchinfo_id,
-            clue_content: clue_content
+            clue_content: clue_content,
+            date:date,
+            detailTime:detailTime,
+            province:province,
+            city:city,
+            area:area,
+            detailAddress:detailAddress,
+            picNum:picNum,
+            clue_pic:clue_pic,
         }, {
             headers: {
                 'Content-Type': 'application/json;charset=UTF-8'
@@ -307,9 +315,15 @@ const api = {
         })
     },
     //线索核实
-    clueVerify(clueId){
+    clueVerify(clueId,textarea,checkMan,phoneNumber){
         return axios.put(path.baseUrl+path.clueVerifyUrl,null,{params:{
-            clueId:clueId}
+            clueId:clueId,
+            textarea:textarea,
+            checkMan:checkMan,
+            phoneNumber:phoneNumber
+
+
+        }
         })
     },
 

@@ -376,7 +376,7 @@ export default {
       reader.readAsDataURL(file.raw); 
       reader.onload = (e) => { 
         this.form.imageurl = e.target.result; 
-        console.log(this.form.imageurl); //图片的base64数据 
+        console.log("图片的base64数据",this.form.imageurl); //图片的base64数据 
       }; 
     }, 
     //时间转化封装 
