@@ -31,8 +31,8 @@
                   codeToText(actitem.Province, actitem.City, actitem.Area)
                 }}
               </div>
-              <div>开始时间：{{ actitem.EndTime }}</div>
-              <div>结束时间：{{ actitem.ExpTime }}</div>
+              <div>开始时间：{{ actitem.ExpTime }}</div>
+              <div>结束时间：{{ actitem.EndTime }}</div>
               <div>
                 人数：{{ actitem.SignupPeople }}/{{ actitem.Needpeople }}人
               </div>

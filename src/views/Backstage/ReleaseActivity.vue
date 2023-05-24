@@ -245,6 +245,7 @@ export default {
       return time;
     },
 
+
     //选择上传图片
     // onUploadChange(file) {
     //   const isIMAGE =

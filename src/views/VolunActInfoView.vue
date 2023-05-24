@@ -27,8 +27,8 @@
                   volActInfo.activity_needpeople
                 }}人
               </div>
-              <div>开始时间：{{ volActInfo.activity_endTime }}</div>
-              <div>结束时间：{{ volActInfo.activity_expTime }}</div>
+              <div>开始时间：{{ volActInfo.activity_expTime }}</div>
+              <div>结束时间：{{ volActInfo.activity_endTime }}</div>
               <div>服务地点：{{ volActInfo.activity_address }}</div>
               <!-- <div>发起机构：{{ volActInfo.activity_inst }}</div> -->
               <div>联络方式：{{ volActInfo.activity_contactMethod }}</div>
@@ -209,12 +209,12 @@ export default {
         var now_date = this.formatDateValue(new Date());
         console.log("当前时间" + now_date);
         console.log("开始时间" + this.volActInfo.activity_endTime);
-        this.is_overdue = this.volActInfo.activity_endTime < now_date;
-        if (this.volActInfo.activity_endTime > now_date)
+        this.is_overdue = this.volActInfo.activity_expTime < now_date;
+        if (this.volActInfo.activity_expTime > now_date)
           this.active = 0;
-        else if (this.volActInfo.activity_endTime < now_date && this.volActInfo.activity_expTime > now_date)
+        else if (this.volActInfo.activity_expTime < now_date && this.volActInfo.activity_endTime > now_date)
           this.active = 2;
-        else if (this.volActInfo.activity_expTime < now_date)
+        else if (this.volActInfo.activity_endTime < now_date)
           this.active = 4;
         console.log("激活项：" + this.active);
       })

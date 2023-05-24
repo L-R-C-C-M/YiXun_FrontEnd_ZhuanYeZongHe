@@ -27,7 +27,14 @@
         <!--图片直接上传可以覆盖吗？-->
 
         <el-form-item label="活动图片">
+
           <div style="text-align: left">
+            <CropperImageUpload :img_url="act_info.activity_pic" @uploadImgSuccess="uploadImgSuccessHandler" />
+            <div slot="tip" class="el-upload__tip">
+              只能上传jpg/png文件
+            </div>
+          </div>
+          <!-- <div style="text-align: left">
             <el-upload v-if="!isEdit" class="avatar-uploader" action :auto-upload="false" ref="upload" disabled
               :show-file-list="false" :on-change="onUploadChange">
               <img v-if="this.act_info.activity_pic" :src="act_info.activity_pic" class="avatar" />
@@ -46,7 +53,7 @@
             <div v-if="isEdit" slot="tip" class="el-upload__tip">
               点击图片上传新图（只能上传jpg/png文件，且不超过5M）
             </div>
-          </div>
+          </div> -->
         </el-form-item>
 
 
@@ -84,7 +91,7 @@
           <!--当前设置时间禁止输入-->
           <el-input v-model="act_info.activity_expTime" placeholder="活动时间" autocomplete="off" disabled></el-input>
 
-        <!-- 不修改则禁止输入
+          <!-- 不修改则禁止输入
           <el-date-picker v-if="!isEdit" v-model="dateValue" type="datetimerange" range-separator="至"
             start-placeholder="开始日期" end-placeholder="结束日期" disabled>
                                     </el-date-picker> -->
@@ -148,7 +155,7 @@
         </el-form-item>
 
         <!--放弃修改怎么处理-->
-      <!-- <div>
+        <!-- <div>
           <el-button type="primary" @click="save">确认修改</el-button>
           <el-button type="primary" @click="">放弃修改</el-button>
                                                                                                                                                 </div> -->
@@ -170,9 +177,13 @@ import { ref } from "vue";
 import { useRoute } from "vue-router";
 import api from "/src/api/index";
 import { regionData } from "element-china-area-data";
+import CropperImageUpload from '@/components/CropperImage.vue'
 
 export default {
   name: "modifyActivity-vue",
+  components: {
+    CropperImageUpload
+  },
   data() {
     return {
       admin_id: JSON.parse(sessionStorage.getItem("administratorid")),
@@ -200,6 +211,23 @@ export default {
       isEdit: false,
       isChange: [false, false, false, false, false, false, false]
     };
+  },
+  setup() {
+    let imgData = ""
+    let picEdit = false
+    const uploadImgSuccessHandler = function (state) {
+      //console.log("图片数据：", state)
+      // emit('update:imgUrl', state)
+      imgData = state;
+      picEdit = true;
+      // console.log("图片数据", imgData);
+      console.log("图片修改状态", picEdit)
+    }
+    return {
+      picEdit,
+      imgData,
+      uploadImgSuccessHandler
+    }
   },
   mounted() {
     // api.getAllVolInst().then((res) => {
@@ -244,12 +272,20 @@ export default {
     save() {
       console.log(this.act_info);
 
-      //修改图片的api
-      api.addVolActivityPic(this.act_info.activity_id, this.act_info.activity_pic).then((res) => {
-        console.log(res.data);
-      });
-      if (this.isChange[3])
+      if (this.picEdit) {
+        //修改图片的api
+        // api.addVolActivityPic(this.act_info.activity_id, this.act_info.activity_pic).then((res) => {
+        //   console.log(res.data);
+        // });
+        api.addVolActivityPic(this.act_info.activity_id, this.imgData).then((res) => {
+          console.log(res.data);
+        });
+      }
+
+      if (this.isChange[3]) {
         this.act_info.activity_expTime = this.formatDateValue(this.dateValue[0]);
+        this.act_info.activity_endTime = this.formatDateValue(this.dateValue[1]);
+      }
       console.log(this.act_info.activity_expTime);
 
       //修改志愿活动的api
@@ -259,6 +295,7 @@ export default {
           this.act_info.activity_name,
           this.act_info.activity_content,
           //this.formatDateValue(this.dateValue[0]),
+          this.act_info.activity_endTime,
           this.act_info.activity_expTime,
           Number(this.act_info.activity_needpeople),
           this.act_info.activity_province,
@@ -326,28 +363,28 @@ export default {
     },
 
     //选择上传图片
-    onUploadChange(file) {
-      const isIMAGE =
-        file.raw.type === "image/jpeg" ||
-        file.raw.type === "image/png" ||
-        file.raw.type === "image/gif";
-      const isLt1M = file.size / 1024 / 1024 < 5;
+    // onUploadChange(file) {
+    //   const isIMAGE =
+    //     file.raw.type === "image/jpeg" ||
+    //     file.raw.type === "image/png" ||
+    //     file.raw.type === "image/gif";
+    //   const isLt1M = file.size / 1024 / 1024 < 5;
 
-      if (!isIMAGE) {
-        this.$message.error("上传文件只能是图片格式!");
-        return false;
-      }
-      if (!isLt1M) {
-        this.$message.error("上传文件大小不能超过 5MB!");
-        return false;
-      }
-      var reader = new FileReader();
-      reader.readAsDataURL(file.raw);
-      reader.onload = (e) => {
-        this.activity.imageurl = e.target.result;
-        console.log(this.activity.imageurl); //图片的base64数据
-      };
-    },
+    //   if (!isIMAGE) {
+    //     this.$message.error("上传文件只能是图片格式!");
+    //     return false;
+    //   }
+    //   if (!isLt1M) {
+    //     this.$message.error("上传文件大小不能超过 5MB!");
+    //     return false;
+    //   }
+    //   var reader = new FileReader();
+    //   reader.readAsDataURL(file.raw);
+    //   reader.onload = (e) => {
+    //     this.activity.imageurl = e.target.result;
+    //     console.log(this.activity.imageurl); //图片的base64数据
+    //   };
+    // },
 
     //修改输入框边框颜色
     changeBorderColor(index) {
