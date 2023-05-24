@@ -574,6 +574,10 @@ const api = {
     getDonateRecord(pageNum, pageSize){
         return axios.get(path.baseUrl + path.getDonateRecord,{ params: { pageNum: pageNum, pageSize: pageSize } });
     },
+    //获取支出记录
+    getFundOutRecord(pageNum, pageSize){
+        return axios.get(path.baseUrl + path.getFundOutRecord,{ params: { pageNum: pageNum, pageSize: pageSize } });
+    },
     //支付宝支付
     aliPay(){
         return axios.put(path.baseUrl + path.aliPay,{ params: { out_trade_no: out_trade_no, subject: subject,total_amount: total_amount } });

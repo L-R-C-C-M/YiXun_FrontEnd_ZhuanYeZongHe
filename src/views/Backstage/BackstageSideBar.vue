@@ -17,18 +17,7 @@
         </el-menu-item-group>
       </el-sub-menu>
 
-      <el-sub-menu index="2">
-        <template #title>
-          <el-icon>
-            <Edit />
-          </el-icon>
-          <span>志愿活动管理</span>
-        </template>
-        <el-menu-item-group>
-          <el-menu-item index="/backstage/releasedActivity">已发布志愿活动</el-menu-item>
-          <el-menu-item index="/backstage/releaseActivity">发布志愿活动</el-menu-item>
-        </el-menu-item-group>
-      </el-sub-menu>
+
 
       <!-- <el-sub-menu index="3">
         <template #title>
@@ -55,7 +44,7 @@
         <span>工作人员审核</span>
       </el-menu-item>
 
-      <el-sub-menu index="3">
+      <el-sub-menu index="2">
         <template #title>
           <el-icon>
             <MessageBox />
@@ -68,7 +57,7 @@
         </el-menu-item-group>
       </el-sub-menu>
 
-      <el-sub-menu index="4">
+      <el-sub-menu index="3">
         <template #title>
           <el-icon>
             <Wallet />

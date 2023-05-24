@@ -20,14 +20,14 @@
 
       <el-menu-item index="/UserBackstage/ChangePassword">
         <el-icon>
-          <setting />
+          <Edit />
         </el-icon>
         <span>修改密码</span>
       </el-menu-item>
 
       <el-menu-item index="/UserBackstage/ApplyVol">
         <el-icon>
-          <setting />
+          <DocumentAdd  />
         </el-icon>
         <span>申请成为工作人员</span>
       </el-menu-item>

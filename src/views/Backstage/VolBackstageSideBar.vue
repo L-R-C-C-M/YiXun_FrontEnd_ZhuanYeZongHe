@@ -13,6 +13,24 @@
         <span>主页</span>
       </el-menu-item>
 
+      <el-menu-item index="/VolBackstage/volManagement">
+        <el-icon><Iphone /></el-icon>
+        <span>工作人员信息</span>
+      </el-menu-item>
+
+      <el-sub-menu index="2">
+        <template #title>
+          <el-icon>
+            <Edit />
+          </el-icon>
+          <span>志愿活动管理</span>
+        </template>
+        <el-menu-item-group>
+          <el-menu-item index="/VolBackstage/releasedActivity">已发布志愿活动</el-menu-item>
+          <el-menu-item index="/VolBackstage/releaseActivity">发布志愿活动</el-menu-item>
+        </el-menu-item-group>
+      </el-sub-menu>
+
       <el-menu-item index="/VolBackstage/Published">
         <el-icon><DocumentCopy /></el-icon>
         <span>我发布的</span>
