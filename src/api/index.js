@@ -567,7 +567,13 @@ const api = {
     //支付宝支付
     aliPay(){
         return axios.put(path.baseUrl + path.aliPay,{ params: { out_trade_no: out_trade_no, subject: subject,total_amount: total_amount } });
+    },
+
+    //工作人员拒绝跟进的寻人信息
+    refuseFollowUp(volid,search_info_id){
+        return axios.get(path.baseUrl + path.refuseFollowUp,{ params: { volid: volid, search_info_id: search_info_id } });
     }
+
 }
 
 export default api;

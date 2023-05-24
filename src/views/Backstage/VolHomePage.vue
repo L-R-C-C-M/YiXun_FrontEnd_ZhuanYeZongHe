@@ -161,8 +161,28 @@ export default {
       this.getFollowUpInfo();
     },
     //拒绝跟进寻人信息
-    rejectInfo(){
-
+    rejectInfo(info_id){
+      api
+        .refuseFollowUp(
+          this.volid,
+          info_id
+        )
+        .then((res) => {
+          console.log(res.data);
+          if(res.data.data.if_succeed=="true"){
+            this.getFollowUpInfo();
+            this.$message({
+              type: "success",
+              message: "拒绝成功!",
+            });
+          }
+          else{
+            this.$message({
+              type: "error",
+              message: "拒绝失败",
+            });
+          }
+        });
     }
   },
 };

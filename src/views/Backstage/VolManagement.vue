@@ -32,9 +32,9 @@
         <el-table-column prop="mail_num" label="邮箱" align="center" />
         <el-table-column prop="vol_id" label="工作人员编号" align="center" />
         <el-table-column
-          prop="fundation_time"
-          label="创建时间"
+          label="地址"
           align="center"
+          :formatter="codeToText"
         />
         <!-- <el-table-column prop= "inst_name" label="志愿机构名" align="center"/> -->
         <el-table-column
@@ -62,6 +62,8 @@
 <script>
 import { ref } from "vue";
 import api from "/src/api/index";
+import { CodeToText } from "element-china-area-data";
+
 const value1 = ref(true);
 export default {
   data() {
@@ -92,6 +94,13 @@ export default {
       //console.log(newPage);
       this.pagenum = newPage; //重新指定当前页
       this.getAllVol();
+    },
+    codeToText(row) {
+      if (row.detail != null) {
+        return `${CodeToText[row.province_id]} ${CodeToText[row.city_id]} ${CodeToText[row.area_id]} ${row.detail}`;
+      } else {
+        return `${CodeToText[row.province_id]} ${CodeToText[row.city_id]} ${CodeToText[row.area_id]}`;
+      }
     },
   },
 };
