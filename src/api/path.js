@@ -1,13 +1,7 @@
 const base = {
     //公共路径
-<<<<<<< HEAD
-    //baseUrl: "http://121.40.111.217:3300",
     // baseUrl: "http://localhost:3300",
     baseUrl:"http://47.96.94.96:3300",
-=======
-    baseUrl: "http://47.96.94.96:3300",
-    //baseUrl: "http://localhost:3300",
->>>>>>> 35f3eead5cd83f273b6c81180e6137f8897707ed
     //1.3 获取用户信息*
     userInfo: "/api/UserInfo/GetUserInfo",
     //1.3-2 修改个人信息*
