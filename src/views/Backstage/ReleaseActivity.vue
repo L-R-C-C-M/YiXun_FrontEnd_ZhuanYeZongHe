@@ -16,15 +16,9 @@
 
         <el-form-item label="活动图片">
           <div style="text-align: left">
-            <el-upload class="avatar-uploader" action :auto-upload="false" ref="upload" :show-file-list="false"
-              :on-change="onUploadChange">
-              <img v-if="this.activity.imageurl" :src="this.activity.imageurl" class="avatar" />
-              <el-icon v-else class="avatar-uploader-icon">
-                <Plus />
-              </el-icon>
-            </el-upload>
+            <CropperImageUpload @uploadImgSuccess="uploadImgSuccessHandler" />
             <div slot="tip" class="el-upload__tip">
-              只能上传jpg/png文件，且不超过5M
+              只能上传jpg/png文件
             </div>
           </div>
         </el-form-item>
@@ -83,34 +77,94 @@
 </template>
     
 <script>
-import { ref } from "vue";
+import { toRefs, toRef, ref } from 'vue'
+import CropperImageUpload from '@/components/CropperImage.vue'
 import api from "/src/api/index";
 import { regionData } from "element-china-area-data";
 
 export default {
-  name: "InformationRelease-vue",
+  name: "ActivityRelease",
+  components: {
+    CropperImageUpload
+  },
+  props: {
+    searchId: {
+      // 定义接收的类型 还可以定义多种类型 [String, Undefined, Number]
+      // 如果required为true,尽量type允许undefined类型，因为传递过来的参数是异步的。或者设置默认值。
+      type: Number,
+      // 定义是否必须传
+      required: false,
+      // 定义默认值
+      //default: ""
+    },
+    contact: {
+      // 定义接收的类型 还可以定义多种类型 [String, Undefined, Number]
+      // 如果required为true,尽量type允许undefined类型，因为传递过来的参数是异步的。或者设置默认值。
+      type: Number,
+      // 定义是否必须传
+      required: false,
+      // 定义默认值
+      //default: ""
+    }
+  },
   data() {
     return {
       admin_id: JSON.parse(sessionStorage.getItem("administratorid")),
       options: regionData,
       selectedOptions: [],
-      activity: {
-        act_name: "",
-        act_content: "",
-        act_time: "",
-        need_people: "",
-        act_province: "",
-        act_city: "",
-        act_area: "",
-        act_address: "",
-        contact_method: "",
-        //volInst_Id: "",
-        imageurl: "",
-        volAct_id: "",
-      },
+      // activity: {
+      //   act_name: "",
+      //   act_content: "",
+      //   act_time: "",
+      //   need_people: "",
+      //   act_province: "",
+      //   act_city: "",
+      //   act_area: "",
+      //   act_address: "",
+      //   contact_method: "",
+      //   //volInst_Id: "",
+      //   imageurl: "",
+      //   volAct_id: "",
+      // },
       volInstOptions: [],
       value1: [],
     };
+  },
+  setup() {
+    let activity = {
+      act_name: "",
+      act_content: "",
+      act_time: "",
+      need_people: "",
+      act_province: "",
+      act_city: "",
+      act_area: "",
+      act_address: "",
+      contact_method: "",
+      //volInst_Id: "",
+      imageurl: "",
+      volAct_id: "",
+    }
+    // const { imgUrl } = toRefs(attrs)
+    //const imgUrl = ref("");
+    const uploadImgSuccessHandler = function (state) {
+      //console.log("图片数据：", state)
+      // emit('update:imgUrl', state)
+      activity.imageurl = state;
+      console.log("图片数据", activity.imageurl);
+    }
+
+    return {
+      activity,
+      uploadImgSuccessHandler
+    }
+  },
+  mounted() {
+    if (this.searchId != null)
+      this.activity.act_name = "寻人线索核实志愿活动";
+    console.log("父组件传参：", this.searchId, this.contact);
+    if (this.contact != null)
+      this.activity.contact_method = this.contact;
   },
   methods: {
     //三级省市区修改
@@ -123,12 +177,15 @@ export default {
     save() {
       console.log(this.activity);
       this.activity.act_time = this.formatDateValue(this.value1[0]);
-      console.log(this.activity.act_time);
+      console.log("开始时间：", this.activity.act_time);
+      this.activity.endTime = this.formatDateValue(this.value1[1]);
+      console.log("结束时间：", this.activity.endTime);
       api
         .releaseVolActivity(
           this.activity.act_name,
           this.activity.act_content,
           this.formatDateValue(this.value1[0]),
+          this.formatDateValue(this.value1[1]),
           Number(this.activity.need_people),
           this.activity.act_province,
           this.activity.act_city,
@@ -189,33 +246,33 @@ export default {
     },
 
     //选择上传图片
-    onUploadChange(file) {
-      const isIMAGE =
-        file.raw.type === "image/jpeg" ||
-        file.raw.type === "image/png" ||
-        file.raw.type === "image/gif";
-      const isLt1M = file.size / 1024 / 1024 < 5;
+    // onUploadChange(file) {
+    //   const isIMAGE =
+    //     file.raw.type === "image/jpeg" ||
+    //     file.raw.type === "image/png" ||
+    //     file.raw.type === "image/gif";
+    //   const isLt1M = file.size / 1024 / 1024 < 5;
 
-      if (!isIMAGE) {
-        this.$message.error("上传文件只能是图片格式!");
-        return false;
-      }
-      if (!isLt1M) {
-        this.$message.error("上传文件大小不能超过 5MB!");
-        return false;
-      }
-      var reader = new FileReader();
-      reader.readAsDataURL(file.raw);
-      reader.onload = (e) => {
-        this.activity.imageurl = e.target.result;
-        console.log(this.activity.imageurl); //图片的base64数据
-      };
-    },
+    //   if (!isIMAGE) {
+    //     this.$message.error("上传文件只能是图片格式!");
+    //     return false;
+    //   }
+    //   if (!isLt1M) {
+    //     this.$message.error("上传文件大小不能超过 5MB!");
+    //     return false;
+    //   }
+    //   var reader = new FileReader();
+    //   reader.readAsDataURL(file.raw);
+    //   reader.onload = (e) => {
+    //     this.activity.imageurl = e.target.result;
+    //     console.log(this.activity.imageurl); //图片的base64数据
+    //   };
+    // },
   },
 };
 </script>
     
-<style  scoped>
+<style scoped>
 h6 {
   color: rgb(184, 184, 184);
 }
@@ -229,7 +286,7 @@ h6 {
   align-items: center;
 }
 
-.avatar-uploader .el-upload {
+/* .avatar-uploader .el-upload {
   border: 1px dashed #d9d9d9;
   border-radius: 6px;
   cursor: pointer;
@@ -254,5 +311,5 @@ h6 {
   width: 178px;
   height: 178px;
   display: block;
-}
+} */
 </style>

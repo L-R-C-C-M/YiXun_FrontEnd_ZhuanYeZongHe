@@ -189,11 +189,19 @@ const api = {
         return axios.get(path.baseUrl + path.getMissingpersonInfoAllUrl, { params: { searchinfoId: id } })
     },
     //发布线索
-    upClue(user_id, searchinfo_id, clue_content) {
+    upClue(user_id, searchinfo_id, clue_content, date, detailTime, province, city, area, detailAddress, picNum, clue_pic) {
         return axios.post(path.baseUrl + path.upClueUrl, {
             user_id: user_id,
             searchinfo_id: searchinfo_id,
-            clue_content: clue_content
+            clue_content: clue_content,
+            date: date,
+            detailTime: detailTime,
+            province: province,
+            city: city,
+            area: area,
+            detailAddress: detailAddress,
+            picNum: picNum,
+            clue_pic: clue_pic,
         }, {
             headers: {
                 'Content-Type': 'application/json;charset=UTF-8'
@@ -299,17 +307,25 @@ const api = {
             new_password: new_password
         })
     },
-    
+
     //寻人信息已找到
-    missingperHaveFound(searchinfoId){
-        return axios.put(path.baseUrl+path.missingperHaveFoundUrl,null,{params:{searchinfoId:searchinfoId}
-            
+    missingperHaveFound(searchinfoId) {
+        return axios.put(path.baseUrl + path.missingperHaveFoundUrl, null, {
+            params: { searchinfoId: searchinfoId }
+
         })
     },
     //线索核实
-    clueVerify(clueId){
-        return axios.put(path.baseUrl+path.clueVerifyUrl,null,{params:{
-            clueId:clueId}
+    clueVerify(clueId, textarea, checkMan, phoneNumber) {
+        return axios.put(path.baseUrl + path.clueVerifyUrl, null, {
+            params: {
+                clueId: clueId,
+                textarea: textarea,
+                checkMan: checkMan,
+                phoneNumber: phoneNumber
+
+
+            }
         })
     },
 
@@ -446,9 +462,9 @@ const api = {
     },
 
     //1.1-2管理员发布志愿活动
-    releaseVolActivity(act_name, act_content, act_time, need_people, act_province, act_city, act_area, act_address, contact_method) {
+    releaseVolActivity(act_name, act_content, act_time, end_time, need_people, act_province, act_city, act_area, act_address, contact_method) {
         return axios.post(path.baseUrl + path.releaseVolActivity, {
-            act_name: act_name, act_content: act_content, act_time: act_time, need_people: need_people,
+            act_name: act_name, act_content: act_content, act_time: act_time, end_time: end_time, need_people: need_people,
             act_province: act_province, act_city: act_city, act_area: act_area, act_address: act_address, contact_method: contact_method
         })
     },
@@ -460,9 +476,9 @@ const api = {
     //新增
 
     //管理员修改志愿活动
-    modifyVolActivity(act_id, act_name, act_content, act_time, need_people, act_province, act_city, act_area, act_address, contact_method) {
+    modifyVolActivity(act_id, act_name, act_content, act_time, end_time, need_people, act_province, act_city, act_area, act_address, contact_method) {
         return axios.put(path.baseUrl + path.modifyVolActivity, {
-            act_id: act_id, act_name: act_name, act_content: act_content, act_time: act_time, need_people: need_people,
+            act_id: act_id, act_name: act_name, act_content: act_content, act_time: act_time, end_time: end_time, need_people: need_people,
             act_province: act_province, act_city: act_city, act_area: act_area, act_address: act_address, contact_method: contact_method
         })
     },
@@ -549,20 +565,20 @@ const api = {
     },
     /* 志愿捐款 */
     //获取捐款总额
-    getDonateCount(){
+    getDonateCount() {
         return axios.get(path.baseUrl + path.getDonateCount);
     },
     //获取捐款人数
-    getDonateHead(){
+    getDonateHead() {
         return axios.get(path.baseUrl + path.getDonateHead);
     },
     //获取捐款记录
-    getDonateRecord(pageNum, pageSize){
-        return axios.get(path.baseUrl + path.getDonateRecord,{ params: { pageNum: pageNum, pageSize: pageSize } });
+    getDonateRecord(pageNum, pageSize) {
+        return axios.get(path.baseUrl + path.getDonateRecord, { params: { pageNum: pageNum, pageSize: pageSize } });
     },
     //获取支出记录
-    getFundOutRecord(pageNum, pageSize){
-        return axios.get(path.baseUrl + path.getFundOutRecord,{ params: { pageNum: pageNum, pageSize: pageSize } });
+    getFundOutRecord(pageNum, pageSize) {
+        return axios.get(path.baseUrl + path.getFundOutRecord, { params: { pageNum: pageNum, pageSize: pageSize } });
     },
     //支付宝支付
     aliPay(){

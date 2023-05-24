@@ -7,29 +7,15 @@
       </el-header>
       <el-main>
         <el-row>
-          <el-button
-            @click="goBack()"
-            type="text"
-            class="return"
-          >&lt;&lt;返回</el-button>
+          <el-button @click="goBack()" type="text" class="return">&lt;&lt;返回</el-button>
           <!--el-button @click="prev()">返回</!--el-button-->
         </el-row>
 
         <el-row min-windth="500px">
-          <el-image
-            v-if="this.MissInfo.search_photo"
-            :src="this.MissInfo.search_photo"
-            style="width: 200px; height: 200px"
-            class="image"
-            fit="cover"
-          />
-          <el-image
-            style="width: 200px; height: 200px"
-            v-else
-            :src="require('../../image/txiang.jpg')"
-            class="image"
-            fit="cover"
-          />
+          <el-image v-if="this.MissInfo.search_photo" :src="this.MissInfo.search_photo"
+            style="width: 200px; height: 200px" class="image" fit="cover" />
+          <el-image style="width: 200px; height: 200px" v-else :src="require('../../image/txiang.jpg')" class="image"
+            fit="cover" />
           <!-- <el-image style="width: 200px; height: 200px"  :src="require('../../image/txiang.jpg')" class="image" :fit="fill"/> -->
 
           <div>
@@ -38,34 +24,17 @@
               <div>| 性别：{{ MissInfo.search_gender }}</div>
               <div>| 出生日期：{{ MissInfo.search_birthday }}</div>
               <div>| 详细地址：{{ address }} {{ MissInfo.search_address }}</div>
-              <div
-                style="padding: 20px 0px 15px 5px"
-                v-if="this.loginState"
-              >
+              <div style="padding: 20px 0px 15px 5px" v-if="this.loginState">
                 <!-- <el-button v-if="!this.isFollow" @click="follow" round
                   >关注寻人信息</el-button
                 >
                 <el-button v-else @click="follow" round>取 消 关 注</el-button> -->
 
-                <el-button
-                  v-if="!this.isFollow"
-                  @click="follow"
-                  round
-                >关注寻人信息</el-button>
-                <el-button
-                  v-else
-                  @click="follow"
-                  round
-                >取 消 关 注</el-button>
+                <el-button v-if="!this.isFollow" @click="follow" round>关注寻人信息</el-button>
+                <el-button v-else @click="follow" round>取 消 关 注</el-button>
               </div>
-              <div
-                style="padding: 20px 0px 15px 5px"
-                v-else
-              >
-                <el-button
-                  round
-                  disabled
-                >关注寻人信息</el-button>
+              <div style="padding: 20px 0px 15px 5px" v-else>
+                <el-button round disabled>关注寻人信息</el-button>
               </div>
             </div>
           </div>
@@ -79,29 +48,23 @@
         <div class="text">{{ MissInfo.search_detail }}</div>
 
         <el-col class="toptext">寻人线索</el-col>
-        <el-row
-          v-for="clue in this.MissInfo.search_clue"
-          :key="clue.ClueContent"
-        >
-          <div class="text">| {{ clue.ClueContent }} <sup style="font-size:12px;color:crimson">{{ clueForm.report_state}}</sup></div>
-          
+        <el-row v-for="clue in this.MissInfo.search_clue" :key="clue.ClueContent">
+          <div class="text">| {{ clue.ClueContent }} <sup style="font-size:12px;color:crimson">{{
+            clueForm.report_state }}</sup></div>
+
           <div style="padding: 9px">
-            <el-button
-              type="primary"
-              class="actButton"
-              round
-              size="small"
-              @click="upClueReport(clue.ClueId)"
-            >举报</el-button>
+            <el-button type="primary" class="actButton" round size="small"
+              @click="upClueReport(clue.ClueId)">举报</el-button>
           </div>
+          <!-- {{线索描述字段}}
+            时间：{{data字段}}+{{detailTime字段}}
+            地点：{{area}}+{{ 详细地址字段}} 
+          按钮：查看图片}}-->
         </el-row>
 
         <el-col class="toptext">跟进工作人员</el-col>
 
-        <el-row
-          v-for="vol in this.MissInfo.search_vols"
-          :key="vol"
-        >
+        <el-row v-for="vol in this.MissInfo.search_vols" :key="vol">
           <el-col>
             <div class="text">姓名：{{ vol.Name }}</div>
             <div class="text">联系电话：{{ vol.PhoneNum }}</div>
@@ -110,69 +73,95 @@
 
         <!-- 上传线索，举报寻人信息按钮 -->
         <div style="padding: 50px 0px 15px 75px">
-          <el-form
-            :model="clueForm"
-            label-width="100px"
-            style="max-width: 1500px"
-          >
-            <el-form-item label="线索描述 ">
-              <el-input
-                v-model="clueForm.report_content"
-                :autosize="{ minRows: 10, maxRows: 12 }"
-                type="textarea"
-              />
-            </el-form-item>
+          <el-form :model="clueForm" label-width="100px" style="max-width: 1500px">
+            <!-- <el-form-item label="线索描述 ">
+              <el-input v-model="clueForm.report_content" :autosize="{ minRows: 10, maxRows: 12 }" type="textarea" />
+            </el-form-item> -->
 
-            <el-button
-              type="primary"
-              class="actButton"
-              round
-              @click="upClueClick(clueForm.report_content)"
-            >发布线索</el-button>
+            <el-button type="primary" class="actButton" round @click="upclueDialogVisible = true">发布线索</el-button>
 
             <!-- <el-button type="primary" class="actButton" round @click="goReport(index)">举 报</el-button> -->
-            <el-button
-              type="primary"
-              class="actButton"
-              round
-              @click="misReport"
-            >举 报</el-button>
+            <el-button type="primary" class="actButton" round @click="misReport">举 报</el-button>
           </el-form>
+        </div>
+
+        <!-- 上传线索对话框 郭静静5-12 -->
+        <div>
+          <el-dialog title="线索发布" v-model="upclueDialogVisible" class="upclueDialog">
+
+            <el-form :model="upclueform">
+              <el-form-item label="线索发现日期">
+                <el-date-picker v-model="upclueform.date" type="date" placeholder="请选择日期" :disabled-date="disabledDate"
+                  :shortcuts="shortcuts" :size="size" />
+              </el-form-item>
+
+              <el-form-item label="具体时间">
+                <el-input v-model="upclueform.detailTime" placeholder="请输入发现线索的具体时间点，例：“上午8点左右” " />
+              </el-form-item>
+
+              <el-form-item label="线索发现地点">
+                <!-- <el-input></el-input> -->
+                <el-cascader placeholder="请选择地区" size="default" :options="areaOptions" v-model="upclueform.selectedArea"
+                  @change="handleChange">
+                </el-cascader>
+              </el-form-item>
+
+              <el-form-item label="详细地点">
+                <el-input v-model="upclueform.detailAddress" placeholder="请输入发现线索的详细地点，例：“XX街道天福超市” " />
+              </el-form-item>
+
+              <el-form-item label="线索描述">
+                <el-input v-model="upclueform.clueText" placeholder="请输入发现的线索信息，包括但不限：被寻人衣着，是否有同行者，形态动作 " />
+
+              </el-form-item>
+
+              <el-form-item label="上传图片">
+                <!-- <el-input></el-input> -->
+                <el-upload action="#" list-type="picture-card" :auto-upload="false" :on-change="handleImgChange">
+                  <el-icon>
+                    <Plus />
+                  </el-icon>
+                  <template #file="{ file }">
+                    <div>
+                      <img class="el-upload-list__item-thumbnail" :src="file.url" :fit="contain" alt="" />
+                      <span class="el-upload-list__item-actions">
+                        <span class="el-upload-list__item-preview" @click="handlePictureCardPreview(file.url)">
+                          <el-icon><zoom-in /></el-icon>
+                        </span>
+                      </span>
+                    </div>
+                  </template>
+                </el-upload>
+
+              </el-form-item>
+              <el-dialog v-model="imgDialogVisible" style="width: 80%;">
+                <img :src="dialogImageUrl" alt="Preview Image" style="width: 100%;" />
+              </el-dialog>
+
+            </el-form>
+
+            <div slot="footer" class="dialog-footer" style="padding: 10px">
+              <!-- <el-button @click="(upclueDialogVisible = false), (MisReason = '')">
+                取 消</el-button> -->
+              <el-button @click="upclueDialogVisible = false">
+                取 消</el-button>
+              <el-button type="primary" @click="upClueClick">确 定</el-button>
+              <!-- <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button> -->
+            </div>
+          </el-dialog>
         </div>
 
         <!-- 线索举报对话框 -->
         <div>
-          <el-dialog
-            title="线索举报"
-            v-model="dialogFormVisible2"
-          >
-            <el-input
-              v-model="clueReason"
-              autocomplete="off"
-              :autosize="{ minRows: 10, maxRows: 12 }"
-              type="textarea"
-              placeholder="点击输入举报理由"
-            />
+          <el-dialog title="线索举报" v-model="dialogFormVisible2">
+            <el-input v-model="clueReason" autocomplete="off" :autosize="{ minRows: 10, maxRows: 12 }" type="textarea"
+              placeholder="点击输入举报理由" />
 
-            <div
-              slot="footer"
-              class="dialog-footer"
-              style="padding: 10px"
-            >
-              <el-button
-                @click="(dialogFormVisible2 = false), (clueReason = '')"
-              >取 消</el-button>
+            <div slot="footer" class="dialog-footer" style="padding: 10px">
+              <el-button @click="(dialogFormVisible2 = false), (clueReason = '')">取 消</el-button>
 
-              <el-button
-                type="primary"
-                v-if="clueReason"
-                @click="SubmitClueReason(clueReason)"
-              >确 定</el-button>
-              <el-button
-                type="primary"
-                disabled
-                v-else
-              >确 定</el-button>
+              <el-button type="primary" v-if="clueReason" @click="SubmitClueReason(clueReason)">确 定</el-button>
+              <el-button type="primary" disabled v-else>确 定</el-button>
 
               <!-- <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button> -->
             </div>
@@ -181,41 +170,23 @@
 
         <!-- 寻人信息举报对话框 -->
         <div>
-          <el-dialog
-            title="寻人信息举报"
-            v-model="dialogFormVisible"
-          >
-            <el-input
-              v-model="MisReason"
-              autocomplete="off"
-              :autosize="{ minRows: 10, maxRows: 12 }"
-              type="textarea"
-              placeholder="点击输入举报理由"
-            />
+          <el-dialog title="寻人信息举报" v-model="dialogFormVisible">
+            <el-input v-model="MisReason" autocomplete="off" :autosize="{ minRows: 10, maxRows: 12 }" type="textarea"
+              placeholder="点击输入举报理由" />
 
-            <div
-              slot="footer"
-              class="dialog-footer"
-              style="padding: 10px"
-            >
+            <div slot="footer" class="dialog-footer" style="padding: 10px">
               <el-button @click="(dialogFormVisible = false), (MisReason = '')">
                 取 消</el-button>
 
-              <el-button
-                type="primary"
-                v-if="MisReason"
-                @click="SubmitMisReason(MisReason)"
-              >确 定</el-button>
-              <el-button
-                type="primary"
-                disabled
-                v-else
-              >确 定</el-button>
+              <el-button type="primary" v-if="MisReason" @click="SubmitMisReason(MisReason)">确 定</el-button>
+              <el-button type="primary" disabled v-else>确 定</el-button>
 
               <!-- <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button> -->
             </div>
           </el-dialog>
         </div>
+
+
       </el-main>
       <Footer></Footer>
     </el-container>
@@ -233,29 +204,46 @@ import { useRoute } from "vue-router";
 import { ElMessage } from "element-plus";
 import { regionData, CodeToText } from "element-china-area-data";
 import { Star, Search } from "@element-plus/icons-vue";
+import { Delete, Download, Plus, ZoomIn } from '@element-plus/icons-vue';
+import { UploadFile } from 'element-plus'
+
 
 // do not use same name with ref
 
 export default {
   name: "ref",
-  data () {
+  data() {
     return {
+      areaOptions: regionData,
       MissInfo: [],
       //对话框显示与隐藏
       dialogFormVisible: false,
       dialogFormVisible2: false,
+      upclueDialogVisible: false,
       MisReason: "",
       clueReason: "",
       clueID: "",
       address: "",
       isFollow: "",
+      upclueform: reactive({
+        detailTime: '',
+        detailAddress: '',
+        clueText: '',
+        date: '',
+        selectedArea: [],
+      }),
+      imgUrlList: [],
+      imgUrlListNum: 0,
     };
   },
   components: {
     InfoHeader,
     Footer,
   },
-  setup () {
+  setup() {
+    const dialogImageUrl = ref('');
+    const imgDialogVisible = ref(false);
+
     const currentDate = ref(new Date());
     const route = useRoute();
 
@@ -268,18 +256,80 @@ export default {
     }
     const clueForm = reactive({
       report_content: "",
-      report_state:"待核实",
+      report_state: "待核实",
     });
+
+    // 线索上传相关数据
+    const shortcuts = [
+      {
+        text: '今天',
+        value: new Date(),
+      },
+      {
+        text: '昨天',
+        value: () => {
+          const date = new Date()
+          date.setTime(date.getTime() - 3600 * 1000 * 24)
+          return date
+        },
+      },
+      {
+        text: '一周前',
+        value: () => {
+          const date = new Date()
+          date.setTime(date.getTime() - 3600 * 1000 * 24 * 7)
+          return date
+        },
+      },
+    ];
+
+    //以下为方法定义
+    const disabledDate = (time) => {
+      return time.getTime() > Date.now()
+    };
+
+    const handlePictureCardPreview = (imgUrl) => {
+      console.log("图片的url", imgUrl);
+      if (imgUrl) {
+        dialogImageUrl.value = imgUrl;
+      }
+      imgDialogVisible.value = true;
+    };
+
+    // const handleImgChange=(uploadFile, uploadFiles) => {
+    //   console.log(uploadFile);
+    //   console.log(uploadFiles);
+    //   var reader = new FileReader(); 
+    //   reader.readAsDataURL(uploadFile.raw); 
+    //   reader.onload = (e) => { 
+    //     console.log("有没有执行");
+    //     console.log(e);
+    //     var imageurl = e.target.result; 
+    //     // console.log("图片的base64数据",imageurl); //图片的base64数据 
+    //     console.log('目前数组的内容',imgUrlList);
+    //     this.imgUrlList.push(imageurl);
+    //     console.log('目前数组的内容',this.imgUrlList);
+    //   }; 
+    // };
+
+
     return {
       user_id,
       loginState,
       currentDate,
       clueForm,
       MissID,
+      shortcuts,
+      disabledDate,//时间选择器中不能选择的时间
+      dialogImageUrl,//查看图片大图的图片url
+      imgDialogVisible,//查看大图的dialog
+      handlePictureCardPreview,
+      // handleImgChange,
+
     };
   },
-  
-  mounted () {
+
+  mounted() {
     api
       .getMissingpersonInfo(this.MissID)
       .then((res) => {
@@ -319,11 +369,11 @@ export default {
     //       console.log(error);
     //     });
     // },
-    goBack () {
+    goBack() {
       this.$router.back();
     },
     //线索发布按钮
-    upClueClick(clueText) {
+    upClueClick() {
       if (!this.loginState) {
         ElMessage({
           message: "请先登录",
@@ -331,24 +381,28 @@ export default {
         });
         return;
       }
-      console.log("发布线索内容", clueText);
+      // console.log("发布线索内容", clueText);
       console.log("寻人信息ID", this.MissID);
+      this.upclueform.date=this.formatLongDate(this.upclueform.date);
+
       api
-        .upClue(parseInt(this.user_id), parseInt(this.MissID), clueText)
+        .upClue(parseInt(this.user_id), parseInt(this.MissID), this.upclueform.clueText,this.upclueform.date,this.upclueform.detailTime,this.upclueform.selectedArea[0],this.upclueform.selectedArea[1],this.upclueform.selectedArea[2],this.upclueform.detailAddress,this.imgUrlList.length,this.imgUrlList)
         .then(function (response) {
           console.log("发布线索", response);
+          // this.getMissInfo();
           ElMessage({
             message: "线索发布成功",
             type: "success",
           });
+
         })
         .catch(function (error) {
           console.log(error);
         });
-    },
 
+    },
     //点击举报[寻人信息]按钮
-    misReport () {
+    misReport() {
       if (!this.loginState) {
         ElMessage({
           message: "请先登录",
@@ -360,7 +414,7 @@ export default {
       this.dialogFormVisible = true;
     },
     //确认提交寻人信息举报理由按钮
-    SubmitMisReason (text) {
+    SubmitMisReason(text) {
       api
         .upMisReport(parseInt(this.user_id), parseInt(this.MissID), text)
         .then(function (response) {
@@ -376,9 +430,8 @@ export default {
 
       this.dialogFormVisible = false;
     },
-
     //点击举报线索按钮
-    upClueReport (id) {
+    upClueReport(id) {
       if (!this.loginState) {
         ElMessage({
           message: "请先登录",
@@ -390,7 +443,7 @@ export default {
       this.clueID = id;
     },
     //确认提交线索举报按钮
-    SubmitClueReason (text) {
+    SubmitClueReason(text) {
       api
         .upClueReport(parseInt(this.user_id), parseInt(this.clueID), text)
         .then(function (response) {
@@ -405,9 +458,8 @@ export default {
         });
       this.dialogFormVisible2 = false;
     },
-
     //关注寻人信息按钮
-    follow () {
+    follow() {
       console.log("用户id", this.user_id);
       console.log("丢失者的id", this.MissID);
       api
@@ -431,11 +483,58 @@ export default {
           console.log(err);
         });
     },
+    //图片URL获取
+    handleImgChange(uploadFile, uploadFiles) {
+      console.log(uploadFile);
+      console.log(uploadFiles);
+      var reader = new FileReader();
+      reader.readAsDataURL(uploadFile.raw);
+      reader.onload = (e) => {
+        console.log("有没有执行");
+        console.log(e);
+        var imageurl = e.target.result;
+        // console.log("图片的base64数据",imageurl); //图片的base64数据 
+        console.log('目前数组的内容', this.imgUrlList);
+        this.imgUrlList.push(imageurl);
+        console.log('目前数组的内容', this.imgUrlList);
+      };
+    },
+    //时间转化封装 
+    formatLongDate(date) {
+      let myyear = date.getFullYear();
+      let mymonth = date.getMonth() + 1;
+      let myweekday = date.getDate();
+      let myHour = date.getHours();
+      let myMin = date.getMinutes();
+      let mySec = date.getSeconds();
+
+      if (mymonth < 10) {
+        mymonth = "0" + mymonth;
+      }
+      if (myweekday < 10) {
+        myweekday = "0" + myweekday;
+      }
+      if (myHour < 10) {
+        myHour = "0" + myHour;
+      }
+      if (myMin < 10) {
+        myMin = "0" + myMin;
+      }
+      if (mySec < 10) {
+        mySec = "0" + mySec;
+      }
+      return myyear + "-" + mymonth + "-" + myweekday;
+    },
+
   },
 };
 </script>
 
 <style scoped>
+.upclueDialog {
+  width: 70%;
+}
+
 /*.el-header.myHeader {
     position: relative;
     height: 50px;

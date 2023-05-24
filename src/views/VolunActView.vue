@@ -31,7 +31,8 @@
                   codeToText(actitem.Province, actitem.City, actitem.Area)
                 }}
               </div>
-              <div>志愿时间：{{ actitem.ExpTime }}</div>
+              <div>开始时间：{{ actitem.EndTime }}</div>
+              <div>结束时间：{{ actitem.ExpTime }}</div>
               <div>
                 人数：{{ actitem.SignupPeople }}/{{ actitem.Needpeople }}人
               </div>
@@ -54,18 +55,22 @@
         <el-col class="toptext">志愿捐助</el-col>
         <el-divider />
         <el-row :gutter="30">
-        <el-col :span="7" :offset="2"><div class="donate-record-card">
-          <div style="padding-top: 15px; ">历史捐款总额</div>
-          <div style="padding-top: 35px; color: #67bbff;font-weight:bolder;font-size: larger">{{donateCount}}</div>
-        </div></el-col>
-        <el-col :span="7" :offset="2" ><div class="donate-record-card">
-          <div style="padding-top: 15px; ">历史捐款人次</div>
-          <div style="padding-top: 35px; color: #67bbff;font-weight:bolder; font-size: larger">{{donateHead}}</div>
-        </div></el-col>
-        <el-col :span="2" :offset="2">
-          <el-button type="primary" class="donate-button"  @click="pay()">我要捐款</el-button>
-        </el-col>
-      </el-row>
+          <el-col :span="7" :offset="2">
+            <div class="donate-record-card">
+              <div style="padding-top: 15px; ">历史捐款总额</div>
+              <div style="padding-top: 35px; color: #67bbff;font-weight:bolder;font-size: larger">{{ donateCount }}</div>
+            </div>
+          </el-col>
+          <el-col :span="7" :offset="2">
+            <div class="donate-record-card">
+              <div style="padding-top: 15px; ">历史捐款人次</div>
+              <div style="padding-top: 35px; color: #67bbff;font-weight:bolder; font-size: larger">{{ donateHead }}</div>
+            </div>
+          </el-col>
+          <el-col :span="2" :offset="2">
+            <el-button type="primary" class="donate-button" @click="pay()">我要捐款</el-button>
+          </el-col>
+        </el-row>
       </el-main>
 
       <el-main class="mainBlock">
@@ -74,94 +79,70 @@
           <el-col :span="12"> 善款去向 </el-col>
         </el-row>
         <el-divider />
-      
-      <div class="overBlock">
-        <el-row
-          type="flex"
-          justify="space-around"
-        >
-          <!--列元素居中-->
-          <el-col
-            :span="11"
-            class="rank"
-          >
-            <el-row
-              v-for="(income, index) in incomeList"
-              :key="index"
-              class="ranktop"
-              style="align-items: center;margin-bottom:30px"
-            >
-              <el-image
-                style="width: 50px; height: 50px; border-radius: 50%"
-                :src="income.userHeadUrl"
-                fit="cover"
-              />
-              <el-col :span="6">{{ income.phoneNum.substring(0,3)+"****"+ income.phoneNum.substring(7,11)}}</el-col>
-              <el-col
-                style="
+
+        <div class="overBlock">
+          <el-row type="flex" justify="space-around">
+            <!--列元素居中-->
+            <el-col :span="11" class="rank">
+              <el-row v-for="(income, index) in incomeList" :key="index" class="ranktop"
+                style="align-items: center;margin-bottom:30px">
+                <el-image style="width: 50px; height: 50px; border-radius: 50%" :src="income.userHeadUrl" fit="cover" />
+                <el-col :span="6">{{ income.phoneNum.substring(0, 3) + "****" + income.phoneNum.substring(7, 11)
+                }}</el-col>
+                <el-col style="
                   justify-content: flex-end;
                   text-align: right;
                   font-weight: bold;
                   color: #2e74b6;
-                "
-                :span="5"
-              >{{ income.amount }}</el-col>
-              <el-col
-                style="justify-content: flex-start; text-align: left; color: #2e74b6;"
-                :span="4"
-              >元</el-col>
-              <el-col
-                :span="6"
-              >{{
-                income.time
-              }}</el-col>
-            </el-row>
-            <div class="Parent">
-          <!--分页-->
-          <el-pagination v-model:page-size="donatePageSize" v-model:current-page="donatePageNum" :total="donateTotal"
-            layout="total,prev, pager, next, jumper" @current-change="handleCurrentChange_donate" />
+                " :span="5">{{ income.amount }}</el-col>
+                <el-col style="justify-content: flex-start; text-align: left; color: #2e74b6;" :span="4">元</el-col>
+                <el-col :span="6">{{
+                  income.time
+                }}</el-col>
+              </el-row>
+              <div class="Parent">
+                <!--分页-->
+                <el-pagination v-model:page-size="donatePageSize" v-model:current-page="donatePageNum"
+                  :total="donateTotal" layout="total,prev, pager, next, jumper"
+                  @current-change="handleCurrentChange_donate" />
+              </div>
+
+            </el-col>
+
+            <div class="divideLine"></div>
+
+            <el-col :span="11" class="rank">
+              <el-row v-for="(expense, index) in expenseList" :key="index" class="ranktop outcome-record"
+                style="align-items: center; margin-bottom:30px">
+                <el-col :span="12" :offset="2" type="flex" justify="left" class="financeOutBox_middle">
+
+                  <el-row style="margin-bottom:20px;font-weight:bolder;font-size: larger;align-items: center;">
+                    <el-col>{{ expense.fund_out_usage }}</el-col>
+                  </el-row>
+                  <el-row style="height:60%;align-items: center;">
+                    <el-col :span="12" class="financeOutBox_inner">
+                      <div style="color: #67bbff;font-weight:bolder; font-size: larger">{{ expense.fund_out_amount }}元
+                      </div>
+                      <div class="financeOutText">支出金额</div>
+                    </el-col>
+                    <el-col :span="12" class="financeOutBox_inner">
+                      <div style="color: #67bbff;font-weight:bolder; font-size:larger">{{ expense.fund_out_time }}</div>
+                      <div class="financeOutText">支出时间</div>
+                    </el-col>
+                  </el-row>
+                </el-col>
+                <el-col :span="8" style="font-size:small;text-align: left;">{{ expense.fund_out_detail }}</el-col>
+              </el-row>
+              <div class="Parent">
+                <!--分页-->
+                <el-pagination v-model:page-size="fundOutPageSize" v-model:current-page="fundOutPageNum"
+                  :total="fundOutTotal" layout="total,prev, pager, next, jumper"
+                  @current-change="handleCurrentChange_fundOut" />
+              </div>
+            </el-col>
+
+          </el-row>
         </div>
-            
-          </el-col>
-
-          <div class="divideLine"></div>
-
-          <el-col
-            :span="11"
-            class="rank" >
-            <el-row
-              v-for="(expense, index) in expenseList"
-              :key="index"
-              class="ranktop outcome-record"
-              style="align-items: center; margin-bottom:30px"
-            >
-              <el-col  :span="12" :offset="2" type="flex" justify="left" class="financeOutBox_middle">
-
-                <el-row  style= "margin-bottom:20px;font-weight:bolder;font-size: larger;align-items: center;">
-                  <el-col>{{ expense.fund_out_usage }}</el-col>
-                </el-row>
-                <el-row style="height:60%;align-items: center;">
-                  <el-col :span="12" class="financeOutBox_inner">
-                    <div style="color: #67bbff;font-weight:bolder; font-size: larger">{{expense.fund_out_amount}}元</div>
-                    <div class="financeOutText">支出金额</div>
-                  </el-col>
-                  <el-col :span="12" class="financeOutBox_inner">
-                    <div style="color: #67bbff;font-weight:bolder; font-size:larger">{{expense.fund_out_time}}</div>
-                    <div class="financeOutText">支出时间</div>
-                  </el-col>
-                </el-row>
-              </el-col>
-              <el-col :span="8" style="font-size:small;text-align: left;" >{{expense.fund_out_detail}}</el-col>
-            </el-row>
-            <div class="Parent">
-          <!--分页-->
-          <el-pagination v-model:page-size="fundOutPageSize" v-model:current-page="fundOutPageNum" :total="fundOutTotal"
-            layout="total,prev, pager, next, jumper" @current-change="handleCurrentChange_fundOut" />
-        </div>
-          </el-col>
-
-        </el-row>
-      </div>
 
       </el-main>
       <Footer></Footer>
@@ -200,8 +181,8 @@ export default {
       "https://yixun-picture.oss-cn-shanghai.aliyuncs.com/user_head/1.jpeg";
     let donatePageNum = ref(1);
     let donatePageSize = ref(5);
-    let donateCount=ref();
-    let donateHead=ref();
+    let donateCount = ref();
+    let donateHead = ref();
     let donateTotal = ref(0);
     let fundOutPageNum = ref(1);
     let fundOutPageSize = ref(2);
@@ -237,7 +218,7 @@ export default {
     this.getFundOutRecord();
   },
   methods: {
-    getDonateCount(){
+    getDonateCount() {
       api
         .getDonateCount()
         .then((res) => {
@@ -248,7 +229,7 @@ export default {
           console.log("获取捐款数量失败", err);
         });
     },
-    getDonateHead(){
+    getDonateHead() {
       api
         .getDonateHead()
         .then((res) => {
@@ -259,7 +240,7 @@ export default {
           console.log("获取捐款人数失败", err);
         });
     },
-    getDonateRecord(){
+    getDonateRecord() {
       api
         .getDonateRecord(
           this.donatePageNum,
@@ -267,7 +248,7 @@ export default {
         )
         .then((res) => {
           console.log(res.data);
-          this.incomeList= res.data.data.income;
+          this.incomeList = res.data.data.income;
           this.donateTotal = res.data.data.total;
         });
     },
@@ -275,7 +256,7 @@ export default {
       this.donatePageNum = newPage; //重新指定当前页
       this.getDonateRecord();
     },
-    getFundOutRecord(){
+    getFundOutRecord() {
       api
         .getFundOutRecord(
           this.fundOutPageNum,
@@ -283,7 +264,7 @@ export default {
         )
         .then((res) => {
           console.log(res.data);
-          this.expenseList= res.data.data.fund_out;
+          this.expenseList = res.data.data.fund_out;
           this.fundOutTotal = res.data.data.total;
         });
     },
@@ -293,7 +274,7 @@ export default {
       console.log("换页成功")
     },
 
-    pay(){
+    pay() {
       //跳转至捐款页面
       this.$router.push({
         path: "/donate",
@@ -361,20 +342,23 @@ export default {
 </script>
 
 <style scoped>
-.financeOutText{
-  font-size:small;
+.financeOutText {
+  font-size: small;
 }
-.financeOutBox_middle{
+
+.financeOutBox_middle {
   display: flex;
   flex-direction: column;
   text-align: left;
   justify-content: space-between;
 }
-.financeOutBox_inner{
+
+.financeOutBox_inner {
   display: flex;
   flex-direction: column;
   text-align: left;
 }
+
 .myHeader3 {
   height: 300px;
   background-image: url(../../image/volun.png);
@@ -477,34 +461,36 @@ export default {
   font-size: 10px;
   margin-bottom: 5px;
 }
-.donate-record-card{
+
+.donate-record-card {
   border-radius: 15px;
   height: 150px;
-  background:  #ffffff;
+  background: #ffffff;
   margin-top: 15px;
 
 }
-  .donate-button {
-    border-radius: 5px;
-    height: 50px;
-    background-color:#2e74b6;
-    margin-top: 65px;
-    font-size:medium;
+
+.donate-button {
+  border-radius: 5px;
+  height: 50px;
+  background-color: #2e74b6;
+  margin-top: 65px;
+  font-size: medium;
 }
+
 .overBlock {
   margin-bottom: 5%;
 }
+
 .divideLine {
   position: absolute;
   /*right: 10px;*/
   width: 1px;
   height: 100%;
-  background-image: linear-gradient(
-    to bottom,
-    #044c90 0%,
-    #044c90 80%,
-    transparent 50%
-  );
+  background-image: linear-gradient(to bottom,
+      #044c90 0%,
+      #044c90 80%,
+      transparent 50%);
   background-size: 100% 18px;
   background-repeat: repeat-y;
 }
@@ -513,12 +499,12 @@ export default {
   background-color: #ffffff;
   border-radius: 20px;
 }
-.outcome-record{
-  height:170px;
+
+.outcome-record {
+  height: 170px;
 }
 
 .rank {
   padding: 1% 2% 2%;
 }
-
 </style>
