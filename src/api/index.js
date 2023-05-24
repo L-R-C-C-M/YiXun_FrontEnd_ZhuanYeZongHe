@@ -317,15 +317,11 @@ const api = {
     },
     //线索核实
     clueVerify(clueId, textarea, checkMan, phoneNumber) {
-        return axios.put(path.baseUrl + path.clueVerifyUrl, null, {
-            params: {
+        return axios.put(path.baseUrl + path.clueVerifyUrl,{
                 clueId: clueId,
                 textarea: textarea,
                 checkMan: checkMan,
                 phoneNumber: phoneNumber
-
-
-            }
         })
     },
 
