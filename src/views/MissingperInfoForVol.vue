@@ -33,12 +33,16 @@
                 <el-button v-if="!this.isFollow" @click="follow" round>关注寻人信息</el-button>
                 <el-button v-else @click="follow" round>取 消 关 注</el-button>
 
+
                 <el-button v-if="MissInfo.whether_found == 'Y'" type="primary" round @click="findDialogVisible = true"
                   disabled>
                   已 找 到
                 </el-button>
                 <el-button v-else type="primary" round @click="findDialogVisible = true">
                   已 找 到
+                </el-button>
+                <el-button @click="releaseActDialogVisible = true" round>
+                  发布志愿活动
                 </el-button>
 
                 <el-dialog v-model="findDialogVisible" title="提示" width="40%">
@@ -94,6 +98,7 @@
 
             <el-button type="primary" class="actButton" round size="small" @click="upClueReport(clue.ClueId)">举报
             </el-button>
+
 
 
 
@@ -188,6 +193,17 @@
 
           </el-dialog>
         </div>
+
+        <el-dialog v-model="releaseActDialogVisible" title="发布志愿活动" align-center width="80%" :before-close="dialogClose">
+          <ActivityRelease :searchId="MissID" :contact="contact" />
+          <!-- <template #footer>
+            <span class="dialog-footer">
+              <el-button @click="dialogClose">取消</el-button>
+              <el-button type="primary" @click="addFundOut">确认</el-button>
+            </span>
+          </template> -->
+        </el-dialog>
+
       </el-main>
       <Footer></Footer>
     </el-container>
@@ -205,6 +221,7 @@ import { useRoute } from "vue-router";
 import { ElMessage } from "element-plus";
 import { regionData, CodeToText } from "element-china-area-data";
 import { Star, Search } from "@element-plus/icons-vue";
+import ActivityRelease from "@/views/Backstage/ReleaseActivity.vue";
 
 // do not use same name with ref
 
@@ -218,6 +235,7 @@ export default {
       dialogFormVisible2: false,
       findDialogVisible: false,
       clueVerifyDialogVisible: false,
+      releaseActDialogVisible: false,
       MisReason: "",
       clueReason: "",
       clueID: "",
@@ -233,6 +251,7 @@ export default {
   components: {
     InfoHeader,
     Footer,
+    ActivityRelease
   },
   setup() {
     const currentDate = ref(new Date());
@@ -260,6 +279,7 @@ export default {
 
   mounted() {
     this.getMissInfo();
+
 
     api
       .followMis(this.user_id, this.MissID)
@@ -421,7 +441,6 @@ export default {
         .then((res) => {
           console.log("接收的数据", res);
           this.getMissInfo();
-
         })
         .catch((err) => {
           console.log(err);
@@ -434,7 +453,7 @@ export default {
       this.clueVerifyDialogVisible = false;
       //调用api将线索状态改为已核实
       api
-        .clueVerify(id,this.clueCheckForm.textarea,this.clueCheckForm.checkMan,this.clueCheckForm.phoneNumber)
+        .clueVerify(id, this.clueCheckForm.textarea, this.clueCheckForm.checkMan, this.clueCheckForm.phoneNumber)
         .then((res) => {
           console.log("接收的数据", res);
           this.getMissInfo();
@@ -444,18 +463,17 @@ export default {
         });
 
 
+
+
     },
     //打开线索核实提示对话框
     openclueVerifyDialog(clueid) {
       this.clueVerifyDialogVisible = true;
       this.clueID = clueid;
+
     },
-
-
-
-
   },
-};
+};  
 </script>
   
 <style scoped>

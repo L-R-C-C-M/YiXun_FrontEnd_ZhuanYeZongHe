@@ -97,11 +97,11 @@ const base = {
     //关注寻人信息 *
     followMisUrl: "/api/UserOperation/UserFocus",
     //修改密码
-    changePasswordUrl:"/api/UserInfo/ChangePassword",
+    changePasswordUrl: "/api/UserInfo/ChangePassword",
     //线索核实
-    clueVerifyUrl:"/api/Vol/ChangeClueConfirmed",
+    clueVerifyUrl: "/api/Vol/ChangeClueConfirmed",
     //寻人信息已找到
-    missingperHaveFoundUrl:"/api/Vol/ChangeSearchinfoToFound",
+    missingperHaveFoundUrl: "/api/Vol/ChangeSearchinfoToFound",
 
 
     //公共路径
@@ -215,9 +215,9 @@ const base = {
     //获取捐款人数
     getDonateHead: "/api/Finance/GetDonateHead",
     //获取捐款记录
-    getDonateRecord:"/api/Finance/GetAllIncome",
+    getDonateRecord: "/api/Finance/GetAllIncome",
     //获取支出记录
-    getFundOutRecord:"/api/Finance/GetAllFoudOutDetail",
+    getFundOutRecord: "/api/Finance/GetAllFoudOutDetail",
     //支付宝支付
     aliPay: "/api/Alipay/pay",
 

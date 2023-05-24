@@ -9,7 +9,7 @@
     <el-main style="background-color: rgba(245, 249, 250, 1)">
 
         <el-row :gutter="60">
-            <el-col :span="5">
+            <el-col :span="6">
                 <div style="background-color: rgba(42, 130, 228, 0.17)" class="card">
                     <div class="cicon">
                         <el-icon size="60" color="#000000" class="eicon">
@@ -23,7 +23,7 @@
                 </div>
             </el-col>
 
-            <el-col :span="5">
+            <el-col :span="6">
                 <div style="background-color: rgba(4, 76, 144, 1)" class="card">
                     <div class="cicon">
                         <el-icon size="60" color="#FFFFFF" class="eicon">
@@ -98,7 +98,7 @@
                 <el-form-item label="支出用途" prop="usage">
                     <!-- <el-form-item label="支出用途"> -->
                     <el-input v-model="fundOutForm.usage" :autosize="{ minRows: 2, maxRows: 4 }" type="textarea"
-                        autocomplete="off" clearable />
+                        autocomplete="off" clearable maxlength="100" show-word-limit />
                 </el-form-item>
             </el-form>
 
