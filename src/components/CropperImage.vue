@@ -3,8 +3,9 @@
         <div class="cropper-image" @click="chooseImage" @mouseenter="mouseenterHandler" @mouseleave="mouseleaveHandler"
             @transfer="onUploadChange">
             <!-- <img v-if="this.activity.imageurl" :src="this.activity.imageurl" class="avatar" /> -->
+            <img v-if="img_url && (!imgUrl)" :src="img_url" class="avatar">
             <img v-if="imgUrl" :src="'data:image/jpg;base64' + imgUrl" class="avatar" />
-            <el-icon v-else class="avatar-uploader-icon">
+            <el-icon v-if="(!img_url) && (!imgUrl)" class="avatar-uploader-icon">
                 <Plus />
             </el-icon>
             <div v-show="imgUrl && maskShow" class="mask">
@@ -73,18 +74,19 @@ import 'vue-cropper/dist/index.css'
 import { VueCropper } from 'vue-cropper'
 export default {
     name: 'CropperImageUpload',
-    // props: {
-    //     imgUrl: {
-    //         type: String,
-    //         default: () => ''
-    //     }
-    // },
+    props: {
+        img_url: {
+            type: String,
+            default: () => ''
+        }
+    },
     components: {
         ZoomIn,
         ZoomOut,
         VueCropper
     },
     setup(props, { emit }) {
+        // console.log("接收到的图片数据", img_url);
         const imgUrl = ref("");
         const imageDialog = ref(false)
         const maskShow = ref(false)

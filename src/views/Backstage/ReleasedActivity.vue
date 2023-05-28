@@ -139,7 +139,7 @@ export default {
         modifyAct(vol_ctivity) {
             //跳转至活动详情发布同款界面
             this.$router.push({
-                path: "/backstage/modifyActivity",
+                path: "/VolBackstage/modifyActivity",
                 //params: {  }, path和params不能同时使用，会使params失效，要用params需要将path替代为name(router名)
                 query: { act_id: vol_ctivity.VolActId },
             });
