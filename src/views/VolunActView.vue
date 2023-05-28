@@ -158,6 +158,7 @@ import { ref } from "vue";
 import MainHeader from "@/views/Frontstage/MainHeader.vue";
 import Footer from "@/views/Frontstage/Footer.vue";
 import { Search } from "@element-plus/icons-vue";
+import { ElMessage } from "element-plus";
 import { defaultDocument } from "@vueuse/core";
 export default {
   name: "VolunActView",
@@ -207,7 +208,10 @@ export default {
       donateTotal,
       fundOutPageNum,
       fundOutPageSize,
-      fundOutTotal
+      fundOutTotal,
+      user_id: "",
+      //是否已登陆
+      loginState: false,
     };
   },
   mounted() {
@@ -216,6 +220,9 @@ export default {
     this.getDonateCount();
     this.getDonateHead();
     this.getFundOutRecord();
+    if ((this.user_id = sessionStorage.getItem("userid") != null)) {
+        this.loginState = true;
+    }
   },
   methods: {
     getDonateCount() {
@@ -275,10 +282,23 @@ export default {
     },
 
     pay() {
-      //跳转至捐款页面
-      this.$router.push({
-        path: "/donate",
-      });
+      //检查登陆状态
+      if (!this.loginState) {
+          ElMessage({
+            message: "请先登录",
+            type: "warning",
+          });
+        //跳转至登陆页面
+          this.$router.push({
+              path: "/login",
+            });
+      }
+      else{
+        //跳转至捐款页面
+        this.$router.push({
+          path: "/donate",
+        });
+      }
     },
     codeToText(province, city, area) {
       return CodeToText[province] + CodeToText[city] + CodeToText[area];

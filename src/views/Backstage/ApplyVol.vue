@@ -2,7 +2,7 @@
 <template>
   <el-header>
     <el-breadcrumb separator="/">
-      <el-breadcrumb-item>申请成为志愿者</el-breadcrumb-item>
+      <el-breadcrumb-item>申请成为工作人员</el-breadcrumb-item>
     </el-breadcrumb>
   </el-header>
 

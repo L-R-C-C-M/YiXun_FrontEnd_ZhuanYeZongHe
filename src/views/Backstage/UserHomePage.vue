@@ -1,7 +1,7 @@
 <template>
   <el-header>
     <el-breadcrumb separator="/">
-      <el-breadcrumb-item>我发布的</el-breadcrumb-item>
+      <el-breadcrumb-item>主页</el-breadcrumb-item>
     </el-breadcrumb>
   </el-header>
   <el-main style="background-color: rgba(245, 249, 250, 1)">
@@ -100,6 +100,76 @@
       </div>
     </el-card>
 
+    <!-- 我报名的志愿活动 -->
+    <el-card style="height: auto; margin-bottom: 2%">
+      <div style="text-align: left; margin-left: 3%">
+        <h3>我报名的志愿活动</h3>
+
+        <el-row
+          style="min-height: 300px"
+          type="flex"
+          justify-content="flex-start"
+        >
+          <!--el-card的背景图片还未更改使用变量-->
+          <el-card
+            v-for="actitem in volActAll"
+            :key="actitem.VolActId"
+            @click="goActInfo(actitem.VolActId)"
+            class="mycard"
+            :body-style="{ padding: '0px' }"
+          >
+            <el-image
+              v-if="actitem.ActPicUrl == null"
+              style="width: 100%; height: 150px"
+              :src="pic"
+              fit="cover"
+            />
+
+            <el-image
+              v-if="actitem.ActPicUrl != null"
+              style="width: 100%; height: 150px"
+              :src="actitem.ActPicUrl"
+              fit="cover"
+            />
+
+            <div class="bottom">
+              <div style="color: #67bbff; font-size: 15px; margin: 0 0 10px">
+                {{ actitem.VolActName }}
+              </div>
+              <div>
+                活动地址：{{
+                  codeToText(
+                    actitem.Province,
+                    actitem.City,
+                    actitem.Area,
+                    actitem.Detail
+                  )
+                }}
+              </div>
+              <div>志愿时间：{{ actitem.ExpTime }}</div>
+              <div>人数：{{ actitem.Needpeople }}人</div>
+              <div>
+                <el-button type="primary" class="button" round
+                  >了解详情</el-button
+                >
+              </div>
+            </div>
+          </el-card>
+        </el-row>
+        <div class="Parent">
+          <!--分页-->
+          <el-pagination
+            align="center"
+            v-model:page-size="pagesize_act"
+            :current-page.sync="currentPage_act"
+            :total="total_act"
+            layout="total,prev, pager, next, jumper"
+            @current-change="handleCurrentChange_act"
+          />
+        </div>
+      </div>
+    </el-card>
+
     <!-- 我关注的寻人信息 -->
     <el-card style="height: max-content; margin-bottom: 2%">
       <div style="text-align: left; margin-left: 3%">
@@ -186,14 +256,54 @@ export default {
       currentPage_follow: 1, //页码
       pagesize_follow: 3, //每页的数量
       total_follow: 0, //总条目数
+      
+      pic: "https://yixun-picture.oss-cn-shanghai.aliyuncs.com/user_head/1.jpeg",
+      volActAll: [],
+      currentPage_act: 1, //页码
+      pagesize_act: 3, //每页的数量
+      total_act: 0, //总条目数
     };
   },
   mounted() {
     this.getAllCLuesPublished();
     this.getAllSearchInfo();
     this.getFollowInfo();
+    this.getVolApplyAct();
   },
   methods: {
+ //点击跳转
+ goActInfo(actID) {
+      console.log("志愿活动id:", actID);
+      //跳转至活动详情页面
+      this.$router.push({
+        path: "/volunActInfo",
+        query: { act_id: actID },
+      });
+    },
+    //获取志愿活动信息
+    getVolApplyAct() {
+      console.log(this.user_id);
+      api
+        .getVolApplyAct(this.user_id, this.currentPage, this.pagesize)
+        .then((res) => {
+          console.log("请求成功", res.data);
+          //volActInfo.value = res.data.volActInfo;
+          this.volActAll = res.data.data.vol_act_info;
+          this.total_act = res.data.data.total;
+          console.log("获取数据", this.volActAll);
+        })
+        .catch((err) => {
+          console.log("请求失败", err);
+        });
+    },
+
+    //更新分页
+    handleCurrentChange_act(newPage) {
+      console.log(newPage);
+      this.currentPage_act = newPage; //重新指定当前页
+      this.getVolApplyAct();
+    },
+
     //删除线索
     deleteClue(index) {
       console.log(index);
@@ -390,6 +500,36 @@ export default {
 
 h {
   font-size: 12px;
+}
+
+.mycard {
+  border-radius: 10%;
+  background-color: #ffffff;
+  /* background-image: url(../assets/hands.png); */
+  background-repeat: no-repeat;
+  background-size: 100%;
+  margin: 30px;
+  width: 310px;
+}
+
+.bottom {
+  border-radius: 10%;
+  background-color: #ffffff;
+  padding: 14px;
+  text-align: left;
+  font-size: 10px;
+  line-height: 18px;
+  margin-top: 0%;
+  margin-bottom: 5px;
+}
+.button {
+  float: right;
+  background-color: #67bbff;
+  padding: 0px;
+  width: 40%;
+  min-height: fit-content;
+  font-size: 10px;
+  margin-bottom: 5px;
 }
 
 .containerFlex {

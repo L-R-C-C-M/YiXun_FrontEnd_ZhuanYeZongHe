@@ -13,7 +13,7 @@
         </template>
         <el-menu-item-group>
           <el-menu-item index="/backstage/userManagement">普通用户</el-menu-item>
-          <el-menu-item index="/backstage/volManagement">工作人员</el-menu-item>
+          <el-menu-item index="/backstage/staffManagement">工作人员</el-menu-item>
         </el-menu-item-group>
       </el-sub-menu>
 

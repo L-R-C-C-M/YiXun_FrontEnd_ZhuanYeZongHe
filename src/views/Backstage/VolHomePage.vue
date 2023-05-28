@@ -88,6 +88,165 @@
       </div>
     </el-card>
 
+     <!-- 我发布的寻人信息 -->
+     <el-card style="height: max-content; margin-bottom: 2%">
+      <div style="text-align: left; margin-left: 3%">
+        <h3>我发布的寻人信息</h3>
+        <div class="containerFlex" style="margin-bottom: 10px">
+          <!-- 使用flex布局 -->
+          <div class="PhotoContainer" v-for="item in searchInfo_list" :key="item.search_info_id">
+            <div class="PhotoOnly" @click="clickPhoto(item.search_info_id)">
+              <el-row class="myRow">
+                <el-col :span="8">
+                  <div class="thePhoto" style="margin-left: 10%">
+                    <img fit="cover" style="
+                          width: 100%;
+                          height: 100%;
+                          border-radius: 10px 10px 0 0;
+                          box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+                            rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+                        " :src="item.search_info_photourl" />
+                  </div>
+                </el-col>
+                <el-col :span="16">
+                  <div class="informationBlock">
+                    <div class="line">
+                      <h class="tableTitle">类型:</h>
+                      <h>{{ item.search_type }}</h>
+                    </div>
+                    <div class="line">
+                      <h class="tableTitle">姓名:</h>
+                      <h>{{ item.sought_people_name }}</h>
+                    </div>
+                    <div class="line">
+                      <h class="tableTitle">性别:</h>
+                      <h>{{ item.sought_people_gender }}</h>
+                    </div>
+                    <div class="line">
+                      <h class="tableTitle">出生日期:</h>
+                      <h>{{ item.sought_people_birthday }}</h>
+                    </div>
+                    <div class="line">
+                      <h class="tableTitle">失散日期:</h>
+                      <h>{{ item.search_info_lostdate }}</h>
+                    </div>
+                    <div class="line">
+                      <h class="tableTitle">失散地点/被寻人所在地:</h>
+                      <h>{{
+                        codeToText(
+                          item.province_id,
+                          item.city_id,
+                          item.area_id,
+                          item.detail
+                        )
+                      }}</h>
+                    </div>
+                  </div>
+                </el-col>
+              </el-row>
+            </div>
+            <div style="margin-top: 15px; text-align: center">
+              <el-button type="primary" size="small" @click="changeInfo(item.search_info_id)">修 改</el-button>
+              <el-button type="danger" size="small" @click="deleteInfo(item.search_info_id)">删 除</el-button>
+            </div>
+          </div>
+        </div>
+        <div class="Parent">
+          <!--分页-->
+          <el-pagination v-model:page-size="pagesize_info" :current-page.sync="currentPage_info" :total="total_info"
+            layout="total,prev, pager, next, jumper" @current-change="handleCurrentChange_info" />
+        </div>
+      </div>
+    </el-card>
+    <!-- 我发布的寻人线索 -->
+    <el-card style="margin-bottom: 2%">
+      <div style="text-align: left; margin-left: 3%; margin-right: 3%">
+        <h3>我发布的寻人线索</h3>
+        <el-card>
+          <el-table :data="clue_list" style="width: 100%" header-align="center">
+            <el-table-column prop="ClueDate" label="发布时间" width="200" align="center" />
+            <el-table-column prop="ClueContent" label="线索内容" align="center" />
+            <el-table-column fixed="right" label="操作" width="120">
+              <template #default="scope">
+                <el-button link type="primary" size="small" @click.prevent="deleteClue(scope.$index)">
+                  删除
+                </el-button>
+              </template>
+            </el-table-column>
+          </el-table>
+          <div class="Parent">
+            <!--分页-->
+            <el-pagination v-model:page-size="pagesize" :current-page.sync="currentPage" :total="total"
+              layout="total,prev, pager, next, jumper" @current-change="handleCurrentChange" />
+          </div>
+        </el-card>
+      </div>
+    </el-card>
+
+    <!-- 我关注的寻人信息 -->
+    <el-card style="height: max-content; margin-bottom: 2%">
+      <div style="text-align: left; margin-left: 3%">
+        <h3>我关注的寻人信息</h3>
+        <div class="containerFlex" style="margin-bottom: 2%">
+          <div class="PhotoContainer" v-for="item in focus_list" :key="item.search_info_id">
+            <div class="PhotoOnly" @click="clickPhoto(item.search_info_id)">
+              <el-row class="myRow">
+                <el-col :span="8">
+                  <div class="thePhoto" style="margin-left: 10%">
+                    <img fit="cover" style="
+                          width: 100%;
+                          height: 100%;
+                          border-radius: 10px 10px 0 0;
+                        " :src="item.search_info_photourl" />
+                  </div>
+                </el-col>
+                <el-col :span="16">
+                  <div class="informationBlock">
+                    <div class="line">
+                      <h class="tableTitle">类型:</h>
+                      <h>{{ item.search_type }}</h>
+                    </div>
+                    <div class="line">
+                      <h class="tableTitle">姓名:</h>
+                      <h>{{ item.sought_people_name }}</h>
+                    </div>
+                    <div class="line">
+                      <h class="tableTitle">性别:</h>
+                      <h>{{ item.sought_people_gender }}</h>
+                    </div>
+                    <div class="line">
+                      <h class="tableTitle">出生日期:</h>
+                      <h>{{ item.sought_people_birthday }}</h>
+                    </div>
+                    <div class="line">
+                      <h class="tableTitle">失散日期:</h>
+                      <h>{{ item.search_info_lostdate }}</h>
+                    </div>
+                    <div class="line">
+                      <h class="tableTitle">失散地点/被寻人所在地:</h>
+                      <h>{{
+                        codeToText(
+                          item.province_id,
+                          item.city_id,
+                          item.area_id,
+                          item.detail
+                        )
+                      }}</h>
+                    </div>
+                  </div>
+                </el-col>
+              </el-row>
+            </div>
+          </div>
+        </div>
+        <div class="Parent">
+          <!--分页-->
+          <el-pagination v-model:page-size="pagesize_focus" :current-page.sync="currentPage_focus" :total="total_focus"
+            layout="total,prev, pager, next, jumper" @current-change="handleCurrentChange_focus" />
+        </div>
+      </div>
+    </el-card>
+
   </el-main>
 </template>
 
@@ -106,10 +265,27 @@ export default {
       currentPage_follow: 1, //页码
       pagesize_follow: 3, //每页的数量
       total_follow: 0, //总条目数
+
+      user_id: JSON.parse(sessionStorage.getItem("userid")),
+      searchInfo_list: [],
+      pagesize_info: 3, ///每页数量
+      currentPage_info: 1, //页码
+      total_info: 0, //总条目数
+      clue_list: [],
+      currentPage: 1, //页码
+      pagesize: 3, //每页的数量
+      total: 0, //总条目数
+      focus_list: [],
+      currentPage_focus: 1, //页码
+      pagesize_focus: 3, //每页的数量
+      total_focus: 0, //总条目数
     };
   },
   mounted() {
     this.getFollowUpInfo();
+    this.getAllCLuesPublished();
+    this.getAllSearchInfo();
+    this.getFollowInfo();
   },
   methods: {
     //点击跳转
@@ -183,7 +359,144 @@ export default {
             });
           }
         });
-    }
+    },
+
+        //删除线索
+        deleteClue(index) {
+      console.log(index);
+      api
+        .userDeleteClue(this.user_id, this.clue_list[index].ClueId)
+        .then((res) => {
+          console.log(res.data);
+          this.getAllCLuesPublished();
+          this.getAllSearchInfo();
+          this.getFollowInfo();
+          if (res.data.status == true) {
+            Object.assign(this.$data, this.$options.data.call(this));
+            this.$message({
+              type: "success",
+              message: "删除成功!",
+            });
+          } else {
+            this.$message({
+              type: "error",
+              message: "删除失败",
+            });
+          }
+        });
+    },
+    //修改寻人信息
+    changeInfo(info_id){
+      console.log("info_id:");
+      console.log(info_id);
+      this.$router.push({ path: "/change_missingperson", query: {SearchInfo: info_id,} });
+    },
+    //删除寻人信息
+    deleteInfo(info_id) {
+      console.log(info_id);
+      console.log("info_id");
+      api.userDeleteInfo(this.user_id, info_id).then((res) => {
+        console.log(res.data);
+        this.getAllCLuesPublished();
+        this.getAllSearchInfo();
+        this.getFollowInfo();
+        if (res.data.status == true) {
+          this.$message({
+            type: "success",
+            message: "删除成功!",
+          });
+          Object.assign(this.$data, this.$options.data.call(this));
+        } else {
+          this.$message({
+            type: "error",
+            message: "删除失败",
+          });
+        }
+      });
+    },
+    //处理返回时间中的T
+    handleTimeString(clue_list) {
+      for (let i in clue_list) {
+        clue_list[i].ClueDate = clue_list[i].ClueDate.replace(/T/, "  ");
+      }
+    },
+
+    //区域码转地址
+    codeToText(province, city, area, detail) {
+      if (detail != null)
+        return (
+          CodeToText[province] + CodeToText[city] + CodeToText[area] + detail
+        );
+      else return CodeToText[province] + CodeToText[city] + CodeToText[area];
+    },
+
+    //寻人信息跳转
+    clickPhoto(SearchinfoId) {
+      console.log(SearchinfoId);
+      //点击跳转到寻人信息的详情页
+      this.$router.push({
+        path: "/missingpersonInfo",
+        query: {
+          SearchInfo: SearchinfoId,
+        },
+      });
+    },
+    //发布的寻人信息
+    getAllSearchInfo() {
+      api
+        .getAllSearchInfoPublished(
+          this.user_id,
+          this.currentPage_info,
+          this.pagesize_info
+        )
+        .then((res) => {
+          console.log(res.data);
+          this.searchInfo_list = res.data.data.searchInfo_list;
+          this.total_info = res.data.data.total;
+        });
+    },
+    handleCurrentChange_info(newPage) {
+      this.currentPage_info = newPage; //重新指定当前页
+      this.getAllSearchInfo();
+    },
+    //发布的寻人线索
+    getAllCLuesPublished() {
+      let temp_list = [];
+      api
+        .getAllCLuesPublished(this.user_id, this.currentPage, this.pagesize)
+        .then((res) => {
+          console.log(res.data);
+          temp_list = res.data.data.clue_list;
+          this.handleTimeString(temp_list);
+          console.log(temp_list);
+          this.clue_list = temp_list;
+          this.total = res.data.data.total;
+        });
+    },
+    handleCurrentChange(newPage) {
+      console.log(newPage);
+      this.currentPage = newPage; //重新指定当前页
+      this.getAllCLuesPublished();
+    },
+    //关注的寻人信息
+    getFollowInfo() {
+      api
+        .getFollowInfo(
+          this.user_id,
+          this.currentPage_focus,
+          this.pagesize_focus
+        )
+        .then((res) => {
+          console.log(res.data);
+          this.focus_list = res.data.data.follow_info;
+          this.total_focus = res.data.data.total;
+        });
+    },
+    handleCurrentChange_focus(newPage) {
+      console.log(newPage);
+      this.currentPage_focus = newPage; //重新指定当前页
+      this.getFollowInfo();
+    },
   },
 };
 </script>

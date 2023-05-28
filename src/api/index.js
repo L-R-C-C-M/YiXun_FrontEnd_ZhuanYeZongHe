@@ -109,8 +109,8 @@ const api = {
 
 
     //4.1.1 获取志愿活动列表
-    getVolActList(pageNum, pageSize) {
-        return axios.get(path.baseUrl + path.volAct, { params: { pageNum: pageNum, pageSize: pageSize } })
+    getVolActList(volId, pageNum, pageSize) {
+        return axios.get(path.baseUrl + path.volAct, { params: { volId:volId, pageNum: pageNum, pageSize: pageSize } })
     },
 
     //4.1.2 搜索志愿活动
@@ -525,8 +525,8 @@ const api = {
         return axios.get(path.baseUrl + path.getFollowUpInfo, { params: { volid: volid, pagenum: pagenum, pagesize: pagesize } })
     },
     //3.2 展示志愿者报名的所有志愿活动
-    getVolApplyAct(volid, pagenum, pagesize) {
-        return axios.get(path.baseUrl + path.getVolApplyAct, { params: { volid: volid, pagenum: pagenum, pagesize: pagesize } })
+    getVolApplyAct(userId, pagenum, pagesize) {
+        return axios.get(path.baseUrl + path.getVolApplyAct, { params: { userId: userId, pagenum: pagenum, pagesize: pagesize } })
     },
     //用户删除自己发布的寻人信息
     userDeleteInfo(userid, infoid) {
@@ -580,15 +580,29 @@ const api = {
     getFundOutRecord(pageNum, pageSize) {
         return axios.get(path.baseUrl + path.getFundOutRecord, { params: { pageNum: pageNum, pageSize: pageSize } });
     },
-    //支付宝支付
-    aliPay(){
-        return axios.put(path.baseUrl + path.aliPay,{ params: { out_trade_no: out_trade_no, subject: subject,total_amount: total_amount } });
-    },
 
     //工作人员拒绝跟进的寻人信息
     refuseFollowUp(volid,search_info_id){
         return axios.get(path.baseUrl + path.refuseFollowUp,{ params: { volid: volid, search_info_id: search_info_id } });
+    },
+
+    //创建订单
+    createOrder(user_id,total_amount){
+        return axios.post(path.baseUrl + path.createOrder,null, {params: {user_id: user_id, total_amount: total_amount}})
+    },
+    //查看支付状态
+    payCheck(out_trade_no){
+        return axios.get(path.baseUrl + path.payCheck, { params: { out_trade_no: out_trade_no} });
+    },
+    //根据地区筛选工作人员
+    searchVolByDistinct(city,pagenum,pagesize){
+        return axios.get(path.baseUrl + path.searchVolByDistinct, { params: { city: city, pagenum: pagenum, pagesize: pagesize} });
+    },
+    //查看报名的用户信息
+    showAllRecruited(actId,pageNum,pageSize){
+        return axios.get(path.baseUrl + path.showAllRecruited, { params: { actId: actId, pageNum: pageNum, pageSize: pageSize} });
     }
+
 
 }
 

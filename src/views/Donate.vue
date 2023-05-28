@@ -61,26 +61,72 @@
     setup(){
         const screenHeight = 0.85*window.innerHeight;
         const num = ref(10);
-        const method = ref(1)
+        const method = ref(1);
+        const out_trade_no=ref(0);
+        const user_id=JSON.parse(sessionStorage.getItem("userid"));
         console.log(`屏幕高度为：${screenHeight}px`);
 
         return {
             screenHeight,
             num,
-            method
+            //付款方式
+            method,
+            user_id,
+            //是否已登陆
+            loginState: false,
+            out_trade_no,
         }
+    },
+    mounted(){
+      console.log(this.user_id);
+      if (this.user_id != null) {
+        this.loginState = true;
+    }
     },
     methods: {
         goBack() {
-        this.$router.back();
+          this.$router.back();
         },
         pay(){
-          const url = 'http://localhost:3300/api/Alipay/pay?out_trade_no=2&subject=益寻公益捐款&total_amount=' +this.num
-          //window.location.href =url
-          window.open(url, '_blank');
-        }
-    }
-  };
+          //检查登陆状态
+          if (!this.loginState) {
+              ElMessage({
+                message: "请先登录",
+                type: "warning",
+              });
+            //跳转至登陆页面
+              this.$router.push({
+                  path: "/login",
+                });
+          }
+          else{
+                //支付宝支付
+                if(this.method==1)
+                {
+                  console.log(this.user_id);
+                  api
+                    .createOrder(this.user_id, this.num)
+                    .then((res) => {
+                      console.log(res.data);
+                      this.out_trade_no = res.data.data.outTradeNo;
+                      console.log(this.out_trade_no)
+                      sessionStorage.setItem("out_trade_no", this.out_trade_no);
+                      const url = 'http://localhost:3300/api/Alipay/pay?out_trade_no='+this.out_trade_no+'&subject=益寻公益捐款&total_amount=' +this.num
+                      window.open(url, '_blank');
+                    });
+                }
+                //微信支付
+                else if(this.method==2)
+                {
+                  //跳转至微信捐款页面
+                  this.$router.push({
+                    path: "/weixinpay",
+                  });
+                }
+              }
+            }
+          }
+        };
   </script>
   
   <style scoped>

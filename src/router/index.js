@@ -106,12 +106,28 @@ const routes = [
   //   component: () => import("../views/VolunInstView.vue")
   // },
   {
+    path: '/paysuccess',
+    name: 'paysuccess',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import("../views/PaySuccess.vue")
+  },
+  {
     path: '/donate',
     name: 'donate',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import("../views/Donate.vue")
+  },
+  {
+    path: '/weixinpay',
+    name: 'weixinpay',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import("../views/WeixinPay.vue")
   },
   {
     path: '/volunActInfo',
@@ -187,8 +203,8 @@ const routes = [
         component: () => import('../views/Backstage/UserManagement.vue')
       },
       {
-        path: 'volManagement',
-        name: 'volManagement',
+        path: 'staffManagement',
+        name: 'staffManagement',
         component: () => import('../views/Backstage/VolManagement.vue')
       },
       {
