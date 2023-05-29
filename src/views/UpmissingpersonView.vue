@@ -203,7 +203,7 @@ export default {
     };
   },
   setup() {
-    let missImg = ref("")
+    let missImg = ref()
     const uploadImgSuccessHandler = function (state) {
       //console.log("图片数据：", state)
       // emit('update:imgUrl', state)

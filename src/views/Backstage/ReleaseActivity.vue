@@ -128,6 +128,7 @@ export default {
       // },
       volInstOptions: [],
       value1: [],
+      // volImg: ""
     };
   },
   setup() {
@@ -148,6 +149,7 @@ export default {
     let user_id = ref(0)
     let vol_id = ref(0)
     let admin_id = ref(0)
+    let volImg = ref()
 
     let userType = JSON.parse(sessionStorage.getItem("useridentity")); //获取用户类型
     if (userType == "user") {
@@ -166,10 +168,12 @@ export default {
       //console.log("图片数据：", state)
       // emit('update:imgUrl', state)
       activity.imageurl = state;
-      console.log("图片数据", activity.imageurl);
+      volImg.value = state;
+      // console.log("上传的图片数据", activity.imageurl);
     }
 
     return {
+      volImg,
       user_id,
       vol_id,
       admin_id,
@@ -193,11 +197,15 @@ export default {
     },
 
     save() {
-      console.log(this.activity);
+      console.log("志愿活动数据", this.activity);
       this.activity.act_time = this.formatDateValue(this.value1[0]);
       console.log("开始时间：", this.activity.act_time);
       this.activity.endTime = this.formatDateValue(this.value1[1]);
       console.log("结束时间：", this.activity.endTime);
+      // if (this.activity.imageurl == "")
+      //   console.log("无图片数据")
+      // console.log("图片数据", this.activity.imageurl);
+      // console.log("图片", this.volImg);
       api
         .releaseVolActivity(
           this.activity.act_name,
@@ -220,7 +228,7 @@ export default {
           if (res.data.status == true) {
             api.addVolActivityPic(
               this.activity.volAct_id,
-              this.activity.imageurl
+              this.volImg
             );
             this.$message({
               type: "success",

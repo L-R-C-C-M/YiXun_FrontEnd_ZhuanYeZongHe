@@ -180,7 +180,7 @@ export default {
         // 上传图片
         const uploadImg = function () {
             cropperInstance.value.getCropData(async (data) => {
-                console.log("图片数据", data)
+                // console.log("图片数据", data)
                 imgUrl.value = data;
                 emit('uploadImgSuccess', data);
             })
