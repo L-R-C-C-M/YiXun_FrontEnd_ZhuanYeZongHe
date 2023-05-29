@@ -207,7 +207,7 @@ export default {
     const uploadImgSuccessHandler = function (state) {
       //console.log("图片数据：", state)
       // emit('update:imgUrl', state)
-      missImg = state;
+      missImg.value = state;
       console.log("上传图片数据", missImg);
     }
 
@@ -236,6 +236,7 @@ export default {
           this.form.birthday = this.formatLongDate(this.form.birthday);
           this.form.date = this.formatLongDate(this.form.date);
           console.log("传入的数据是", this.form);
+          // console.log("上传的图片数据是", this.missImg);
           api
             .upMissperson(
               this.userid, //用户id 
@@ -260,6 +261,7 @@ export default {
               // api.addPicture(this.form.id, this.form.imageurl).then((res) => {
               //   // Object.assign(this.$data, this.$options.data.call(this)); 
               // });
+              console.log("上传的图片数据", this.missImg)
               api.addPicture(this.form.id, this.missImg).then((res) => {
                 // Object.assign(this.$data, this.$options.data.call(this)); 
               });

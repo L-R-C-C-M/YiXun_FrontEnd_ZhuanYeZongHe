@@ -213,15 +213,15 @@ export default {
     };
   },
   setup() {
-    let imgData = ""
-    let picEdit = false
+    let imgData = ref()
+    let picEdit = ref(false)
     const uploadImgSuccessHandler = function (state) {
       //console.log("图片数据：", state)
       // emit('update:imgUrl', state)
-      imgData = state;
-      picEdit = true;
+      imgData.value = state;
+      picEdit.value = true;
       // console.log("图片数据", imgData);
-      console.log("图片修改状态", picEdit)
+      console.log("图片修改状态", picEdit.value)
     }
     return {
       picEdit,
@@ -272,11 +272,13 @@ export default {
     save() {
       console.log(this.act_info);
 
+      console.log("图片是否修改", this.picEdit)
       if (this.picEdit) {
         //修改图片的api
         // api.addVolActivityPic(this.act_info.activity_id, this.act_info.activity_pic).then((res) => {
         //   console.log(res.data);
         // });
+        // console.log("上传的图片数据", this.imgData)
         api.addVolActivityPic(this.act_info.activity_id, this.imgData).then((res) => {
           console.log(res.data);
         });
@@ -288,7 +290,7 @@ export default {
       }
       console.log(this.act_info.activity_expTime);
 
-      //修改志愿活动的api
+      修改志愿活动的api
       api
         .modifyVolActivity(
           this.act_info.activity_id,
