@@ -36,18 +36,19 @@
 
             <!--在点击报名时判断登录状态-->
             <!--未到截止报名时间，报名人数未满可以报名,也可以取消报名-->
-            <el-button v-show="!volActInfo.is_overdue &&
+            <el-button v-show="!isVolunteer && !volActInfo.is_overdue &&
               volActInfo.activity_signupPeople <
               volActInfo.activity_needpeople
               " type="primary" class="actButton" round @click="goSignUp()">{{ signup }}</el-button>
 
             <!--未到截止报名时间但报名人数已满且自己未报名-->
-            <el-button v-show="!volActInfo.is_overdue && (volActInfo.activity_signupPeople >=
+            <el-button v-show="!isVolunteer && !volActInfo.is_overdue && (volActInfo.activity_signupPeople >=
               volActInfo.activity_needpeople) && !is_applied
               " type="primary" class="actButton" round disabled>人数已满</el-button>
 
             <!--已到截止报名时间-->
-            <el-button v-show="volActInfo.is_overdue" type="primary" class="actButton" round disabled>报名结束</el-button>
+            <el-button v-show="!isVolunteer && volActInfo.is_overdue" type="primary" class="actButton" round
+              disabled>报名结束</el-button>
 
 
             <!--，未登录无法报名、普通用户禁止报名-->
@@ -150,24 +151,25 @@ export default {
     console.log("接收到的志愿活动id", act_id);
 
     // const vol_id = 2;
-    //let vol_id = ref(0);
+    let vol_id = ref(0);
     let user_id = ref(0);
     let signup = ref("我要报名");
     let is_applied = ref(false);
     let volActInfo = ref([]);
-    //let isVolunteer = ref(true);
+    let isVolunteer = ref(true);
     let loginState = reactive(false);
     if (sessionStorage.getItem("userid") != null) {
       user_id = ref(sessionStorage.getItem("userid"));
       loginState = true;
     }
     let userType = JSON.parse(sessionStorage.getItem("useridentity")); //获取用户类型
-    // if (userType == "user") {
-    //   isVolunteer.value = false;
-    // } else {
-    //   vol_id = JSON.parse(sessionStorage.getItem("volid"));
-    //   console.log("志愿者id", vol_id);
-    // }
+    if (userType == "user") {
+      isVolunteer.value = false;
+    } else {
+      isVolunteer.value = true;
+      vol_id = JSON.parse(sessionStorage.getItem("volid"));
+      console.log("志愿者id", vol_id);
+    }
 
     let pic =
       "https://yixun-picture.oss-cn-shanghai.aliyuncs.com/user_head/1.jpeg";
@@ -179,7 +181,7 @@ export default {
 
     return {
       pic,
-      //vol_id,
+      vol_id,
       user_id,
       act_id,
       is_applied,
@@ -187,7 +189,7 @@ export default {
       currentDate,
       volActInfo,
       loginState,
-      //isVolunteer,
+      isVolunteer,
       userType,
       active,//步骤条的激活序号
       is_overdue: false,//是否已经开始

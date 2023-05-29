@@ -1,7 +1,7 @@
 const base = {
     //公共路径
-    baseUrl: "http://localhost:3300",
-    //baseUrl:"http://47.96.94.96:3300",
+    // baseUrl: "http://localhost:3300",
+    baseUrl: "http://47.96.94.96:3300",
     //1.3 获取用户信息*
     userInfo: "/api/UserInfo/GetUserInfo",
     //1.3-2 修改个人信息*
@@ -221,15 +221,15 @@ const base = {
 
     /* 支付 */
     //创建订单
-    createOrder:"/api/Alipay/createorder",
+    createOrder: "/api/Alipay/createorder",
     //查看支付状态
-    payCheck:"/api/Alipay/paycheck",
+    payCheck: "/api/Alipay/paycheck",
 
 
     //工作人员拒绝跟进的寻人信息
     refuseFollowUp: "/api/SearchInfo/RefuseFollowUp",
     //根据地区筛选工作人员
-    searchVolByDistinct:"/api/Vol/SearchVolByDistinct",
+    searchVolByDistinct: "/api/Vol/SearchVolByDistinct",
     //查看报名的用户信息
     showAllRecruited: "/api/VolAct/ShowAllRecruited"
 

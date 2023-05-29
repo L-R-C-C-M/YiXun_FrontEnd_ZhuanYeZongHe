@@ -145,6 +145,21 @@ export default {
       imageurl: "",
       volAct_id: "",
     }
+    let user_id = ref(0)
+    let vol_id = ref(0)
+    let admin_id = ref(0)
+
+    let userType = JSON.parse(sessionStorage.getItem("useridentity")); //获取用户类型
+    if (userType == "user") {
+      user_id = ref(sessionStorage.getItem("userid"));
+    }
+    else if (userType == "volunteer") {
+      vol_id = JSON.parse(sessionStorage.getItem("volid"));
+    }
+    else {
+      admin_id = JSON.parse(sessionStorage.getItem("administratorid"))
+    }
+
     // const { imgUrl } = toRefs(attrs)
     //const imgUrl = ref("");
     const uploadImgSuccessHandler = function (state) {
@@ -155,6 +170,9 @@ export default {
     }
 
     return {
+      user_id,
+      vol_id,
+      admin_id,
       activity,
       uploadImgSuccessHandler
     }
@@ -191,12 +209,14 @@ export default {
           this.activity.act_city,
           this.activity.act_area,
           this.activity.act_address,
-          this.activity.contact_method
+          this.activity.contact_method,
+          this.vol_id
           //this.activity.volInst_Id
         )
         .then((res) => {
           console.log(res.data);
           this.activity.volAct_id = res.data.data.volAct_id;
+          console.log("上传图片数据", this.activity.imageurl);
           if (res.data.status == true) {
             api.addVolActivityPic(
               this.activity.volAct_id,

@@ -73,7 +73,7 @@ import { ZoomIn, ZoomOut } from '@element-plus/icons-vue'
 import 'vue-cropper/dist/index.css'
 import { VueCropper } from 'vue-cropper'
 export default {
-    name: 'CropperImageUpload',
+    name: 'UpMissImage',
     props: {
         img_url: {
             type: String,
@@ -120,10 +120,10 @@ export default {
             info: true,          //图片大小信息
             canScale: true,      //图片是否允许滚轮缩放
             autoCrop: true,      //是否默认生成截图框
-            autoCropWidth: 350,  //默认生成截图框宽度
-            autoCropHeight: 200, //默认生成截图框高度
+            autoCropWidth: 240,  //默认生成截图框宽度
+            autoCropHeight: 280, //默认生成截图框高度
             fixed: true,         //是否开启截图框宽高固定比例
-            fixedNumber: [7, 4], //截图框的宽高比例
+            fixedNumber: [6, 7], //截图框的宽高比例
             full: true,         //false按原比例裁切图片，不失真
             fixedBox: true,      //固定截图框大小，不允许改变
             canMove: false,      //上传图片是否可以移动
@@ -134,7 +134,7 @@ export default {
             infoTrue: false,     //true为展示真实输出图片宽高，false展示看到的截图框宽高
             maxImgSize: 3000,    //限制图片最大宽度和高度
             enlarge: 1,          //图片根据截图框输出比例倍数
-            mode: '350px 200px'  //图片默认渲染方式
+            mode: '240px 280px'  //图片默认渲染方式
         })
         const chooseImageType = ref('jpeg')
         const cropperInstance = ref(null) // 用于标识cropper组件实例  vue2.x 中的ref
@@ -279,8 +279,8 @@ export default {
     overflow: hidden;
     border: 1px solid #ccc;
     background: #cccccc;
-    width: 350px !important;
-    height: 200px !important;
+    width: 240px !important;
+    height: 280px !important;
 }
 
 .cropper-content .show-preview .show-preview-title {
@@ -343,8 +343,8 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 210px;
-    height: 120px;
+    width: 180px;
+    height: 210px;
     cursor: pointer;
     border: 1px dashed #e6e6e6;
 }

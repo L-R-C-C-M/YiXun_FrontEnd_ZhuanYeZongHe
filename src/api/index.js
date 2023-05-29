@@ -110,7 +110,7 @@ const api = {
 
     //4.1.1 获取志愿活动列表
     getVolActList(volId, pageNum, pageSize) {
-        return axios.get(path.baseUrl + path.volAct, { params: { volId:volId, pageNum: pageNum, pageSize: pageSize } })
+        return axios.get(path.baseUrl + path.volAct, { params: { volId: volId, pageNum: pageNum, pageSize: pageSize } })
     },
 
     //4.1.2 搜索志愿活动
@@ -124,12 +124,12 @@ const api = {
         return axios.get(path.baseUrl + path.volActInfo, { params: { VolActId: act_id } })
     },
     //4.1.4 报名&取消报名志愿活动
-    getSignUp(vol_id, act_id) {
-        return axios.get(path.baseUrl + path.volSignUp, { params: { VolId: vol_id, VolActId: act_id } })
+    getSignUp(user_id, act_id) {
+        return axios.get(path.baseUrl + path.volSignUp, { params: { userId: user_id, VolActId: act_id } })
     },
     //获取报名状态
-    getApplyState(vol_id, act_id) {
-        return axios.get(path.baseUrl + path.applyState, { params: { vol_id: vol_id, volAct_id: act_id } })
+    getApplyState(user_id, act_id) {
+        return axios.get(path.baseUrl + path.applyState, { params: { userId: user_id, volAct_id: act_id } })
     },
 
     //4.2.1 获取志愿机构列表
@@ -317,11 +317,11 @@ const api = {
     },
     //线索核实
     clueVerify(clueId, textarea, checkMan, phoneNumber) {
-        return axios.put(path.baseUrl + path.clueVerifyUrl,{
-                clueId: clueId,
-                textarea: textarea,
-                checkMan: checkMan,
-                phoneNumber: phoneNumber
+        return axios.put(path.baseUrl + path.clueVerifyUrl, {
+            clueId: clueId,
+            textarea: textarea,
+            checkMan: checkMan,
+            phoneNumber: phoneNumber
         })
     },
 
@@ -429,10 +429,11 @@ const api = {
     },
 
     //1.1-2管理员发布志愿活动
-    releaseVolActivity(act_name, act_content, act_time, need_people, act_province, act_city, act_area, act_address, contact_method) {
+    releaseVolActivity(act_name, act_content, act_time, need_people, act_province, act_city, act_area, act_address, contact_method, vol_id) {
         return axios.post(path.baseUrl + path.releaseVolActivity, {
             act_name: act_name, act_content: act_content, act_time: act_time, need_people: need_people,
-            act_province: act_province, act_city: act_city, act_area: act_area, act_address: act_address, contact_method: contact_method
+            act_province: act_province, act_city: act_city, act_area: act_area, act_address: act_address, contact_method: contact_method,
+            act_initiator: vol_id
         })
     },
 
@@ -578,25 +579,25 @@ const api = {
     },
 
     //工作人员拒绝跟进的寻人信息
-    refuseFollowUp(volid,search_info_id){
-        return axios.get(path.baseUrl + path.refuseFollowUp,{ params: { volid: volid, search_info_id: search_info_id } });
+    refuseFollowUp(volid, search_info_id) {
+        return axios.get(path.baseUrl + path.refuseFollowUp, { params: { volid: volid, search_info_id: search_info_id } });
     },
 
     //创建订单
-    createOrder(user_id,total_amount){
-        return axios.post(path.baseUrl + path.createOrder,null, {params: {user_id: user_id, total_amount: total_amount}})
+    createOrder(user_id, total_amount) {
+        return axios.post(path.baseUrl + path.createOrder, null, { params: { user_id: user_id, total_amount: total_amount } })
     },
     //查看支付状态
-    payCheck(out_trade_no){
-        return axios.get(path.baseUrl + path.payCheck, { params: { out_trade_no: out_trade_no} });
+    payCheck(out_trade_no) {
+        return axios.get(path.baseUrl + path.payCheck, { params: { out_trade_no: out_trade_no } });
     },
     //根据地区筛选工作人员
-    searchVolByDistinct(city,pagenum,pagesize){
-        return axios.get(path.baseUrl + path.searchVolByDistinct, { params: { city: city, pagenum: pagenum, pagesize: pagesize} });
+    searchVolByDistinct(city, pagenum, pagesize) {
+        return axios.get(path.baseUrl + path.searchVolByDistinct, { params: { city: city, pagenum: pagenum, pagesize: pagesize } });
     },
     //查看报名的用户信息
-    showAllRecruited(actId,pageNum,pageSize){
-        return axios.get(path.baseUrl + path.showAllRecruited, { params: { actId: actId, pageNum: pageNum, pageSize: pageSize} });
+    showAllRecruited(actId, pageNum, pageSize) {
+        return axios.get(path.baseUrl + path.showAllRecruited, { params: { actId: actId, pageNum: pageNum, pageSize: pageSize } });
     }
 
 
