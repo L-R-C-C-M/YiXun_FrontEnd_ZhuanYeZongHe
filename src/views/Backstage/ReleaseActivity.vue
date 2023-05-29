@@ -131,7 +131,7 @@ export default {
     };
   },
   setup() {
-    let activity = {
+    let activity = ref({
       act_name: "",
       act_content: "",
       act_time: "",
@@ -144,7 +144,7 @@ export default {
       //volInst_Id: "",
       imageurl: "",
       volAct_id: "",
-    }
+    })
     let user_id = ref(0)
     let vol_id = ref(0)
     let admin_id = ref(0)

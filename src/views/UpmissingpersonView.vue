@@ -203,14 +203,16 @@ export default {
     };
   },
   setup() {
+    let missImg = ref("")
     const uploadImgSuccessHandler = function (state) {
       //console.log("图片数据：", state)
       // emit('update:imgUrl', state)
-      this.form.imageurl = state;
-      console.log("图片数据", form.imageurl);
+      missImg = state;
+      console.log("上传图片数据", missImg);
     }
 
     return {
+      missImg,
       uploadImgSuccessHandler
     }
   },
@@ -255,7 +257,10 @@ export default {
             .then((res) => {
               this.form.id = res.data.data.searchInfo_id;
               console.log(res.data.data.searchInfo_id);
-              api.addPicture(this.form.id, this.form.imageurl).then((res) => {
+              // api.addPicture(this.form.id, this.form.imageurl).then((res) => {
+              //   // Object.assign(this.$data, this.$options.data.call(this)); 
+              // });
+              api.addPicture(this.form.id, this.missImg).then((res) => {
                 // Object.assign(this.$data, this.$options.data.call(this)); 
               });
               ElMessage({
