@@ -55,6 +55,8 @@
           <div style="padding: 9px">
             <el-button type="primary" class="actButton" round size="small"
               @click="upClueReport(clue.ClueId)">举报</el-button>
+            <el-button type="primary" class="actButton" round size="small"
+              @click="openClueDetail(clue.ClueId)">查看详情</el-button>
           </div>
           <!-- {{线索描述字段}}
             时间：{{data字段}}+{{detailTime字段}}
@@ -185,6 +187,85 @@
             </div>
           </el-dialog>
         </div>
+        <!-- 查看线索详情对话框 -->
+        <div>
+          <el-dialog title="线索详情" v-model="clueDetailDialogFormVisible">
+            <div>
+              <el-descriptions class="margin-top" :column="1" border>
+                <el-descriptions-item>
+                  <template #label>
+                    <div class="cell-item">
+                      <el-icon :style="iconStyle">
+                        <Calendar />
+                      </el-icon>
+                      发现日期
+                    </div>
+                  </template>
+                  kooriookami
+                </el-descriptions-item>
+                <el-descriptions-item>
+                  <template #label>
+                    <div class="cell-item">
+                      <el-icon :style="iconStyle">
+                        <Watch />
+                      </el-icon>
+                      发现时间
+                    </div>
+                  </template>
+                  kooriookami
+                </el-descriptions-item>
+                <el-descriptions-item>
+                  <template #label>
+                    <div class="cell-item">
+                      <el-icon :style="iconStyle">
+                        <MapLocation />
+                      </el-icon>
+                      发现地区
+                    </div>
+                  </template>
+                  18100000000
+                </el-descriptions-item>
+                <el-descriptions-item>
+                  <template #label>
+                    <div class="cell-item">
+                      <el-icon :style="iconStyle">
+                        <Guide />
+                      </el-icon>
+                      具体地点
+                    </div>
+                  </template>
+                  Suzhou
+                </el-descriptions-item>
+                <el-descriptions-item>
+                  <template #label>
+                    <div class="cell-item">
+                      <el-icon :style="iconStyle">
+                        <Tickets />
+                      </el-icon>
+                      线索描述
+                    </div>
+                  </template>
+                  啊啊啊线索描述
+                </el-descriptions-item>
+              </el-descriptions>
+              <div class="demo-image__lazy">
+                <el-image v-for="url in urls" :key="url" :src="url" lazy />
+              </div>
+            </div>
+
+            <div slot="footer" class="dialog-footer" style="padding: 10px">
+              <!-- <el-button @click="(dialogFormVisible = false), (MisReason = '')">
+                取 消</el-button> -->
+
+              <el-button type="primary" @click="clueDetailDialogFormVisible = false">确 定</el-button>
+              <!-- <el-button type="primary" disabled v-else>确 定</el-button> -->
+
+              <!-- <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button> -->
+            </div>
+          </el-dialog>
+
+
+        </div>
 
 
       </el-main>
@@ -203,9 +284,9 @@ import { thisTypeAnnotation } from "@babel/types";
 import { useRoute } from "vue-router";
 import { ElMessage } from "element-plus";
 import { regionData, CodeToText } from "element-china-area-data";
-import { Star, Search } from "@element-plus/icons-vue";
-import { Delete, Download, Plus, ZoomIn } from '@element-plus/icons-vue';
+import { Plus, ZoomIn, Calendar, Watch, MapLocation, Guide, Tickets } from '@element-plus/icons-vue';
 import { UploadFile } from 'element-plus'
+
 
 
 // do not use same name with ref
@@ -220,6 +301,7 @@ export default {
       dialogFormVisible: false,
       dialogFormVisible2: false,
       upclueDialogVisible: false,
+      clueDetailDialogFormVisible: false,
       MisReason: "",
       clueReason: "",
       clueID: "",
@@ -254,6 +336,16 @@ export default {
     //   user_id = sessionStorage.getItem("userid");
     //   loginState = true;
     // }
+
+    const urls = [
+      'https://fuss10.elemecdn.com/a/3f/3302e58f9a181d2509f3dc0fa68b0jpeg.jpeg',
+      'https://fuss10.elemecdn.com/1/34/19aa98b1fcb2781c4fba33d850549jpeg.jpeg',
+      'https://fuss10.elemecdn.com/0/6f/e35ff375812e6b0020b6b4e8f9583jpeg.jpeg',
+      'https://fuss10.elemecdn.com/9/bb/e27858e973f5d7d3904835f46abbdjpeg.jpeg',
+      'https://fuss10.elemecdn.com/d/e6/c4d93a3805b3ce3f323f7974e6f78jpeg.jpeg',
+      'https://fuss10.elemecdn.com/3/28/bbf893f792f03a54408b3b7a7ebf0jpeg.jpeg',
+      'https://fuss10.elemecdn.com/2/11/6535bcfb26e4c79b48ddde44f4b6fjpeg.jpeg',
+    ];
     const clueForm = reactive({
       report_content: "",
       report_state: "待核实",
@@ -314,6 +406,7 @@ export default {
 
 
     return {
+      urls,
       user_id,
       loginState,
       currentDate,
@@ -332,8 +425,8 @@ export default {
   mounted() {
     if ((sessionStorage.getItem("userid") != null)) {
       this.loginState = true;
-      this.user_id=sessionStorage.getItem("userid");
-      console.log("this.user_id",this.user_id);
+      this.user_id = sessionStorage.getItem("userid");
+      console.log("this.user_id", this.user_id);
     }
     api
       .getMissingpersonInfo(this.MissID)
@@ -388,10 +481,10 @@ export default {
       }
       // console.log("发布线索内容", clueText);
       console.log("寻人信息ID", this.MissID);
-      this.upclueform.date=this.formatLongDate(this.upclueform.date);
+      this.upclueform.date = this.formatLongDate(this.upclueform.date);
 
       api
-        .upClue(parseInt(this.user_id), parseInt(this.MissID), this.upclueform.clueText,this.upclueform.date,this.upclueform.detailTime,this.upclueform.selectedArea[0],this.upclueform.selectedArea[1],this.upclueform.selectedArea[2],this.upclueform.detailAddress,this.imgUrlList.length,this.imgUrlList)
+        .upClue(parseInt(this.user_id), parseInt(this.MissID), this.upclueform.clueText, this.upclueform.date, this.upclueform.detailTime, this.upclueform.selectedArea[0], this.upclueform.selectedArea[1], this.upclueform.selectedArea[2], this.upclueform.detailAddress, this.imgUrlList.length, this.imgUrlList)
         .then(function (response) {
           console.log("发布线索", response);
           // this.getMissInfo();
@@ -531,7 +624,7 @@ export default {
       return myyear + "-" + mymonth + "-" + myweekday;
     },
     //点击发布线索按钮，已登录的可以打开表单填写对话框，未登录提示登录
-    toOpenUpclueDialog(){
+    toOpenUpclueDialog() {
       if (!this.loginState) {
         ElMessage({
           message: "请先登录",
@@ -540,6 +633,13 @@ export default {
         return;
       }
       this.upclueDialogVisible = true;
+    },
+    //打开寻人线索详情
+    openClueDetail(clueID) {
+      this.clueID = clueID;
+      this.clueDetailDialogFormVisible = true;
+
+
     }
   },
 };
@@ -644,5 +744,28 @@ export default {
   text-align: left;
   margin-top: 10px;
   margin-left: 100px;
+}
+
+.cell-item {
+  display: flex;
+  align-items: center;
+  /* width: 20%; */
+}
+
+.margin-top {
+  margin-top: 20px;
+}
+
+.demo-image__lazy {
+  height: 400px;
+  overflow-y: auto;
+}
+.demo-image__lazy .el-image {
+  display: block;
+  min-height: 200px;
+  margin-bottom: 10px;
+}
+.demo-image__lazy .el-image:last-child {
+  margin-bottom: 0;
 }
 </style>
