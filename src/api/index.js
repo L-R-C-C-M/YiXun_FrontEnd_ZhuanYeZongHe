@@ -291,7 +291,7 @@ const api = {
     },
     //关注寻人信息
     followMis(userid, infoid) {
-        return axios.get(path.baseUrl + path.followMisUrl, {
+        return axios.get(path.baseUrl + path.followMisUrl,{
             params: {
                 userid: userid,
                 infoid: infoid

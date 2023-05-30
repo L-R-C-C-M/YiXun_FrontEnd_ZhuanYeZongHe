@@ -250,10 +250,10 @@ export default {
     const MissID = route.query.SearchInfo;
     let user_id = reactive();
     let loginState = reactive(false);
-    if (sessionStorage.getItem("userid") != null) {
-      user_id = sessionStorage.getItem("userid");
-      loginState = true;
-    }
+    // if (sessionStorage.getItem("userid") != null) {
+    //   user_id = sessionStorage.getItem("userid");
+    //   loginState = true;
+    // }
     const clueForm = reactive({
       report_content: "",
       report_state: "待核实",
@@ -330,8 +330,10 @@ export default {
   },
 
   mounted() {
-    if ((this.user_id = sessionStorage.getItem("userid") != null)) {
+    if ((sessionStorage.getItem("userid") != null)) {
       this.loginState = true;
+      this.user_id=sessionStorage.getItem("userid");
+      console.log("this.user_id",this.user_id);
     }
     api
       .getMissingpersonInfo(this.MissID)
