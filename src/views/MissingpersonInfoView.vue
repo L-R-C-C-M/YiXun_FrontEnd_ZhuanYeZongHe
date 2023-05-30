@@ -78,7 +78,7 @@
               <el-input v-model="clueForm.report_content" :autosize="{ minRows: 10, maxRows: 12 }" type="textarea" />
             </el-form-item> -->
 
-            <el-button type="primary" class="actButton" round @click="upclueDialogVisible = true">发布线索</el-button>
+            <el-button type="primary" class="actButton" round @click="toOpenUpclueDialog">发布线索</el-button>
 
             <!-- <el-button type="primary" class="actButton" round @click="goReport(index)">举 报</el-button> -->
             <el-button type="primary" class="actButton" round @click="misReport">举 报</el-button>
@@ -330,6 +330,9 @@ export default {
   },
 
   mounted() {
+    if ((this.user_id = sessionStorage.getItem("userid") != null)) {
+      this.loginState = true;
+    }
     api
       .getMissingpersonInfo(this.MissID)
       .then((res) => {
@@ -525,7 +528,17 @@ export default {
       }
       return myyear + "-" + mymonth + "-" + myweekday;
     },
-
+    //点击发布线索按钮，已登录的可以打开表单填写对话框，未登录提示登录
+    toOpenUpclueDialog(){
+      if (!this.loginState) {
+        ElMessage({
+          message: "请先登录",
+          type: "warning",
+        });
+        return;
+      }
+      this.upclueDialogVisible = true;
+    }
   },
 };
 </script>
