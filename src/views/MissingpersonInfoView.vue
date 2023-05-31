@@ -201,7 +201,7 @@
                       发现日期
                     </div>
                   </template>
-                  kooriookami
+                  {{ clueInfo.clueInfoDate }}
                 </el-descriptions-item>
                 <el-descriptions-item>
                   <template #label>
@@ -212,7 +212,7 @@
                       发现时间
                     </div>
                   </template>
-                  kooriookami
+                  {{ clueInfo.clueInfoTime }}
                 </el-descriptions-item>
                 <el-descriptions-item>
                   <template #label>
@@ -223,7 +223,7 @@
                       发现地区
                     </div>
                   </template>
-                  18100000000
+                  {{ clueInfo.clueInfoArea }}
                 </el-descriptions-item>
                 <el-descriptions-item>
                   <template #label>
@@ -234,7 +234,7 @@
                       具体地点
                     </div>
                   </template>
-                  Suzhou
+                  {{ clueInfo.clutInfoAdr }}
                 </el-descriptions-item>
                 <el-descriptions-item>
                   <template #label>
@@ -245,7 +245,7 @@
                       线索描述
                     </div>
                   </template>
-                  啊啊啊线索描述
+                  {{ clueInfo.clueInfoText }}
                 </el-descriptions-item>
               </el-descriptions>
               <div class="demo-image__lazy">
@@ -295,6 +295,15 @@ export default {
   name: "ref",
   data() {
     return {
+      urls:[],
+      clueInfo:reactive({
+        clueInfoDate:"",
+        clueInfoTime:"",
+        clueInfoArea:"",
+        clutInfoAdr:"",
+        clueInfoText:"",
+        clueInfoImgUrl:[],
+      }),
       areaOptions: regionData,
       MissInfo: [],
       //对话框显示与隐藏
@@ -337,15 +346,6 @@ export default {
     //   loginState = true;
     // }
 
-    const urls = [
-      'https://fuss10.elemecdn.com/a/3f/3302e58f9a181d2509f3dc0fa68b0jpeg.jpeg',
-      'https://fuss10.elemecdn.com/1/34/19aa98b1fcb2781c4fba33d850549jpeg.jpeg',
-      'https://fuss10.elemecdn.com/0/6f/e35ff375812e6b0020b6b4e8f9583jpeg.jpeg',
-      'https://fuss10.elemecdn.com/9/bb/e27858e973f5d7d3904835f46abbdjpeg.jpeg',
-      'https://fuss10.elemecdn.com/d/e6/c4d93a3805b3ce3f323f7974e6f78jpeg.jpeg',
-      'https://fuss10.elemecdn.com/3/28/bbf893f792f03a54408b3b7a7ebf0jpeg.jpeg',
-      'https://fuss10.elemecdn.com/2/11/6535bcfb26e4c79b48ddde44f4b6fjpeg.jpeg',
-    ];
     const clueForm = reactive({
       report_content: "",
       report_state: "待核实",
@@ -406,7 +406,7 @@ export default {
 
 
     return {
-      urls,
+      
       user_id,
       loginState,
       currentDate,
@@ -637,6 +637,29 @@ export default {
     //打开寻人线索详情
     openClueDetail(clueID) {
       this.clueID = clueID;
+      api
+      .getClueDetail(this.clueID)
+      .then((res) => {
+        console.log("clueDetail接收到的数据", res);
+        var theClueInfo=res.data.data;
+        console.log(theClueInfo);
+        // this.MissInfo = res.data.data;
+        // console.log("志愿者长度", this.MissInfo.search_vols.length);
+        // this.address =
+        //   CodeToText[this.MissInfo.search_province] +
+        //   CodeToText[this.MissInfo.search_city] +
+        //   CodeToText[this.MissInfo.search_area];
+        this.clueInfo.clueInfoArea=CodeToText[theClueInfo.province]+CodeToText[theClueInfo.city]+CodeToText[theClueInfo.area];
+        console.log(this.clueInfo.clueInfoArea);
+        this.clueInfo.clueInfoDate=theClueInfo.clue_day;
+        this.clueInfo.clueInfoTime=theClueInfo.detail_time;
+        this.clueInfo.clutInfoAdr=theClueInfo.detail_address;
+        this.clueInfo.clueInfoText=theClueInfo.clue_content;
+        this.urls=theClueInfo.pic_list;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
       this.clueDetailDialogFormVisible = true;
 
 

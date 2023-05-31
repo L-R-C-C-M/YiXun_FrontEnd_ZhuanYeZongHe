@@ -324,6 +324,10 @@ const api = {
             phoneNumber: phoneNumber
         })
     },
+    //获取线索详情
+    getClueDetail(clueId){
+        return axios.get(path.baseUrl + path.getclueDetailUrl, { params: { clueId: clueId } })
+    },
 
 
     //————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————————

@@ -102,6 +102,8 @@ const base = {
     clueVerifyUrl: "/api/Vol/ChangeClueConfirmed",
     //寻人信息已找到
     missingperHaveFoundUrl: "/api/Vol/ChangeSearchinfoToFound",
+    //获取线索详情
+    getclueDetailUrl:"/api/SearchInfo/GetClueDetail",
 
 
     //公共路径
