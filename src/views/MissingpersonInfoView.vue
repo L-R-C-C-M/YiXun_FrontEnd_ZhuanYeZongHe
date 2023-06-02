@@ -25,11 +25,6 @@
               <div>| 出生日期：{{ MissInfo.search_birthday }}</div>
               <div>| 详细地址：{{ address }} {{ MissInfo.search_address }}</div>
               <div style="padding: 20px 0px 15px 5px" v-if="this.loginState">
-                <!-- <el-button v-if="!this.isFollow" @click="follow" round
-                  >关注寻人信息</el-button
-                >
-                <el-button v-else @click="follow" round>取 消 关 注</el-button> -->
-
                 <el-button v-if="!this.isFollow" @click="follow" round>关注寻人信息</el-button>
                 <el-button v-else @click="follow" round>取 消 关 注</el-button>
               </div>
@@ -38,10 +33,7 @@
               </div>
             </div>
           </div>
-          <div>
-            <!-- <el-button type="primary" v-if="MisReason" @click="SubmitMisReason(MisReason)">确 定</el-button>
-            <el-button type="primary" disabled v-else>确 定</el-button> -->
-          </div>
+
         </el-row>
 
         <el-col class="toptext">特征描述</el-col>
@@ -49,14 +41,21 @@
 
         <el-col class="toptext">寻人线索</el-col>
         <el-row v-for="clue in this.MissInfo.search_clue" :key="clue.ClueContent">
-          <div class="text">| {{ clue.ClueContent }} <sup style="font-size:12px;color:crimson">{{
-            clueForm.report_state }}</sup></div>
+          <div class="text">
+            | {{ clue.ClueContent }}
+            <sup v-if="clue.WhetherConfirmed == 'Y'" style="font-size:12px;color:forestgreen">
+              已核实
+            </sup>
+            <sup v-else style="font-size:5px;color:crimson">
+              未核实
+            </sup>
+          </div>
 
           <div style="padding: 9px">
-            <el-button type="primary" class="actButton" round size="small"
-              @click="upClueReport(clue.ClueId)">举报</el-button>
-            <el-button type="primary" class="actButton" round size="small"
-              @click="openClueDetail(clue.ClueId)">查看详情</el-button>
+            <el-button type="primary" class="actButton" round size="small" @click="upClueReport(clue.ClueId)">举报
+            </el-button>
+            <el-button type="primary" class="actButton" round size="small" @click="openClueDetail(clue.ClueId)">查看详情
+            </el-button>
           </div>
           <!-- {{线索描述字段}}
             时间：{{data字段}}+{{detailTime字段}}
@@ -76,11 +75,10 @@
         <!-- 上传线索，举报寻人信息按钮 -->
         <div style="padding: 50px 0px 15px 75px">
           <el-form :model="clueForm" label-width="100px" style="max-width: 1500px">
-            <!-- <el-form-item label="线索描述 ">
-              <el-input v-model="clueForm.report_content" :autosize="{ minRows: 10, maxRows: 12 }" type="textarea" />
-            </el-form-item> -->
 
-            <el-button type="primary" class="actButton" round @click="toOpenUpclueDialog">发布线索</el-button>
+
+            <el-button type="primary" class="actButton" round @click="toOpenUpclueDialog">发布线索
+            </el-button>
 
             <!-- <el-button type="primary" class="actButton" round @click="goReport(index)">举 报</el-button> -->
             <el-button type="primary" class="actButton" round @click="misReport">举 报</el-button>
@@ -253,15 +251,15 @@
               </div>
             </div>
 
-            <div slot="footer" class="dialog-footer" style="padding: 10px">
-              <!-- <el-button @click="(dialogFormVisible = false), (MisReason = '')">
+            <!-- <div slot="footer" class="dialog-footer" style="padding: 10px"> -->
+            <!-- <el-button @click="(dialogFormVisible = false), (MisReason = '')">
                 取 消</el-button> -->
 
-              <el-button type="primary" @click="clueDetailDialogFormVisible = false">确 定</el-button>
-              <!-- <el-button type="primary" disabled v-else>确 定</el-button> -->
+            <!-- <el-button type="primary" @click="clueDetailDialogFormVisible = false">确 定</el-button> -->
+            <!-- <el-button type="primary" disabled v-else>确 定</el-button> -->
 
-              <!-- <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button> -->
-            </div>
+            <!-- <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button> -->
+            <!-- </div> -->
           </el-dialog>
 
 
@@ -295,14 +293,14 @@ export default {
   name: "ref",
   data() {
     return {
-      urls:[],
-      clueInfo:reactive({
-        clueInfoDate:"",
-        clueInfoTime:"",
-        clueInfoArea:"",
-        clutInfoAdr:"",
-        clueInfoText:"",
-        clueInfoImgUrl:[],
+      urls: [],
+      clueInfo: reactive({
+        clueInfoDate: "",
+        clueInfoTime: "",
+        clueInfoArea: "",
+        clutInfoAdr: "",
+        clueInfoText: "",
+        clueInfoImgUrl: [],
       }),
       areaOptions: regionData,
       MissInfo: [],
@@ -346,10 +344,7 @@ export default {
     //   loginState = true;
     // }
 
-    const clueForm = reactive({
-      report_content: "",
-      report_state: "待核实",
-    });
+
 
     // 线索上传相关数据
     const shortcuts = [
@@ -406,11 +401,11 @@ export default {
 
 
     return {
-      
+
       user_id,
       loginState,
       currentDate,
-      clueForm,
+
       MissID,
       shortcuts,
       disabledDate,//时间选择器中不能选择的时间
@@ -456,6 +451,30 @@ export default {
       });
   },
   methods: {
+
+    //获取寻人信息详情
+    getMissInfo() {
+      api
+        .getMissingpersonInfo(this.MissID)
+        .then((res) => {
+          console.log("接收到的数据", res);
+          this.MissInfo = res.data.data;
+          console.log("志愿者长度", this.MissInfo.search_vols.length);
+          this.address =
+            CodeToText[this.MissInfo.search_province] +
+            CodeToText[this.MissInfo.search_city] +
+            CodeToText[this.MissInfo.search_area];
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+      if (!this.loginState) {
+        return;
+      }
+
+    },
+
+
     // goReport() {
     //   this.$router.push({ path: "/report", query: {} });
     //   api
@@ -484,10 +503,17 @@ export default {
       this.upclueform.date = this.formatLongDate(this.upclueform.date);
 
       api
-        .upClue(parseInt(this.user_id), parseInt(this.MissID), this.upclueform.clueText, this.upclueform.date, this.upclueform.detailTime, this.upclueform.selectedArea[0], this.upclueform.selectedArea[1], this.upclueform.selectedArea[2], this.upclueform.detailAddress, this.imgUrlList.length, this.imgUrlList)
+        .upClue(parseInt(this.user_id), parseInt(this.MissID),
+          this.upclueform.clueText, this.upclueform.date,
+          this.upclueform.detailTime,
+          this.upclueform.selectedArea[0],
+          this.upclueform.selectedArea[1],
+          this.upclueform.selectedArea[2],
+          this.upclueform.detailAddress,
+          this.imgUrlList.length, this.imgUrlList)
         .then(function (response) {
           console.log("发布线索", response);
-          // this.getMissInfo();
+          this.getMissInfo();
           ElMessage({
             message: "线索发布成功",
             type: "success",
@@ -638,32 +664,32 @@ export default {
     openClueDetail(clueID) {
       this.clueID = clueID;
       api
-      .getClueDetail(this.clueID)
-      .then((res) => {
-        console.log("clueDetail接收到的数据", res);
-        var theClueInfo=res.data.data;
-        console.log(theClueInfo);
-        // this.MissInfo = res.data.data;
-        // console.log("志愿者长度", this.MissInfo.search_vols.length);
-        // this.address =
-        //   CodeToText[this.MissInfo.search_province] +
-        //   CodeToText[this.MissInfo.search_city] +
-        //   CodeToText[this.MissInfo.search_area];
-        this.clueInfo.clueInfoArea=CodeToText[theClueInfo.province]+CodeToText[theClueInfo.city]+CodeToText[theClueInfo.area];
-        console.log(this.clueInfo.clueInfoArea);
-        this.clueInfo.clueInfoDate=theClueInfo.clue_day;
-        this.clueInfo.clueInfoTime=theClueInfo.detail_time;
-        this.clueInfo.clutInfoAdr=theClueInfo.detail_address;
-        this.clueInfo.clueInfoText=theClueInfo.clue_content;
-        this.urls=theClueInfo.pic_list;
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+        .getClueDetail(this.clueID)
+        .then((res) => {
+          console.log("clueDetail接收到的数据", res);
+          var theClueInfo = res.data.data;
+          console.log(theClueInfo);
+          // this.MissInfo = res.data.data;
+          // console.log("志愿者长度", this.MissInfo.search_vols.length);
+          // this.address =
+          //   CodeToText[this.MissInfo.search_province] +
+          //   CodeToText[this.MissInfo.search_city] +
+          //   CodeToText[this.MissInfo.search_area];
+          this.clueInfo.clueInfoArea = CodeToText[theClueInfo.province] + CodeToText[theClueInfo.city] + CodeToText[theClueInfo.area];
+          console.log(this.clueInfo.clueInfoArea);
+          this.clueInfo.clueInfoDate = theClueInfo.clue_day;
+          this.clueInfo.clueInfoTime = theClueInfo.detail_time;
+          this.clueInfo.clutInfoAdr = theClueInfo.detail_address;
+          this.clueInfo.clueInfoText = theClueInfo.clue_content;
+          this.urls = theClueInfo.pic_list;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
       this.clueDetailDialogFormVisible = true;
 
 
-    }
+    },
   },
 };
 </script>
@@ -783,11 +809,13 @@ export default {
   height: 400px;
   overflow-y: auto;
 }
+
 .demo-image__lazy .el-image {
   display: block;
   min-height: 200px;
   margin-bottom: 10px;
 }
+
 .demo-image__lazy .el-image:last-child {
   margin-bottom: 0;
 }

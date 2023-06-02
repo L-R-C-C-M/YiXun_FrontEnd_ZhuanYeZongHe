@@ -297,7 +297,6 @@ export default {
         query: { act_id: actID },
       });
     },
-    
     //区域码转地址
     codeToText(province, city, area, detail) {
       if (detail != null)
@@ -360,9 +359,8 @@ export default {
           }
         });
     },
-
-        //删除线索
-        deleteClue(index) {
+      //删除线索
+    deleteClue(index) {
       console.log(index);
       api
         .userDeleteClue(this.user_id, this.clue_list[index].ClueId)
@@ -420,7 +418,6 @@ export default {
         clue_list[i].ClueDate = clue_list[i].ClueDate.replace(/T/, "  ");
       }
     },
-
     //区域码转地址
     codeToText(province, city, area, detail) {
       if (detail != null)
@@ -428,18 +425,6 @@ export default {
           CodeToText[province] + CodeToText[city] + CodeToText[area] + detail
         );
       else return CodeToText[province] + CodeToText[city] + CodeToText[area];
-    },
-
-    //寻人信息跳转
-    clickPhoto(SearchinfoId) {
-      console.log(SearchinfoId);
-      //点击跳转到寻人信息的详情页
-      this.$router.push({
-        path: "/missingpersonInfo",
-        query: {
-          SearchInfo: SearchinfoId,
-        },
-      });
     },
     //发布的寻人信息
     getAllSearchInfo() {
