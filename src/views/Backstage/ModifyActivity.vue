@@ -290,7 +290,7 @@ export default {
       }
       console.log(this.act_info.activity_expTime);
 
-      修改志愿活动的api
+      //修改志愿活动的api
       api
         .modifyVolActivity(
           this.act_info.activity_id,

@@ -56,6 +56,8 @@
             </el-button>
             <el-button type="primary" class="actButton" round size="small" @click="openClueDetail(clue.ClueId)">查看详情
             </el-button>
+            <el-button v-if="clue.VolActId != 0" type="primary" class="actButton" round size="small"
+              @click="goVolActInfo(clue.VolActId)">查看相关志愿活动</el-button>
           </div>
           <!-- {{线索描述字段}}
             时间：{{data字段}}+{{detailTime字段}}
@@ -343,8 +345,6 @@ export default {
     //   user_id = sessionStorage.getItem("userid");
     //   loginState = true;
     // }
-
-
 
     // 线索上传相关数据
     const shortcuts = [
@@ -690,6 +690,15 @@ export default {
 
 
     },
+    goVolActInfo(actId) {
+
+      //跳转到志愿活动详情页
+      this.$router.push({
+        path: "/volunActInfo",
+        //params: {  }, path和params不能同时使用，会使params失效，要用params需要将path替代为name(router名)
+        query: { act_id: actId },
+      });
+    }
   },
 };
 </script>
@@ -815,6 +824,7 @@ export default {
   min-height: 200px;
   margin-bottom: 10px;
 }
+
 
 .demo-image__lazy .el-image:last-child {
   margin-bottom: 0;

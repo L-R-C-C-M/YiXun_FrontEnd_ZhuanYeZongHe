@@ -10,26 +10,18 @@
         <h3>我跟进的寻人信息</h3>
         <!-- 我跟进的寻人信息 -->
         <div class="containerFlex" style="margin-bottom: 2%">
-          <div
-            class="PhotoContainer"
-            v-for="item in follow_list"
-            :key="item.search_info_id"
-          >
+          <div class="PhotoContainer" v-for="item in follow_list" :key="item.search_info_id">
             <div class="PhotoOnly" @click="clickPhoto(item.search_info_id)">
               <el-row class="myRow">
                 <el-col :span="8">
                   <div class="thePhoto" style="margin-left: 10%">
-                    <img
-                      fit="cover"
-                      style="
+                    <img fit="cover" style="
                         width: 100%;
                         height: 100%;
                         border-radius: 10px 10px 0 0;
                         box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
                           rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
-                      "
-                      :src="item.search_info_photourl"
-                    />
+                      " :src="item.search_info_photourl" />
                   </div>
                 </el-col>
                 <el-col :span="16">
@@ -76,20 +68,14 @@
         </div>
         <div class="Parent">
           <!--分页-->
-          <el-pagination
-            align="center"
-            v-model:page-size="pagesize_follow"
-            :current-page.sync="currentPage_follow"
-            :total="total_follow"
-            layout="total,prev, pager, next, jumper"
-            @current-change="handleCurrentChange_follow"
-          />
+          <el-pagination align="center" v-model:page-size="pagesize_follow" :current-page.sync="currentPage_follow"
+            :total="total_follow" layout="total,prev, pager, next, jumper" @current-change="handleCurrentChange_follow" />
         </div>
       </div>
     </el-card>
 
-     <!-- 我发布的寻人信息 -->
-     <el-card style="height: max-content; margin-bottom: 2%">
+    <!-- 我发布的寻人信息 -->
+    <el-card style="height: max-content; margin-bottom: 2%">
       <div style="text-align: left; margin-left: 3%">
         <h3>我发布的寻人信息</h3>
         <div class="containerFlex" style="margin-bottom: 10px">
@@ -297,6 +283,7 @@ export default {
         query: { act_id: actID },
       });
     },
+
     //区域码转地址
     codeToText(province, city, area, detail) {
       if (detail != null)
@@ -336,7 +323,7 @@ export default {
       this.getFollowUpInfo();
     },
     //拒绝跟进寻人信息
-    rejectInfo(info_id){
+    rejectInfo(info_id) {
       api
         .refuseFollowUp(
           this.volid,
@@ -344,14 +331,14 @@ export default {
         )
         .then((res) => {
           console.log(res.data);
-          if(res.data.data.if_succeed=="true"){
+          if (res.data.data.if_succeed == "true") {
             this.getFollowUpInfo();
             this.$message({
               type: "success",
               message: "拒绝成功!",
             });
           }
-          else{
+          else {
             this.$message({
               type: "error",
               message: "拒绝失败",
@@ -359,7 +346,7 @@ export default {
           }
         });
     },
-      //删除线索
+    //删除线索
     deleteClue(index) {
       console.log(index);
       api
@@ -384,10 +371,10 @@ export default {
         });
     },
     //修改寻人信息
-    changeInfo(info_id){
+    changeInfo(info_id) {
       console.log("info_id:");
       console.log(info_id);
-      this.$router.push({ path: "/change_missingperson", query: {SearchInfo: info_id,} });
+      this.$router.push({ path: "/change_missingperson", query: { SearchInfo: info_id, } });
     },
     //删除寻人信息
     deleteInfo(info_id) {
@@ -506,6 +493,7 @@ export default {
   margin-top: 0%;
   margin-bottom: 5px;
 }
+
 .button {
   float: right;
   background-color: #67bbff;
@@ -545,16 +533,19 @@ export default {
 .thePhoto {
   height: 100%;
 }
+
 .informationBlock {
   padding-left: 5%;
   padding-top: 5%;
   padding-bottom: 8%;
   display: inline-block;
 }
+
 .informationBlock .line {
   padding-top: 10px;
   float: inline-start;
 }
+
 .informationBlock .tableTitle {
   color: #2e74b6;
   font-weight: 700;
@@ -566,17 +557,22 @@ h {
 
 .containerFlex {
   display: flex;
-  flex-direction: row; /*容器内成员的排列方式为从左到右*/
-  flex-wrap: wrap; /*换行方式，放不下就换行*/
-  justify-content: flex-start; /*项目在主轴上的对齐方式*/
+  flex-direction: row;
+  /*容器内成员的排列方式为从左到右*/
+  flex-wrap: wrap;
+  /*换行方式，放不下就换行*/
+  justify-content: flex-start;
+  /*项目在主轴上的对齐方式*/
   align-content: flex-start;
 }
+
 .PhotoContainer {
   width: 360px;
   height: 100%;
   margin-bottom: 20px;
   margin-right: 1.5%;
 }
+
 .PhotoOnly {
   width: 95%;
   height: 100%;

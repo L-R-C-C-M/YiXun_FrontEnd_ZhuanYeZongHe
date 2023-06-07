@@ -53,7 +53,7 @@
 
         <el-form-item label="活动时间" style="margin-bottom: 3%">
           <el-date-picker v-model="value1" type="datetimerange" range-separator="至" start-placeholder="开始日期"
-            end-placeholder="结束日期">
+            end-placeholder="结束日期" :append-to-body="false">
           </el-date-picker>
         </el-form-item>
 
@@ -77,10 +77,10 @@
 </template>
     
 <script>
-import { toRefs, toRef, ref } from 'vue'
+import { toRefs, toRef, ref, emit } from 'vue'
 import CropperImageUpload from '@/components/CropperImage.vue'
 import api from "/src/api/index";
-import { regionData } from "element-china-area-data";
+import { regionData, CodeToText } from "element-china-area-data";
 
 export default {
   name: "ActivityRelease",
@@ -105,7 +105,15 @@ export default {
       required: false,
       // 定义默认值
       //default: ""
-    }
+    },
+    activity_clueId: {
+      type: Number,
+      required: false,
+    },
+    // address: {
+    //   type: Object,
+    //   required: false
+    // }
   },
   data() {
     return {
@@ -169,7 +177,7 @@ export default {
       // emit('update:imgUrl', state)
       activity.imageurl = state;
       volImg.value = state;
-      // console.log("上传的图片数据", activity.imageurl);
+      console.log("上传的图片数据", volImg);
     }
 
     return {
@@ -184,13 +192,32 @@ export default {
   mounted() {
     if (this.searchId != null)
       this.activity.act_name = "寻人线索核实志愿活动";
-    console.log("父组件传参：", this.searchId, this.contact);
+    console.log("父组件传参：", this.searchId, this.contact, this.activity_clueId);
     if (this.contact != null)
       this.activity.contact_method = this.contact;
+    if (this.activity_clueId != null) {
+      api
+        .getClueDetail(this.activity_clueId)
+        .then((res) => {
+          console.log("clueDetail接收到的数据", res);
+          var theClueInfo = res.data.data;
+          console.log(theClueInfo);
+          this.activity.act_province = theClueInfo.province;
+          this.activity.act_city = theClueInfo.city;
+          this.activity.act_area = theClueInfo.area;
+          this.activity.act_address = theClueInfo.detail_address;
+          this.selectedOptions = [theClueInfo.province, theClueInfo.city, theClueInfo.area]
+          console.log("地址列表：", this.selectedOptions);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   },
   methods: {
     //三级省市区修改
     handleChange(value) {
+      console.log(value);
       this.activity.act_province = value[0];
       this.activity.act_city = value[1];
       this.activity.act_area = value[2];
@@ -206,6 +233,8 @@ export default {
       //   console.log("无图片数据")
       // console.log("图片数据", this.activity.imageurl);
       // console.log("图片", this.volImg);
+
+      console.log("父组件传参", this.activity_clueId)
       api
         .releaseVolActivity(
           this.activity.act_name,
@@ -217,14 +246,15 @@ export default {
           this.activity.act_city,
           this.activity.act_area,
           this.activity.act_address,
-          this.activity.contact_method,
-          this.vol_id
+          String(this.activity.contact_method),
+          this.vol_id,
+          this.activity_clueId
           //this.activity.volInst_Id
         )
         .then((res) => {
           console.log(res.data);
           this.activity.volAct_id = res.data.data.volAct_id;
-          console.log("上传图片数据", this.activity.imageurl);
+          // console.log("上传图片数据", this.volImg);
           if (res.data.status == true) {
             api.addVolActivityPic(
               this.activity.volAct_id,
@@ -234,6 +264,7 @@ export default {
               type: "success",
               message: "发布成功!",
             });
+            this.$emit('releaseActSuccess', true);
           } else {
             this.$message({
               type: "error",

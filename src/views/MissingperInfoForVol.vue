@@ -24,7 +24,7 @@
               <div>| 性别：{{ MissInfo.search_gender }}</div>
               <div>| 出生日期：{{ MissInfo.search_birthday }}</div>
               <div>| 详细地址：{{ address }} {{ MissInfo.search_address }}</div>
-              <div style="padding: 20px 0px 15px 5px" >
+              <div style="padding: 20px 0px 15px 5px">
                 <el-button v-if="!this.isFollow" @click="follow" round>关注寻人信息</el-button>
                 <el-button v-else @click="follow" round>取 消 关 注</el-button>
 
@@ -34,9 +34,6 @@
                 </el-button>
                 <el-button v-else type="primary" round @click="findDialogVisible = true">
                   已 找 到
-                </el-button>
-                <el-button @click="releaseActDialogVisible = true" round>
-                  发布志愿活动
                 </el-button>
 
                 <el-dialog v-model="findDialogVisible" title="提示" width="40%">
@@ -65,7 +62,7 @@
         <div class="text">{{ MissInfo.search_detail }}</div>
 
         <el-col class="toptext">寻人线索</el-col>
-        <el-row v-for="clue in this.MissInfo.search_clue" :key="clue.ClueContent">
+        <el-row :key="clueRefresh" v-for="clue in this.MissInfo.search_clue">
           <div class="text">
             | {{ clue.ClueContent }}
             <sup v-if="clue.WhetherConfirmed == 'Y'" style="font-size:12px;color:forestgreen">
@@ -88,6 +85,12 @@
             </el-button>
             <el-button type="primary" class="actButton" round size="small" @click="openClueDetail(clue.ClueId)">查看详情
             </el-button>
+            <el-button type="primary" v-if="clue.WhetherConfirmed == 'N' && clue.VolActId == 0" size="small"
+              @click="releaseClueAct(clue.ClueId)" round>
+              发布志愿活动
+            </el-button>
+            <el-button v-if="clue.VolActId != 0" type="primary" class="actButton" round size="small"
+              @click="goVolActInfo(clue.VolActId)">查看相关志愿活动</el-button>
 
           </div>
 
@@ -326,13 +329,11 @@
         </div>
 
         <el-dialog v-model="releaseActDialogVisible" title="发布志愿活动" align-center width="80%" :before-close="dialogClose">
-          <ActivityRelease :searchId="MissID" :contact="contact" />
-          <!-- <template #footer>
-            <span class="dialog-footer">
-              <el-button @click="dialogClose">取消</el-button>
-              <el-button type="primary" @click="addFundOut">确认</el-button>
-            </span>
-          </template> -->
+          <!-- <ActivityRelease :searchId="MissID" :contact="MissInfo.search_vols[0].PhoneNum"
+            :activity_clueId="activity_clueId" :address="address_list" /> -->
+          <ActivityRelease :key="actRefresh" :searchId="MissID" :contact="MissInfo.search_vols[0].PhoneNum"
+            :activity_clueId="activity_clueId" @releaseActSuccess="releaseActSuccessHandler" />
+
         </el-dialog>
 
       </el-main>
@@ -378,7 +379,6 @@ export default {
       clueDetailDialogFormVisible: false,
       findDialogVisible: false,//找到寻人信息
       clueVerifyDialogVisible: false,//核实线索
-      releaseActDialogVisible: false,//发布志愿活动
       MisReason: "",
       clueReason: "",
       clueID: "",
@@ -406,9 +406,11 @@ export default {
     ActivityRelease
   },
   setup() {
+    const clueRefresh = ref(true);
+    const actRefresh = ref(true);
     const dialogImageUrl = ref('');
     const imgDialogVisible = ref(false);
-
+    const releaseActDialogVisible = ref(false);//发布志愿活动
     const currentDate = ref(new Date());
     const route = useRoute();
 
@@ -458,18 +460,44 @@ export default {
       imgDialogVisible.value = true;
     };
 
+    let activity_clueId = ref(0)
+
+    // const address_list = ref({
+    //   search_province: "",
+    //   search_city: "",
+    //   search_area: "",
+    //   search_address: ""
+    // })
+
+    // const releaseActSuccessHandler = function (state) {
+    //   releaseActDialogVisible.value = false;
+    //   actRefresh.value = !actRefresh;
+    //   this.getMissInfo();
+    //   // clueRefresh.value = !clueRefresh;
+    //   // this.$nextTick(() => {
+    //   //   // 重新渲染组件
+    //   //   clueRefresh.value = true
+    //   // })
+    //   console.log("接受的数据", state);
+    // }
+
     return {
       user_id,
       loginState,
       currentDate,
+      clueRefresh,
+      actRefresh,
 
       MissID,
       shortcuts,
       disabledDate,//时间选择器中不能选择的时间
       dialogImageUrl,//查看图片大图的图片url
       imgDialogVisible,//查看大图的dialog
+      releaseActDialogVisible,//发布志愿活动
       handlePictureCardPreview,
-
+      // releaseActSuccessHandler,
+      activity_clueId,
+      // address_list
     };
   },
 
@@ -492,6 +520,12 @@ export default {
   },
   methods: {
 
+    releaseActSuccessHandler(state) {
+      this.releaseActDialogVisible = false;
+      // actRefresh.value = !actRefresh;
+      this.getMissInfo();
+    },
+
     //获取寻人信息详情
     getMissInfo() {
       api
@@ -504,6 +538,11 @@ export default {
             CodeToText[this.MissInfo.search_province] +
             CodeToText[this.MissInfo.search_city] +
             CodeToText[this.MissInfo.search_area];
+          // this.address_list.search_province = this.MissInfo.search_province;
+          // this.address_list.search_city = this.MissInfo.search_city;
+          // this.address_list.search_area = this.MissInfo.search_area;
+          // this.address_list.search_address = this.MissInfo.search_address;
+          // console.log("寻人信息地址", this.address_list)
         })
         .catch((err) => {
           console.log(err);
@@ -541,6 +580,7 @@ export default {
           this.imgUrlList.length, this.imgUrlList)
         .then((response) => {
           console.log("发布线索", response);
+          this.upclueDialogVisible = false;
           this.getMissInfo();
           ElMessage({
             message: "线索发布成功",
@@ -715,8 +755,6 @@ export default {
           console.log(err);
         });
       this.clueDetailDialogFormVisible = true;
-
-
     },
 
 
@@ -762,6 +800,20 @@ export default {
       this.clueID = clueid;
 
     },
+
+    //发布于线索相关的志愿活动
+    releaseClueAct(clueId) {
+      this.releaseActDialogVisible = true
+      this.activity_clueId = clueId
+    },
+    goVolActInfo(actId) {
+      //跳转到志愿活动详情页
+      this.$router.push({
+        path: "/volunActInfo",
+        //params: {  }, path和params不能同时使用，会使params失效，要用params需要将path替代为name(router名)
+        query: { act_id: actId },
+      });
+    }
   },
 };  
 </script>
@@ -770,6 +822,7 @@ export default {
 .upclueDialog {
   width: 70%;
 }
+
 .dialog-footer button:first-child {
   margin-right: 10px;
 }
@@ -879,10 +932,12 @@ export default {
 .margin-top {
   margin-top: 20px;
 }
+
 .demo-image__lazy {
   height: 400px;
   overflow-y: auto;
 }
+
 .demo-image__lazy .el-image {
   display: block;
   min-height: 200px;
@@ -892,6 +947,4 @@ export default {
 .demo-image__lazy .el-image:last-child {
   margin-bottom: 0;
 }
-
-
 </style>

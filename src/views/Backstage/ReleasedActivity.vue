@@ -32,19 +32,20 @@
                 <!-- <el-table-column prop="need_people" label="所需人数" align="center"/> -->
                 <el-table-column prop="operation" label="操作" align="center">
                     <template v-slot="scope">
-                        <el-button icon="User" size="small" @click="dialog(scope.row)" style="margin-right: 10px;">查看招募人员</el-button>
+                        <el-button icon="User" size="small" @click="dialog(scope.row)"
+                            style="margin-right: 10px;">查看招募人员</el-button>
                         <el-dialog v-model="dialogTableVisible" title="已报名用户信息">
                             <el-table :data="gridData">
-                            <el-table-column property="userId" label="用户编号" width="150" />
-                            <el-table-column property="userName" label="姓名" width="200" />
-                            <el-table-column property="phoneNum" label="联系方式" />
-                            <el-table-column property="mailboxNum" label="邮箱" />
+                                <el-table-column property="userId" label="用户编号" width="150" />
+                                <el-table-column property="userName" label="姓名" width="200" />
+                                <el-table-column property="phoneNum" label="联系方式" />
+                                <el-table-column property="mailboxNum" label="邮箱" />
                             </el-table>
                             <!--分页-->
                             <div class="Parent">
-                            <el-pagination v-model:currentPage="pagenum_table" v-model:page-size="pagesize_table"
-                                :total="total_table" layout="total, prev, pager, next, jumper"
-                                @current-change="handleCurrentChange_table" />
+                                <el-pagination v-model:currentPage="pagenum_table" v-model:page-size="pagesize_table"
+                                    :total="total_table" layout="total, prev, pager, next, jumper"
+                                    @current-change="handleCurrentChange_table" />
                             </div>
                         </el-dialog>
                         <el-button type="primary" icon="Edit" size="small" @click="modifyAct(scope.row)">编辑</el-button>
@@ -56,9 +57,9 @@
 
             <!--分页-->
             <div class="Parent">
-            <el-pagination v-model:currentPage="pagenum" v-model:page-size="pagesize" :page-sizes="[1, 2, 5, 10]"
-                :total="total" layout="total, prev, pager, next, jumper" @size-change="handleSizeChange"
-                @current-change="handleCurrentChange" />
+                <el-pagination v-model:currentPage="pagenum" v-model:page-size="pagesize" :page-sizes="[1, 2, 5, 10]"
+                    :total="total" layout="total, prev, pager, next, jumper" @size-change="handleSizeChange"
+                    @current-change="handleCurrentChange" />
             </div>
         </el-card>
 
@@ -76,29 +77,29 @@ export default {
             pagenum: 1,  //页数
             pagesize: 5, //每页的数量
             total: 100,  //总条目数
-            volId:0, //工作人员ID
+            volId: 0, //工作人员ID
             dialogTableVisible: false, //是否展示对话框
 
-            gridData:[],
+            gridData: [],
             pagenum_table: 1,  //页数
             pagesize_table: 5, //每页的数量
-            total_table:0,
+            total_table: 0,
 
         }
     },
     mounted() {
-        this.volId=JSON.parse(sessionStorage.getItem("volid"));
+        this.volId = JSON.parse(sessionStorage.getItem("volid"));
         this.getAllActivities();
     },
     methods: {
-        dialog(vol_ctivity){
-            this.dialogTableVisible=true;
-            api.showAllRecruited(vol_ctivity.VolActId,this.pagenum_table, this.pagesize_table)
-            .then((res) => {
+        dialog(vol_ctivity) {
+            this.dialogTableVisible = true;
+            api.showAllRecruited(vol_ctivity.VolActId, this.pagenum_table, this.pagesize_table)
+                .then((res) => {
                     console.log("请求成功", res);
                     this.gridData = res.data.data.users_list;
                     this.total_table = res.data.data.total;
-            })
+                })
         },
         handleSizeChange_table(newSize) {
             //console.log(newSize);
@@ -107,7 +108,7 @@ export default {
         },
         getAllActivities() {
             api
-                .getVolActList(this.volId,this.pagenum, this.pagesize)
+                .getVolActList(this.volId, this.pagenum, this.pagesize)
                 .then((res) => {
                     console.log("请求成功", res);
                     this.tableData = res.data.data.activity_list;
@@ -148,13 +149,14 @@ export default {
         async deleteAct(vol_ctivity) {
             console.log(vol_ctivity.VolActId);
             if (confirm("您确定要删除此志愿活动吗？")) {
-                await api.deleteVolActivity(vol_ctivity.VolActId).then(res => {
-                    this.$message.success('删除成功！');
-                    this.getAllActivities();
-                }).catch(err => {
-                    console.log(err)
-                    this.$message.error('删除失败！');
-                })
+                await api.deleteVolActivity(vol_ctivity.VolActId)
+                    .then(res => {
+                        this.$message.success('删除成功！');
+                        this.getAllActivities();
+                    }).catch(err => {
+                        console.log(err)
+                        this.$message.error('删除失败！');
+                    })
             }
         },
 
@@ -199,11 +201,11 @@ export default {
 }
 
 .Parent {
-  display: flex;
+    display: flex;
 }
 
 .el-pagination {
-  margin: auto;
+    margin: auto;
 }
 </style>
  

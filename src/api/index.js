@@ -291,7 +291,7 @@ const api = {
     },
     //关注寻人信息
     followMis(userid, infoid) {
-        return axios.get(path.baseUrl + path.followMisUrl,{
+        return axios.get(path.baseUrl + path.followMisUrl, {
             params: {
                 userid: userid,
                 infoid: infoid
@@ -463,11 +463,11 @@ const api = {
     },
 
     //1.1-2管理员发布志愿活动
-    releaseVolActivity(act_name, act_content, act_time, end_time, need_people, act_province, act_city, act_area, act_address, contact_method, vol_id) {
+    releaseVolActivity(act_name, act_content, act_time, end_time, need_people, act_province, act_city, act_area, act_address, contact_method, vol_id, clue_id) {
         return axios.post(path.baseUrl + path.releaseVolActivity, {
             act_name: act_name, act_content: act_content, act_time: act_time, end_time: end_time, need_people: need_people,
             act_province: act_province, act_city: act_city, act_area: act_area, act_address: act_address, contact_method: contact_method,
-            act_initiator: vol_id
+            act_initiator: vol_id, act_clueId: clue_id
         })
     },
     //发布志愿活动图片

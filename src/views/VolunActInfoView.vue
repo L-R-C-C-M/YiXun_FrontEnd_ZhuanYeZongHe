@@ -116,7 +116,11 @@
 
 
         </el-row>
-        <el-row class="toptext">活动详情</el-row>
+        <el-row class="toptext">活动详情&nbsp;
+          <el-link v-if="volActInfo.activity_clueId" @click="clueDetailDialogFormVisible = true"
+            style="vertical-align: bottom;">&nbsp;查看线索详情&nbsp;</el-link>
+          <el-link v-if="volActInfo.activity_searchinfoId" @click="goSearchInfo()">&nbsp;查看相关寻人信息&nbsp;</el-link>
+        </el-row>
         <el-divider />
         <div v-if="volActInfo.activity_content == null" class="text">
           暂无活动介绍
@@ -124,6 +128,84 @@
         <div v-if="volActInfo.activity_content != null" class="text">
           {{ volActInfo.activity_content }}
         </div>
+
+        <!-- 查看线索详情对话框 -->
+        <el-dialog title="线索详情" v-model="clueDetailDialogFormVisible">
+          <div>
+            <el-descriptions class="margin-top" :column="1" border>
+              <el-descriptions-item>
+                <template #label>
+                  <div class="cell-item">
+                    <el-icon :style="iconStyle">
+                      <Calendar />
+                    </el-icon>
+                    发现日期
+                  </div>
+                </template>
+                {{ clueInfo.clueInfoDate }}
+              </el-descriptions-item>
+              <el-descriptions-item>
+                <template #label>
+                  <div class="cell-item">
+                    <el-icon :style="iconStyle">
+                      <Watch />
+                    </el-icon>
+                    发现时间
+                  </div>
+                </template>
+                {{ clueInfo.clueInfoTime }}
+              </el-descriptions-item>
+              <el-descriptions-item>
+                <template #label>
+                  <div class="cell-item">
+                    <el-icon :style="iconStyle">
+                      <MapLocation />
+                    </el-icon>
+                    发现地区
+                  </div>
+                </template>
+                {{ clueInfo.clueInfoArea }}
+              </el-descriptions-item>
+              <el-descriptions-item>
+                <template #label>
+                  <div class="cell-item">
+                    <el-icon :style="iconStyle">
+                      <Guide />
+                    </el-icon>
+                    具体地点
+                  </div>
+                </template>
+                {{ clueInfo.clutInfoAdr }}
+              </el-descriptions-item>
+              <el-descriptions-item>
+                <template #label>
+                  <div class="cell-item">
+                    <el-icon :style="iconStyle">
+                      <Tickets />
+                    </el-icon>
+                    线索描述
+                  </div>
+                </template>
+                {{ clueInfo.clueInfoText }}
+              </el-descriptions-item>
+            </el-descriptions>
+            <div class="demo-image__lazy">
+              <el-image v-for="url in urls" :key="url" :src="url" lazy />
+            </div>
+          </div>
+
+          <!-- <div slot="footer" class="dialog-footer" style="padding: 10px"> -->
+          <!-- <el-button @click="(dialogFormVisible = false), (MisReason = '')">
+                取 消</el-button> -->
+
+          <!-- <el-button type="primary" @click="clueDetailDialogFormVisible = false">确 定</el-button> -->
+          <!-- <el-button type="primary" disabled v-else>确 定</el-button> -->
+
+          <!-- <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button> -->
+          <!-- </div> -->
+        </el-dialog>
+
+
       </el-main>
       <Footer></Footer>
     </el-container>
@@ -137,15 +219,30 @@ import { reactive, ref } from "vue";
 import { ElMessage } from "element-plus";
 import InfoHeader from "@/views/Frontstage/InfoHeader.vue";
 import Footer from "@/views/Frontstage/Footer.vue";
+import { CodeToText } from "element-china-area-data";
+import { Plus, ZoomIn, Calendar, Watch, MapLocation, Guide, Tickets } from '@element-plus/icons-vue';
 export default {
   name: "volunActInfoView",
   components: {
     InfoHeader,
     Footer,
   },
+  data() {
+    return {
+      urls: [],
+      clueInfo: reactive({
+        clueInfoDate: "",
+        clueInfoTime: "",
+        clueInfoArea: "",
+        clutInfoAdr: "",
+        clueInfoText: "",
+        clueInfoImgUrl: [],
+      }),
+    }
+  },
   setup() {
     const currentDate = ref(new Date());
-    console.log("当前时间", currentDate);
+    // console.log("当前时间", currentDate);
     const route = useRoute();
     const act_id = route.query.act_id;
     console.log("接收到的志愿活动id", act_id);
@@ -179,6 +276,8 @@ export default {
 
     let active = ref(0)
 
+    let clueDetailDialogFormVisible = ref(false)
+
     return {
       pic,
       vol_id,
@@ -193,6 +292,7 @@ export default {
       userType,
       active,//步骤条的激活序号
       is_overdue: false,//是否已经开始
+      clueDetailDialogFormVisible,//线索详情的对话框
     };
   },
   mounted() {
@@ -204,20 +304,53 @@ export default {
     api //获取单个志愿活动详细信息
       .getVolActInfo(this.act_id)
       .then((res) => {
-        console.log("请求成功", res);
-        //volActInfo.value = res.data.volActInfo;
         this.volActInfo = res.data.data;
-        console.log("获取数据", this.volActInfo);
+        console.log("志愿活动详情", this.volActInfo);
         var now_date = this.formatDateValue(new Date());
-        console.log("当前时间" + now_date);
-        console.log("开始时间" + this.volActInfo.activity_endTime);
+        // console.log("当前时间" + now_date);
+        // console.log("开始时间" + this.volActInfo.activity_endTime);
         this.is_overdue = this.volActInfo.activity_expTime < now_date;
+
         if (this.volActInfo.activity_expTime > now_date)
           this.active = 0;
         else if (this.volActInfo.activity_expTime < now_date && this.volActInfo.activity_endTime > now_date)
           this.active = 2;
         else if (this.volActInfo.activity_endTime < now_date)
           this.active = 4;
+
+        //获取线索ID，再获取线索详情，如果线索核实过，将is_overdue设置为true
+        //将active设置为4
+        if (this.volActInfo.activity_clueId != null) {
+          console.log("线索Id", this.volActInfo.activity_clueId);
+          api
+            .getClueDetail(this.volActInfo.activity_clueId)
+            .then((res) => {
+              console.log("clueDetail接收到的数据", res);
+              var theClueInfo = res.data.data;
+              console.log("线索详情", theClueInfo);
+              // this.MissInfo = res.data.data;
+              // console.log("志愿者长度", this.MissInfo.search_vols.length);
+              // this.address =
+              //   CodeToText[this.MissInfo.search_province] +
+              //   CodeToText[this.MissInfo.search_city] +
+              //   CodeToText[this.MissInfo.search_area];
+              this.clueInfo.clueInfoArea = CodeToText[theClueInfo.province] + CodeToText[theClueInfo.city] + CodeToText[theClueInfo.area];
+              // console.log(this.clueInfo.clueInfoArea);
+              this.clueInfo.clueInfoDate = theClueInfo.clue_day;
+              this.clueInfo.clueInfoTime = theClueInfo.detail_time;
+              this.clueInfo.clutInfoAdr = theClueInfo.detail_address;
+              this.clueInfo.clueInfoText = theClueInfo.clue_content;
+              this.urls = theClueInfo.pic_list;
+
+              if (theClueInfo.whether_confirmed == "Y")
+                this.active = 4;
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        }
+
+
         console.log("激活项：" + this.active);
       })
       .catch((err) => {
@@ -233,13 +366,13 @@ export default {
         //.getApplyState(vol_id, act_id)
         .getApplyState(this.user_id, this.act_id)
         .then((res) => {
-          console.log("判断成功", res);
+          console.log("登录状态判断成功", res);
           this.is_applied = res.data.data.is_applied;
           if (this.is_applied == "true")
             this.signup = "已报名";
         })
         .catch((err) => {
-          console.log("判断失败", err);
+          console.log("登录状态判断失败", err);
         });
     }
   },
@@ -258,7 +391,7 @@ export default {
             // console.log("报名的志愿活动id", this.act_id);
 
             if (this.is_applied == "false") {
-              console.log("ApplyState", res.data.data.ApplyState);
+              console.log("报名状态", res.data.data.ApplyState);
               if (res.data.data.ApplyState) {
                 //报名成功
                 ElMessage({
@@ -305,6 +438,17 @@ export default {
           type: "error",
         });
       }
+    },
+    goSearchInfo() {
+      console.log("寻人信息ID", this.volActInfo.activity_searchinfoId)
+      console.log("线索ID", this.volActInfo.activity_clueId)
+      this.$router.push({
+        path: "/missingpersonInfo",
+        query: {
+          SearchInfo: this.volActInfo.activity_searchinfoId,
+          // SearchInfo: 1
+        },
+      });
     },
     formatDateValue(now) {
       var year = this.dateZero(now.getFullYear()); //取得4位数的年份
@@ -421,6 +565,27 @@ export default {
   text-align: left;
   white-space: pre-wrap;
   /*实现换行 */
+}
+
+.cell-item {
+  display: flex;
+  align-items: center;
+  /* width: 20%; */
+}
+
+.demo-image__lazy {
+  height: 400px;
+  overflow-y: auto;
+}
+
+.demo-image__lazy .el-image {
+  display: block;
+  min-height: 200px;
+  margin-bottom: 10px;
+}
+
+.demo-image__lazy .el-image:last-child {
+  margin-bottom: 0;
 }
 
 /*.card-header {
