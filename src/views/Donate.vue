@@ -111,7 +111,7 @@
                       this.out_trade_no = res.data.data.outTradeNo;
                       console.log(this.out_trade_no)
                       sessionStorage.setItem("out_trade_no", this.out_trade_no);
-                      const url = 'http://localhost:3300/api/Alipay/pay?out_trade_no='+this.out_trade_no+'&subject=益寻公益捐款&total_amount=' +this.num
+                      const url = 'http://47.96.94.96:3300/api/Alipay/pay?out_trade_no='+this.out_trade_no+'&subject=益寻公益捐款&total_amount=' +this.num
                       window.open(url, '_blank');
                     });
                 }

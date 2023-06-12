@@ -50,7 +50,7 @@
         goBack() {
             //跳转至捐款页面
             this.$router.push({
-            path: "/donate",
+            path: "/volunAct",
             });
         },
         checkPay(){

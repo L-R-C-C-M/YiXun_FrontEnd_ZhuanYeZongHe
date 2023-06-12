@@ -1,5 +1,4 @@
 <template>
-    <p>修改寻人信息</p>
     <el-container style="height: fit-content">
         <el-header style="padding: 0">
             <InfoHeader />
