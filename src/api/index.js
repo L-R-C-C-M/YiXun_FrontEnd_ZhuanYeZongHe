@@ -260,6 +260,7 @@ const api = {
             }
         )
     },
+    //修改寻人信息
     changeMisspersonInfo(search_type, sought_people_name, sought_people_gender,
         sought_people_height, sought_people_detail, sought_people_birthday, sought_people_state,
         isreport, searchinfo_lostdate, contact_method, province_id, city_id, area_id, address_detail) {
@@ -298,6 +299,16 @@ const api = {
             }
         })
     },
+    //获取用户是否已关注
+    y_n_follow(userid, infoid) {
+        return axios.get(path.baseUrl + path.y_n_followMisUrl, {
+            params: {
+                userid: userid,
+                infoid: infoid
+            }
+        })
+    },
+
     //修改密码
     changePassword(user_id, user_password, new_password) {
 

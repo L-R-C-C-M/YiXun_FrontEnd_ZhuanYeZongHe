@@ -96,6 +96,8 @@ const base = {
     changeMisspersonInfoUrl: "/api/UserOperation/UserChangeSearchInfo",
     //关注寻人信息 *
     followMisUrl: "/api/UserOperation/UserFocus",
+    // 判断是否关注寻人信息
+    y_n_followMisUrl:"/api/UserOperation/IfFocus",
     //修改密码
     changePasswordUrl: "/api/UserInfo/ChangePassword",
     //线索核实

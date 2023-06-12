@@ -509,10 +509,10 @@ export default {
     }
     this.getMissInfo();
     api
-      .followMis(this.user_id, this.MissID)
+      .y_n_follow(this.user_id, this.MissID)
       .then((res) => {
         console.log("关注按钮接收的数据", res.data);
-        this.isFollow = res.data.data.state;
+        this.isFollow = res.data;
       })
       .catch((err) => {
         console.log(err);
