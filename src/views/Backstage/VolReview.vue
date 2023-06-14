@@ -2,7 +2,7 @@
 <template>
   <el-header>
     <el-breadcrumb separator="/">
-      <el-breadcrumb-item>志愿者审核</el-breadcrumb-item>
+      <el-breadcrumb-item>工作人员审核</el-breadcrumb-item>
     </el-breadcrumb>
   </el-header>
   <el-main style="background-color: rgba(245, 249, 250, 1)">
@@ -29,9 +29,7 @@
             </el-icon>
           </div>
           <div style="padding-left: 20px">
-            <span style="color: #ffffff; font-size: large"
-              >已审核<br /><br
-            /></span>
+            <span style="color: #ffffff; font-size: large">已审核<br /><br /></span>
             <span style="color: #ffffff; font-size: xx-large">{{
               vol_apply_reviewed
             }}</span>
@@ -52,34 +50,16 @@
         <el-table-column prop="background" label="背景" align="center" />
         <el-table-column prop="operation" label="操作" align="center">
           <template v-slot="scope">
-            <el-button
-              type="success"
-              plain
-              size="small"
-              @click="passVol(scope.row)"
-              >通过</el-button
-            >
-            <el-button
-              type="danger"
-              plain
-              size="small"
-              @click="rejectVol(scope.row)"
-              >拒绝</el-button
-            >
+            <el-button type="success" plain size="small" @click="passVol(scope.row)">通过</el-button>
+            <el-button type="danger" plain size="small" @click="rejectVol(scope.row)">拒绝</el-button>
           </template>
         </el-table-column>
       </el-table>
 
       <!--分页-->
-      <el-pagination
-        v-model:currentPage="pagenum"
-        v-model:page-size="pagesize"
-        :page-sizes="[1, 2, 5, 10]"
-        :total="total"
-        layout="total, sizes, prev, pager, next, jumper"
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
-      />
+      <el-pagination v-model:currentPage="pagenum" v-model:page-size="pagesize" :page-sizes="[1, 2, 5, 10]" :total="total"
+        layout="total, sizes, prev, pager, next, jumper" @size-change="handleSizeChange"
+        @current-change="handleCurrentChange" />
     </el-card>
   </el-main>
 </template>
@@ -182,9 +162,11 @@ export default {
 .el-row:last-child {
   margin-bottom: 0;
 }
+
 .el-card {
   margin-bottom: 20px; //下边距
 }
+
 .card {
   height: 160px;
   margin-bottom: 40px;
@@ -192,10 +174,12 @@ export default {
   display: flex;
   align-items: center;
 }
+
 .cicon {
   float: left;
   padding-left: 20px;
 }
+
 .eicon {
   font-size: 80px;
 }

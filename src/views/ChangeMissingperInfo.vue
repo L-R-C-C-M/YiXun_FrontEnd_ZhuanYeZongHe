@@ -42,8 +42,7 @@
                     </el-form-item>
 
                     <el-form-item label="身高(厘米)" prop="height">
-                        <el-input-number v-model="form.height" :min="1" :max="250" controls-position="right"
-                             />
+                        <el-input-number v-model="form.height" :min="1" :max="250" controls-position="right" />
                     </el-form-item>
 
                     <!-- <el-form-item label="上传照片"> 
@@ -131,13 +130,13 @@ import { reactive } from "vue";
 import { thisTypeAnnotation } from "@babel/types";
 import { useRoute } from "vue-router";
 import { ElMessage } from "element-plus";
-import { regionData } from "element-china-area-data"; 
+import { regionData } from "element-china-area-data";
 import { Star, Search } from "@element-plus/icons-vue";
 
 export default {
     data() {
         return {
-            options: regionData, 
+            options: regionData,
             MissInfo: [],
             form: reactive({
                 name: "",
@@ -191,11 +190,11 @@ export default {
         };
     },
     setup() {
- 
+
         const route = useRoute();
 
         const MissID = route.query.SearchInfo;
-        
+
         return {
             MissID,
         };
@@ -209,26 +208,26 @@ export default {
                 this.MissInfo = res.data.data;
                 console.log("this.MissInfo", this.MissInfo);
 
-                this.form.type=this.MissInfo.search_type;
+                this.form.type = this.MissInfo.search_type;
                 this.form.name = this.MissInfo.search_name;
                 this.form.sex = this.MissInfo.search_gender;
                 this.form.birthday = new Date(this.MissInfo.search_birthday);
                 this.form.height = parseInt(this.MissInfo.search_height);
                 this.form.imageurl = this.MissInfo.search_photo;
-                this.form.features =this.MissInfo.search_detail;
-                this.form.y_n_report=this.MissInfo.isreport;
-                this.form.date=new Date(this.MissInfo.searchinfo_lostdate);
+                this.form.features = this.MissInfo.search_detail;
+                this.form.y_n_report = this.MissInfo.isreport;
+                this.form.date = new Date(this.MissInfo.searchinfo_lostdate);
 
                 //     // this.form.selectedOptions=
                 // this.form.selectedOptions[0]=this.MissInfo.search_province;
                 // this.form.selectedOptions[1]=this.MissInfo.search_city;
                 // this.form.selectedOptions[2]=this.MissInfo.search_area;
-                this.form.selectedOptions[0]="110000";
-                this.form.selectedOptions[1]="110100";
-                this.form.selectedOptions[2]="110101";
+                this.form.selectedOptions[0] = "110000";
+                this.form.selectedOptions[1] = "110100";
+                this.form.selectedOptions[2] = "110101";
                 this.form.address = this.MissInfo.search_address;
-                this.form.linkman="张华";
-                this.form.telephone=this.MissInfo.contact_method;
+                this.form.linkman = "张华";
+                this.form.telephone = this.MissInfo.contact_method;
                 // console.log("志愿者长度", this.MissInfo.search_vols.length);
                 // this.address =
                 //   CodeToText[this.MissInfo.search_province] +

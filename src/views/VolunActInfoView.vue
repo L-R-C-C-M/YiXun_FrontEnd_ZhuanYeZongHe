@@ -36,19 +36,35 @@
 
             <!--在点击报名时判断登录状态-->
             <!--未到截止报名时间，报名人数未满可以报名,也可以取消报名-->
-            <el-button v-show="!isVolunteer && !volActInfo.is_overdue &&
+            <el-button v-show="!isVolunteer && !is_overdue &&
               volActInfo.activity_signupPeople <
               volActInfo.activity_needpeople
               " type="primary" class="actButton" round @click="goSignUp()">{{ signup }}</el-button>
 
             <!--未到截止报名时间但报名人数已满且自己未报名-->
-            <el-button v-show="!isVolunteer && !volActInfo.is_overdue && (volActInfo.activity_signupPeople >=
+            <el-button v-show="!isVolunteer && !is_overdue && (volActInfo.activity_signupPeople >=
               volActInfo.activity_needpeople) && !is_applied
               " type="primary" class="actButton" round disabled>人数已满</el-button>
 
             <!--已到截止报名时间-->
-            <el-button v-show="!isVolunteer && volActInfo.is_overdue" type="primary" class="actButton" round
+            <el-button v-show="!isVolunteer && is_overdue" type="primary" class="actButton" round
               disabled>报名结束</el-button>
+
+            <!--在点击报名时判断登录状态-->
+            <!--未到截止报名时间，报名人数未满可以报名,也可以取消报名-->
+            <!-- <el-button v-show="!isVolunteer && !volActInfo.is_overdue &&
+              volActInfo.activity_signupPeople <
+              volActInfo.activity_needpeople
+              " type="primary" class="actButton" round @click="goSignUp()">{{ signup }}</el-button> -->
+
+            <!--未到截止报名时间但报名人数已满且自己未报名-->
+            <!-- <el-button v-show="!isVolunteer && !volActInfo.is_overdue && (volActInfo.activity_signupPeople >=
+              volActInfo.activity_needpeople) && !is_applied
+              " type="primary" class="actButton" round disabled>人数已满</el-button> -->
+
+            <!--已到截止报名时间-->
+            <!-- <el-button v-show="!isVolunteer && volActInfo.is_overdue" type="primary" class="actButton" round
+              disabled>报名结束</el-button> -->
 
 
             <!--，未登录无法报名、普通用户禁止报名-->
@@ -307,9 +323,10 @@ export default {
         this.volActInfo = res.data.data;
         console.log("志愿活动详情", this.volActInfo);
         var now_date = this.formatDateValue(new Date());
-        // console.log("当前时间" + now_date);
-        // console.log("开始时间" + this.volActInfo.activity_endTime);
+        console.log("当前时间" + now_date);
+        console.log("开始时间" + this.volActInfo.activity_expTime);
         this.is_overdue = this.volActInfo.activity_expTime < now_date;
+        console.log("是否超过时间", this.is_overdue);
 
         if (this.volActInfo.activity_expTime > now_date)
           this.active = 0;
@@ -342,8 +359,11 @@ export default {
               this.clueInfo.clueInfoText = theClueInfo.clue_content;
               this.urls = theClueInfo.pic_list;
 
-              if (theClueInfo.whether_confirmed == "Y")
+              if (theClueInfo.whether_confirmed == "Y") {
                 this.active = 4;
+                this.is_overdue = true;
+              }
+
             })
             .catch((err) => {
               console.log(err);

@@ -82,15 +82,12 @@
             :total="total" @size-change="handleSizeChange" @current-change="handleCurrentChange" />
         </div>
 
-       <div>
-        <el-image
-      style=" margin-top: 120px;"
-      :src="require('../../image/process.png')"
-      :fit="scale-down"></el-image>
-       </div>
+        <div>
+          <el-image style=" margin-top: 120px;" :src="require('../../image/process.png')" :fit="scale - down"></el-image>
+        </div>
 
         <div id="app">
-          <kinesis-container class="container">
+          <!-- <kinesis-container class="container">
             <kinesis-element>
               <kinesis-element tag="img" :src="require('../../image/cover_show3.png')" :strength="10" type="rotate"
                 transformOrigin="50% 300%" axis="x" />
@@ -130,8 +127,8 @@
               </div>
             </kinesis-element>
 
-            <!-- background-circles-props -->
-            <kinesis-element>
+             background-circles-props -->
+          <!-- <kinesis-element>
               <div class="circle circle-purple"></div>
             </kinesis-element>
             <kinesis-element>
@@ -143,7 +140,7 @@
             <kinesis-element>
               <div class="circle circle-purple3"></div>
             </kinesis-element>
-          </kinesis-container>
+          </kinesis-container> -->
         </div>
       </el-main>
       <Footer></Footer>

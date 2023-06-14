@@ -519,7 +519,6 @@ export default {
       });
   },
   methods: {
-
     releaseActSuccessHandler(state) {
       this.releaseActDialogVisible = false;
       // actRefresh.value = !actRefresh;

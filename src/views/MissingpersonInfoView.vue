@@ -504,7 +504,8 @@ export default {
 
       api
         .upClue(parseInt(this.user_id), parseInt(this.MissID),
-          this.upclueform.clueText, this.upclueform.date,
+          this.upclueform.clueText,
+          this.upclueform.date,
           this.upclueform.detailTime,
           this.upclueform.selectedArea[0],
           this.upclueform.selectedArea[1],
@@ -513,7 +514,9 @@ export default {
           this.imgUrlList.length, this.imgUrlList)
         .then(function (response) {
           console.log("发布线索", response);
-          this.getMissInfo();
+
+          // this.getMissInfo();
+          // this.upclueDialogVisible = false;
           ElMessage({
             message: "线索发布成功",
             type: "success",
@@ -523,6 +526,8 @@ export default {
         .catch(function (error) {
           console.log(error);
         });
+
+      this.getMissInfo();
 
     },
     //点击举报[寻人信息]按钮
@@ -625,6 +630,7 @@ export default {
     },
     //时间转化封装 
     formatLongDate(date) {
+      console.log("上传时间：", date);
       let myyear = date.getFullYear();
       let mymonth = date.getMonth() + 1;
       let myweekday = date.getDate();
