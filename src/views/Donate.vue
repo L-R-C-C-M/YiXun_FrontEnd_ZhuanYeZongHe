@@ -47,8 +47,6 @@
                 :src="require('../../image/AliPayLogo.png')" :fit="contain" /> </el-radio>
             <el-radio :label="2"> <el-image style="width: 150px; height: 40px" :src="require('../../image/WePayLogo.png')"
                 :fit="contain" /></el-radio>
-            <el-radio :label="3"> <el-image style="width: 150px; height: 40px"
-                :src="require('../../image/UnionPayLogo.jpg')" :fit="contain" /></el-radio>
           </el-radio-group>
         </div>
         <el-button type="primary" color="#2e74b6" size="large" @click="pay()"> 确定 </el-button>
